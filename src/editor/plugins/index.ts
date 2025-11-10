@@ -7,3 +7,5 @@ export * from "./FloatingTextFormatToolbarPlugin";
 export * from "./ImagesPlugin";
 export * from "./LinkPlugin";
 export * from "./MarkdownShortcutPlugin";
+export * from "./MarkdownTransformers";
+export * from "./MaxLengthPlugin";

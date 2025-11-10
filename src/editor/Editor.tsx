@@ -33,8 +33,8 @@ import {
   ImagesPlugin,
   LinkPlugin,
   MarkdownPlugin as MarkdownShortcutPlugin,
+  MaxLengthPlugin,
 } from "./plugins";
-import { MaxLengthPlugin } from "./plugins/MaxLengthPlugin";
 import ShortcutsPlugin from "./plugins/ShortcutsPlugin";
 import TableCellActionMenuPlugin from "./plugins/TableActionMenuPlugin";
 import TableCellResizer from "./plugins/TableCellResizer";
