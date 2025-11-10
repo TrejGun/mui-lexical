@@ -1,0 +1,92 @@
+{
+  "author": {
+    "email": "trejgun@gmail.com",
+    "name": "TrejGun",
+    "url": "https://ethberry.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/TrejGun/mui-lexical/issues"
+  },
+  "contributors": [
+    {
+      "email": "pro200hummer@gmail.com",
+      "name": "Pavel Nikalaichyk",
+      "url": "https://github.com/pro200hummer"
+    }
+  ],
+  "dependencies": {
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/server": "11.11.0",
+    "@emotion/styled": "11.14.1",
+    "@lexical/code": "0.38.2",
+    "@lexical/link": "0.38.2",
+    "@lexical/list": "0.38.2",
+    "@lexical/markdown": "0.38.2",
+    "@lexical/overflow": "0.38.2",
+    "@lexical/react": "0.38.2",
+    "@lexical/rich-text": "0.38.2",
+    "@lexical/selection": "0.38.2",
+    "@lexical/table": "0.38.2",
+    "@lexical/utils": "0.38.2",
+    "@mui/icons-material": "7.3.5",
+    "@mui/material": "7.3.5",
+    "@mui/material-nextjs": "7.3.5",
+    "lexical": "0.38.2",
+    "lodash-es": "4.17.21",
+    "mdi-material-ui": "7.9.4"
+  },
+  "description": "Material-UI Lexical Editor and Viewer",
+  "devDependencies": {
+    "@ethberry/eslint-config": "5.0.9",
+    "@types/lodash-es": "4.17.12",
+    "@types/node": "22.19.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.6",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "homepage": "https://github.com/TrejGun/mui-lexical#readme",
+  "keywords": [
+    "material-ui",
+    "mui",
+    "lexical editor",
+    "rte",
+    "react",
+    "text editor",
+    "lexical"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "@ethberry/mui-lexical",
+  "peerDependencies": {
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "^7.0.0",
+    "@mui/system": "^7.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrejGun/mui-lexical.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepare": "husky",
+    "storybook": "storybook dev -p 6006",
+    "test": "jest"
+  },
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

@@ -1,0 +1,4 @@
+{
+  "extends": ["github>TrejGun/renovate-config"],
+  "baseBranches": ["main"]
+}

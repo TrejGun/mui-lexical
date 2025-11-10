@@ -1,0 +1,11 @@
+src
+storybook
+coverage
+
+renovate.json
+tsconfig.json
+tsconfig.test.json
+jest.config.json
+*.stories.tsx
+
+.*
