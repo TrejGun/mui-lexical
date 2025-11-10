@@ -31,7 +31,6 @@
     "@lexical/utils": "0.38.2",
     "@mui/icons-material": "7.3.5",
     "@mui/material": "7.3.5",
-    "@mui/material-nextjs": "7.3.5",
     "lexical": "0.38.2",
     "lodash-es": "4.17.21",
     "mdi-material-ui": "7.9.4"
@@ -84,7 +83,6 @@
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist/",
     "prepare": "husky",
-    "storybook": "storybook dev -p 6006",
     "test": "jest"
   },
   "types": "./dist/index.d.ts",
