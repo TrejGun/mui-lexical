@@ -28,8 +28,8 @@ import {
   CodeActionMenuPlugin,
   CodeHighlightPlugin,
   ComponentPickerMenuPlugin as ComponentPickerPlugin,
+  FloatingLinkEditorPlugin,
 } from "./plugins";
-import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 import FloatingTextFormatToolbarPlugin from "./plugins/FloatingTextFormatToolbarPlugin";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";

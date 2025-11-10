@@ -1,4 +1,7 @@
-.link-editor {
+import { css } from "@mui/material";
+
+export const floatLinkEditorPluginStyles = css`
+  .link-editor {
     display: flex;
     position: absolute;
     top: 0;
@@ -12,9 +15,9 @@
     border-radius: 0 0 8px 8px;
     transition: opacity 0.5s;
     will-change: transform;
-}
+  }
 
-.link-editor .button {
+  .link-editor .button {
     width: 20px;
     height: 20px;
     display: inline-block;
@@ -22,20 +25,21 @@
     border-radius: 8px;
     cursor: pointer;
     margin: 0 2px;
-}
+  }
 
-.link-editor .button.hovered {
+  .link-editor .button.hovered {
     width: 20px;
     height: 20px;
     display: inline-block;
     background-color: #eee;
-}
+  }
 
-.link-editor .button i,
-.actions i {
+  .link-editor .button i,
+  .actions i {
     background-size: contain;
     display: inline-block;
     height: 20px;
     width: 20px;
     vertical-align: -0.25em;
-}
+  }
+`;
