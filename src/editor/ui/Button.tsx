@@ -8,20 +8,19 @@
 
 import type { JSX } from "react";
 import { ReactNode } from "react";
-
-import "./Button.css";
+import { css, Button as MUIButton } from "@mui/material";
 
 import joinClasses from "../utils/joinClasses";
 
-export default function Button({
-                                 "data-test-id": dataTestId,
-                                 children,
-                                 className,
-                                 onClick,
-                                 disabled,
-                                 small,
-                                 title,
-                               }: {
+export const Button = ({
+  "data-test-id": dataTestId,
+  children,
+  className,
+  onClick,
+  disabled,
+  small,
+  title,
+}: {
   "data-test-id"?: string;
   children: ReactNode;
   className?: string;
@@ -29,21 +28,45 @@ export default function Button({
   onClick: () => void;
   small?: boolean;
   title?: string;
-}): JSX.Element {
+}): JSX.Element => {
   return (
-    <button
+    <MUIButton
       disabled={disabled}
-      className={joinClasses(
-        "Button__root",
-        disabled && "Button__disabled",
-        small && "Button__small",
-        className,
-      )}
+      className={joinClasses("Button__root", disabled && "Button__disabled", small && "Button__small", className)}
       onClick={onClick}
       title={title}
       aria-label={title}
-      {...(dataTestId && { "data-test-id": dataTestId })}>
+      {...(dataTestId && { "data-test-id": dataTestId })}
+    >
       {children}
-    </button>
+    </MUIButton>
   );
-}
+};
+
+export const buttonStyles = css`
+  .Button__root {
+    padding: 10px 15px;
+    border: 0;
+    background-color: #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .Button__root:hover {
+    background-color: #ddd;
+  }
+
+  .Button__small {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+
+  .Button__disabled {
+    cursor: not-allowed;
+  }
+
+  .Button__disabled:hover {
+    background-color: #eee;
+  }
+`;

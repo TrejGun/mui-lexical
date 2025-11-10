@@ -1,25 +1,28 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- *
- */
-.PlaygroundEditorTheme__ltr {
+import { css } from "@mui/material";
+
+export const playgroundEditorThemeStyles = css`
+  /**
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   *
+   *
+   */
+  .PlaygroundEditorTheme__ltr {
     text-align: left;
-}
+  }
 
-.PlaygroundEditorTheme__rtl {
+  .PlaygroundEditorTheme__rtl {
     text-align: right;
-}
+  }
 
-.PlaygroundEditorTheme__paragraph {
+  .PlaygroundEditorTheme__paragraph {
     margin: 0;
     position: relative;
-}
+  }
 
-.PlaygroundEditorTheme__quote {
+  .PlaygroundEditorTheme__quote {
     margin: 0;
     margin-left: 20px;
     margin-bottom: 10px;
@@ -29,170 +32,170 @@
     border-left-width: 4px;
     border-left-style: solid;
     padding-left: 16px;
-}
+  }
 
-.PlaygroundEditorTheme__h1 {
+  .PlaygroundEditorTheme__h1 {
     font-size: 24px;
     color: rgb(5, 5, 5);
     font-weight: 400;
     margin: 0;
-}
+  }
 
-.PlaygroundEditorTheme__h2 {
+  .PlaygroundEditorTheme__h2 {
     font-size: 15px;
     color: rgb(101, 103, 107);
     font-weight: 700;
     margin: 0;
     text-transform: uppercase;
-}
+  }
 
-.PlaygroundEditorTheme__h3 {
+  .PlaygroundEditorTheme__h3 {
     font-size: 12px;
     margin: 0;
     text-transform: uppercase;
-}
+  }
 
-.PlaygroundEditorTheme__indent {
+  .PlaygroundEditorTheme__indent {
     --lexical-indent-base-value: 40px;
-}
+  }
 
-.PlaygroundEditorTheme__textBold {
+  .PlaygroundEditorTheme__textBold {
     font-weight: bold;
-}
+  }
 
-.PlaygroundEditorTheme__paragraph mark {
+  .PlaygroundEditorTheme__paragraph mark {
     background-color: unset;
-}
+  }
 
-.PlaygroundEditorTheme__textHighlight {
+  .PlaygroundEditorTheme__textHighlight {
     background: rgba(255, 212, 0, 0.14);
     border-bottom: 2px solid rgba(255, 212, 0, 0.3);
-}
+  }
 
-.PlaygroundEditorTheme__textItalic {
+  .PlaygroundEditorTheme__textItalic {
     font-style: italic;
-}
+  }
 
-.PlaygroundEditorTheme__textUnderline {
+  .PlaygroundEditorTheme__textUnderline {
     text-decoration: underline;
-}
+  }
 
-.PlaygroundEditorTheme__textStrikethrough {
+  .PlaygroundEditorTheme__textStrikethrough {
     text-decoration: line-through;
-}
+  }
 
-.PlaygroundEditorTheme__textUnderlineStrikethrough {
+  .PlaygroundEditorTheme__textUnderlineStrikethrough {
     text-decoration: underline line-through;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode {
+  .PlaygroundEditorTheme__tabNode {
     position: relative;
     text-decoration: none;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderline::after {
-    content: '';
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderline::after {
+    content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0.15em;
     border-bottom: 0.1em solid currentColor;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textStrikethrough::before {
-    content: '';
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textStrikethrough::before {
+    content: "";
     position: absolute;
     left: 0;
     right: 0;
     top: 0.69em;
     border-top: 0.1em solid currentColor;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::before,
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::after {
-    content: '';
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::before,
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::after {
+    content: "";
     position: absolute;
     left: 0;
     right: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::before {
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::before {
     top: 0.69em;
     border-top: 0.1em solid currentColor;
-}
+  }
 
-.PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::after {
+  .PlaygroundEditorTheme__tabNode.PlaygroundEditorTheme__textUnderlineStrikethrough::after {
     bottom: 0.05em;
     border-bottom: 0.1em solid currentColor;
-}
+  }
 
-.PlaygroundEditorTheme__textSubscript {
+  .PlaygroundEditorTheme__textSubscript {
     font-size: 0.8em;
     vertical-align: sub !important;
-}
+  }
 
-.PlaygroundEditorTheme__textSuperscript {
+  .PlaygroundEditorTheme__textSuperscript {
     font-size: 0.8em;
     vertical-align: super;
-}
+  }
 
-.PlaygroundEditorTheme__textCode {
+  .PlaygroundEditorTheme__textCode {
     background-color: rgb(240, 242, 245);
     padding: 1px 0.25rem;
     font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 94%;
-}
+  }
 
-.PlaygroundEditorTheme__textLowercase {
+  .PlaygroundEditorTheme__textLowercase {
     text-transform: lowercase;
-}
+  }
 
-.PlaygroundEditorTheme__textUppercase {
+  .PlaygroundEditorTheme__textUppercase {
     text-transform: uppercase;
-}
+  }
 
-.PlaygroundEditorTheme__textCapitalize {
+  .PlaygroundEditorTheme__textCapitalize {
     text-transform: capitalize;
-}
+  }
 
-.PlaygroundEditorTheme__hashtag {
+  .PlaygroundEditorTheme__hashtag {
     background-color: rgba(88, 144, 255, 0.15);
     border-bottom: 1px solid rgba(88, 144, 255, 0.3);
-}
+  }
 
-.PlaygroundEditorTheme__link {
+  .PlaygroundEditorTheme__link {
     color: rgb(33, 111, 219);
     text-decoration: none;
-}
+  }
 
-.PlaygroundEditorTheme__link:hover {
+  .PlaygroundEditorTheme__link:hover {
     text-decoration: underline;
     cursor: pointer;
-}
+  }
 
-.PlaygroundEditorTheme__blockCursor {
+  .PlaygroundEditorTheme__blockCursor {
     display: block;
     pointer-events: none;
     position: absolute;
-}
+  }
 
-.PlaygroundEditorTheme__blockCursor:after {
-    content: '';
+  .PlaygroundEditorTheme__blockCursor:after {
+    content: "";
     display: block;
     position: absolute;
     top: -2px;
     width: 20px;
     border-top: 1px solid black;
     animation: CursorBlink 1.1s steps(2, start) infinite;
-}
+  }
 
-@keyframes CursorBlink {
+  @keyframes CursorBlink {
     to {
-        visibility: hidden;
+      visibility: hidden;
     }
-}
+  }
 
-.PlaygroundEditorTheme__code {
+  .PlaygroundEditorTheme__code {
     background-color: rgb(240, 242, 245);
     font-family: Menlo, Consolas, Monaco, monospace;
     display: block;
@@ -205,9 +208,9 @@
     overflow-x: auto;
     position: relative;
     tab-size: 2;
-}
+  }
 
-.PlaygroundEditorTheme__code:before {
+  .PlaygroundEditorTheme__code:before {
     content: attr(data-gutter);
     position: absolute;
     background-color: #eee;
@@ -219,29 +222,29 @@
     white-space: pre-wrap;
     text-align: right;
     min-width: 25px;
-}
+  }
 
-.PlaygroundEditorTheme__tableScrollableWrapper {
+  .PlaygroundEditorTheme__tableScrollableWrapper {
     overflow-x: auto;
     margin: 0px 25px 30px 0px;
-}
+  }
 
-.PlaygroundEditorTheme__tableScrollableWrapper > .PlaygroundEditorTheme__table {
+  .PlaygroundEditorTheme__tableScrollableWrapper > .PlaygroundEditorTheme__table {
     /* Remove the table's vertical margin and put it on the wrapper */
     margin-top: 0;
     margin-bottom: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tableAlignmentCenter {
+  .PlaygroundEditorTheme__tableAlignmentCenter {
     margin-left: auto;
     margin-right: auto;
-}
+  }
 
-.PlaygroundEditorTheme__tableAlignmentRight {
+  .PlaygroundEditorTheme__tableAlignmentRight {
     margin-left: auto;
-}
+  }
 
-.PlaygroundEditorTheme__table {
+  .PlaygroundEditorTheme__table {
     border-collapse: collapse;
     border-spacing: 0;
     overflow-y: scroll;
@@ -250,77 +253,77 @@
     width: fit-content;
     margin-top: 25px;
     margin-bottom: 30px;
-}
+  }
 
-.PlaygroundEditorTheme__tableScrollableWrapper.PlaygroundEditorTheme__tableFrozenRow {
+  .PlaygroundEditorTheme__tableScrollableWrapper.PlaygroundEditorTheme__tableFrozenRow {
     /* position:sticky needs overflow:clip or visible
        https://github.com/w3c/csswg-drafts/issues/865#issuecomment-350585274 */
     overflow-x: clip;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > td {
+  .PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > td {
     overflow: clip;
     background-color: #ffffff;
     position: sticky;
     z-index: 2;
     top: 44px;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > th {
+  .PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > th {
     overflow: clip;
     background-color: #f2f3f5;
     position: sticky;
     z-index: 2;
     top: 44px;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > th:after,
-.PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > td:after {
-    content: '';
+  .PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > th:after,
+  .PlaygroundEditorTheme__tableFrozenRow tr:nth-of-type(1) > td:after {
+    content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     border-bottom: 1px solid #bbb;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenColumn tr > td:first-child {
+  .PlaygroundEditorTheme__tableFrozenColumn tr > td:first-child {
     background-color: #ffffff;
     position: sticky;
     z-index: 2;
     left: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenColumn tr > th:first-child {
+  .PlaygroundEditorTheme__tableFrozenColumn tr > th:first-child {
     background-color: #f2f3f5;
     position: sticky;
     z-index: 2;
     left: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tableFrozenColumn tr > :first-child::after {
-    content: '';
+  .PlaygroundEditorTheme__tableFrozenColumn tr > :first-child::after {
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     height: 100%;
     border-right: 1px solid #bbb;
-}
+  }
 
-.PlaygroundEditorTheme__tableRowStriping tr:nth-child(even) {
+  .PlaygroundEditorTheme__tableRowStriping tr:nth-child(even) {
     background-color: #f2f5fb;
-}
+  }
 
-.PlaygroundEditorTheme__tableSelection *::selection {
+  .PlaygroundEditorTheme__tableSelection *::selection {
     background-color: transparent;
-}
+  }
 
-.PlaygroundEditorTheme__tableSelected {
+  .PlaygroundEditorTheme__tableSelected {
     outline: 2px solid rgb(60, 132, 244);
-}
+  }
 
-.PlaygroundEditorTheme__tableCell {
+  .PlaygroundEditorTheme__tableCell {
     border: 1px solid #bbb;
     width: 75px;
     vertical-align: top;
@@ -329,17 +332,17 @@
     position: relative;
     outline: none;
     overflow: auto;
-}
+  }
 
-/*
-  A firefox workaround to allow scrolling of overflowing table cell
-  ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1904159
-*/
-.PlaygroundEditorTheme__tableCell > * {
+  /*
+    A firefox workaround to allow scrolling of overflowing table cell
+    ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1904159
+  */
+  .PlaygroundEditorTheme__tableCell > * {
     overflow: inherit;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellResizer {
+  .PlaygroundEditorTheme__tableCellResizer {
     position: absolute;
     right: -4px;
     height: 100%;
@@ -347,18 +350,18 @@
     cursor: ew-resize;
     z-index: 10;
     top: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellHeader {
+  .PlaygroundEditorTheme__tableCellHeader {
     background-color: #f2f3f5;
     text-align: start;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellSelected {
+  .PlaygroundEditorTheme__tableCellSelected {
     caret-color: transparent;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellSelected::after {
+  .PlaygroundEditorTheme__tableCellSelected::after {
     position: absolute;
     left: 0;
     right: 0;
@@ -366,82 +369,82 @@
     top: 0;
     background-color: highlight;
     mix-blend-mode: multiply;
-    content: '';
+    content: "";
     pointer-events: none;
-}
+  }
 
-.PlaygroundEditorTheme__tableAddColumns {
+  .PlaygroundEditorTheme__tableAddColumns {
     position: absolute;
     background-color: #eee;
     height: 100%;
     animation: table-controls 0.2s ease;
     border: 0;
     cursor: pointer;
-}
+  }
 
-.PlaygroundEditorTheme__tableAddColumns:after {
+  .PlaygroundEditorTheme__tableAddColumns:after {
     background-image: url(../images/icons/plus.svg);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     display: block;
-    content: ' ';
+    content: " ";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     opacity: 0.4;
-}
+  }
 
-.PlaygroundEditorTheme__tableAddColumns:hover,
-.PlaygroundEditorTheme__tableAddRows:hover {
+  .PlaygroundEditorTheme__tableAddColumns:hover,
+  .PlaygroundEditorTheme__tableAddRows:hover {
     background-color: #c9dbf0;
-}
+  }
 
-.PlaygroundEditorTheme__tableAddRows {
+  .PlaygroundEditorTheme__tableAddRows {
     position: absolute;
     width: calc(100% - 25px);
     background-color: #eee;
     animation: table-controls 0.2s ease;
     border: 0;
     cursor: pointer;
-}
+  }
 
-.PlaygroundEditorTheme__tableAddRows:after {
+  .PlaygroundEditorTheme__tableAddRows:after {
     background-image: url(../images/icons/plus.svg);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     display: block;
-    content: ' ';
+    content: " ";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     opacity: 0.4;
-}
+  }
 
-@keyframes table-controls {
+  @keyframes table-controls {
     0% {
-        opacity: 0;
+      opacity: 0;
     }
     100% {
-        opacity: 1;
+      opacity: 1;
     }
-}
+  }
 
-.PlaygroundEditorTheme__tableCellResizeRuler {
+  .PlaygroundEditorTheme__tableCellResizeRuler {
     display: block;
     position: absolute;
     width: 1px;
     background-color: rgb(60, 132, 244);
     height: 100%;
     top: 0;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellActionButtonContainer {
+  .PlaygroundEditorTheme__tableCellActionButtonContainer {
     display: block;
     right: 5px;
     top: 6px;
@@ -449,9 +452,9 @@
     z-index: 4;
     width: 20px;
     height: 20px;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellActionButton {
+  .PlaygroundEditorTheme__tableCellActionButton {
     background-color: #eee;
     display: block;
     border: 0;
@@ -460,70 +463,70 @@
     height: 20px;
     color: #222;
     cursor: pointer;
-}
+  }
 
-.PlaygroundEditorTheme__tableCellActionButton:hover {
+  .PlaygroundEditorTheme__tableCellActionButton:hover {
     background-color: #ddd;
-}
+  }
 
-.PlaygroundEditorTheme__characterLimit {
+  .PlaygroundEditorTheme__characterLimit {
     display: inline;
     background-color: #ffbbbb !important;
-}
+  }
 
-.PlaygroundEditorTheme__ol1 {
+  .PlaygroundEditorTheme__ol1 {
     padding: 0;
     margin: 0;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__ol2 {
+  .PlaygroundEditorTheme__ol2 {
     padding: 0;
     margin: 0;
     list-style-type: upper-alpha;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__ol3 {
+  .PlaygroundEditorTheme__ol3 {
     padding: 0;
     margin: 0;
     list-style-type: lower-alpha;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__ol4 {
+  .PlaygroundEditorTheme__ol4 {
     padding: 0;
     margin: 0;
     list-style-type: upper-roman;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__ol5 {
+  .PlaygroundEditorTheme__ol5 {
     padding: 0;
     margin: 0;
     list-style-type: lower-roman;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__ul {
+  .PlaygroundEditorTheme__ul {
     padding: 0;
     margin: 0;
     list-style-position: outside;
-}
+  }
 
-.PlaygroundEditorTheme__listItem {
+  .PlaygroundEditorTheme__listItem {
     margin: 0 32px;
-}
+  }
 
-.PlaygroundEditorTheme__listItem::marker {
+  .PlaygroundEditorTheme__listItem::marker {
     color: var(--listitem-marker-color);
     background-color: var(--listitem-marker-background-color);
     font-family: var(--listitem-marker-font-family);
     font-size: var(--listitem-marker-font-size);
-}
+  }
 
-.PlaygroundEditorTheme__listItemChecked,
-.PlaygroundEditorTheme__listItemUnchecked {
+  .PlaygroundEditorTheme__listItemChecked,
+  .PlaygroundEditorTheme__listItemUnchecked {
     position: relative;
     margin-left: 8px;
     margin-right: 8px;
@@ -531,15 +534,15 @@
     padding-right: 24px;
     list-style-type: none;
     outline: none;
-}
+  }
 
-.PlaygroundEditorTheme__listItemChecked {
+  .PlaygroundEditorTheme__listItemChecked {
     text-decoration: line-through;
-}
+  }
 
-.PlaygroundEditorTheme__listItemUnchecked:before,
-.PlaygroundEditorTheme__listItemChecked:before {
-    content: '';
+  .PlaygroundEditorTheme__listItemUnchecked:before,
+  .PlaygroundEditorTheme__listItemChecked:before {
+    content: "";
     width: 16px;
     height: 16px;
     top: 2px;
@@ -548,34 +551,34 @@
     display: block;
     background-size: cover;
     position: absolute;
-}
+  }
 
-.PlaygroundEditorTheme__listItemUnchecked[dir='rtl']:before,
-.PlaygroundEditorTheme__listItemChecked[dir='rtl']:before {
+  .PlaygroundEditorTheme__listItemUnchecked[dir="rtl"]:before,
+  .PlaygroundEditorTheme__listItemChecked[dir="rtl"]:before {
     left: auto;
     right: 0;
-}
+  }
 
-.PlaygroundEditorTheme__listItemUnchecked:focus:before,
-.PlaygroundEditorTheme__listItemChecked:focus:before {
+  .PlaygroundEditorTheme__listItemUnchecked:focus:before,
+  .PlaygroundEditorTheme__listItemChecked:focus:before {
     box-shadow: 0 0 0 2px #a6cdfe;
     border-radius: 2px;
-}
+  }
 
-.PlaygroundEditorTheme__listItemUnchecked:before {
+  .PlaygroundEditorTheme__listItemUnchecked:before {
     border: 1px solid #999;
     border-radius: 2px;
-}
+  }
 
-.PlaygroundEditorTheme__listItemChecked:before {
+  .PlaygroundEditorTheme__listItemChecked:before {
     border: 1px solid rgb(61, 135, 245);
     border-radius: 2px;
     background-color: #3d87f5;
     background-repeat: no-repeat;
-}
+  }
 
-.PlaygroundEditorTheme__listItemChecked:after {
-    content: '';
+  .PlaygroundEditorTheme__listItemChecked:after {
+    content: "";
     cursor: pointer;
     border-color: #fff;
     border-style: solid;
@@ -588,116 +591,117 @@
     height: 6px;
     transform: rotate(45deg);
     border-width: 0 2px 2px 0;
-}
+  }
 
-.PlaygroundEditorTheme__nestedListItem {
+  .PlaygroundEditorTheme__nestedListItem {
     list-style-type: none;
-}
+  }
 
-.PlaygroundEditorTheme__nestedListItem:before,
-.PlaygroundEditorTheme__nestedListItem:after {
+  .PlaygroundEditorTheme__nestedListItem:before,
+  .PlaygroundEditorTheme__nestedListItem:after {
     display: none;
-}
+  }
 
-.PlaygroundEditorTheme__tokenComment {
+  .PlaygroundEditorTheme__tokenComment {
     color: slategray;
-}
+  }
 
-.PlaygroundEditorTheme__tokenPunctuation {
+  .PlaygroundEditorTheme__tokenPunctuation {
     color: #999;
-}
+  }
 
-.PlaygroundEditorTheme__tokenProperty {
+  .PlaygroundEditorTheme__tokenProperty {
     color: #905;
-}
+  }
 
-.PlaygroundEditorTheme__tokenSelector {
+  .PlaygroundEditorTheme__tokenSelector {
     color: #690;
-}
+  }
 
-.PlaygroundEditorTheme__tokenOperator {
+  .PlaygroundEditorTheme__tokenOperator {
     color: #9a6e3a;
-}
+  }
 
-.PlaygroundEditorTheme__tokenAttr {
+  .PlaygroundEditorTheme__tokenAttr {
     color: #07a;
-}
+  }
 
-.PlaygroundEditorTheme__tokenVariable {
+  .PlaygroundEditorTheme__tokenVariable {
     color: #e90;
-}
+  }
 
-.PlaygroundEditorTheme__tokenFunction {
+  .PlaygroundEditorTheme__tokenFunction {
     color: #dd4a68;
-}
+  }
 
-.PlaygroundEditorTheme__mark {
+  .PlaygroundEditorTheme__mark {
     background: rgba(255, 212, 0, 0.14);
     border-bottom: 2px solid rgba(255, 212, 0, 0.3);
     padding-bottom: 2px;
-}
+  }
 
-.PlaygroundEditorTheme__markOverlap {
+  .PlaygroundEditorTheme__markOverlap {
     background: rgba(255, 212, 0, 0.3);
     border-bottom: 2px solid rgba(255, 212, 0, 0.7);
-}
+  }
 
-.PlaygroundEditorTheme__mark.selected {
+  .PlaygroundEditorTheme__mark.selected {
     background: rgba(255, 212, 0, 0.5);
     border-bottom: 2px solid rgba(255, 212, 0, 1);
-}
+  }
 
-.PlaygroundEditorTheme__markOverlap.selected {
+  .PlaygroundEditorTheme__markOverlap.selected {
     background: rgba(255, 212, 0, 0.7);
     border-bottom: 2px solid rgba(255, 212, 0, 0.7);
-}
+  }
 
-.PlaygroundEditorTheme__embedBlock {
+  .PlaygroundEditorTheme__embedBlock {
     user-select: none;
-}
+  }
 
-.PlaygroundEditorTheme__embedBlockFocus {
+  .PlaygroundEditorTheme__embedBlockFocus {
     outline: 2px solid rgb(60, 132, 244);
-}
+  }
 
-.PlaygroundEditorTheme__layoutContainer {
+  .PlaygroundEditorTheme__layoutContainer {
     display: grid;
     gap: 10px;
     margin: 10px 0;
-}
+  }
 
-.PlaygroundEditorTheme__layoutItem {
+  .PlaygroundEditorTheme__layoutItem {
     border: 1px dashed #ddd;
     padding: 8px 16px;
     min-width: 0;
     max-width: 100%;
-}
+  }
 
-.PlaygroundEditorTheme__autocomplete {
+  .PlaygroundEditorTheme__autocomplete {
     color: #ccc;
-}
+  }
 
-.PlaygroundEditorTheme__hr {
+  .PlaygroundEditorTheme__hr {
     padding: 2px 2px;
     border: none;
     margin: 1em 0;
     cursor: pointer;
-}
+  }
 
-.PlaygroundEditorTheme__hr:after {
-    content: '';
+  .PlaygroundEditorTheme__hr:after {
+    content: "";
     display: block;
     height: 2px;
     background-color: #ccc;
     line-height: 2px;
-}
+  }
 
-.PlaygroundEditorTheme__hr.PlaygroundEditorTheme__hrSelected {
+  .PlaygroundEditorTheme__hr.PlaygroundEditorTheme__hrSelected {
     outline: 2px solid rgb(60, 132, 244);
     user-select: none;
-}
+  }
 
-.PlaygroundEditorTheme__specialText {
+  .PlaygroundEditorTheme__specialText {
     background-color: yellow;
     font-weight: bold;
-}
+  }
+`;

@@ -43,7 +43,7 @@ import {
 } from "./plugins";
 import ContentEditable from "./ui/ContentEditable";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
-import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+import { playgroundEditorTheme } from "./themes/playgroundEditorTheme";
 
 export const Editor = () => {
   const { historyState } = useSharedHistoryContext();
@@ -86,7 +86,7 @@ export const Editor = () => {
         onError: (error: Error) => {
           throw error;
         },
-        theme: PlaygroundEditorTheme,
+        theme: playgroundEditorTheme,
       }}
     >
       <SharedHistoryContext>
