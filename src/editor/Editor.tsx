@@ -32,8 +32,8 @@ import {
   FloatingTextFormatToolbarPlugin,
   ImagesPlugin,
   LinkPlugin,
+  MarkdownPlugin as MarkdownShortcutPlugin,
 } from "./plugins";
-import MarkdownShortcutPlugin from "./plugins/MarkdownShortcutPlugin";
 import { MaxLengthPlugin } from "./plugins/MaxLengthPlugin";
 import ShortcutsPlugin from "./plugins/ShortcutsPlugin";
 import TableCellActionMenuPlugin from "./plugins/TableActionMenuPlugin";

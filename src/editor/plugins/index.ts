@@ -6,3 +6,4 @@ export * from "./FloatingLinkEditorPlugin";
 export * from "./FloatingTextFormatToolbarPlugin";
 export * from "./ImagesPlugin";
 export * from "./LinkPlugin";
+export * from "./MarkdownShortcutPlugin";
