@@ -1,4 +1,13 @@
-import { codeActionMenuPluginStyles, floatLinkEditorPluginStyles } from "./editor/plugins";
+import {
+  codeActionMenuPluginStyles,
+  floatLinkEditorPluginStyles,
+  floatTextFormatToolbarPluginStyles,
+} from "./editor/plugins";
 import { editorStyles } from "./editor/editorStyles";
 
-export const muiLexicalStyles = [editorStyles, codeActionMenuPluginStyles, floatLinkEditorPluginStyles];
+export const muiLexicalStyles = [
+  editorStyles,
+  codeActionMenuPluginStyles,
+  floatLinkEditorPluginStyles,
+  floatTextFormatToolbarPluginStyles,
+];

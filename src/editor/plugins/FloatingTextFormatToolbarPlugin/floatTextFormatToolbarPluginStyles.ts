@@ -1,12 +1,7 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
+import { css } from "@mui/material";
 
-.floating-text-format-popup {
+export const floatTextFormatToolbarPluginStyles = css`
+  .floating-text-format-popup {
     display: flex;
     background: #fff;
     padding: 4px;
@@ -16,14 +11,14 @@
     left: 0;
     z-index: 10;
     opacity: 0;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     transition: opacity 0.5s;
     height: 35px;
     will-change: transform;
-}
+  }
 
-.floating-text-format-popup button.popup-item {
+  .floating-text-format-popup button.popup-item {
     border: 0;
     display: flex;
     background: none;
@@ -31,17 +26,17 @@
     padding: 8px;
     cursor: pointer;
     vertical-align: middle;
-}
+  }
 
-.floating-text-format-popup button.popup-item:disabled {
+  .floating-text-format-popup button.popup-item:disabled {
     cursor: not-allowed;
-}
+  }
 
-.floating-text-format-popup button.popup-item.spaced {
+  .floating-text-format-popup button.popup-item.spaced {
     margin-right: 2px;
-}
+  }
 
-.floating-text-format-popup button.popup-item i.format {
+  .floating-text-format-popup button.popup-item i.format {
     background-size: contain;
     height: 18px;
     width: 18px;
@@ -49,25 +44,25 @@
     vertical-align: -0.25em;
     display: flex;
     opacity: 0.6;
-}
+  }
 
-.floating-text-format-popup button.popup-item:disabled i.format {
+  .floating-text-format-popup button.popup-item:disabled i.format {
     opacity: 0.2;
-}
+  }
 
-.floating-text-format-popup button.popup-item.active {
+  .floating-text-format-popup button.popup-item.active {
     background-color: rgba(223, 232, 250, 0.3);
-}
+  }
 
-.floating-text-format-popup button.popup-item.active i {
+  .floating-text-format-popup button.popup-item.active i {
     opacity: 1;
-}
+  }
 
-.floating-text-format-popup .popup-item:hover:not([disabled]) {
+  .floating-text-format-popup .popup-item:hover:not([disabled]) {
     background-color: #eee;
-}
+  }
 
-.floating-text-format-popup select.popup-item {
+  .floating-text-format-popup select.popup-item {
     border: 0;
     display: flex;
     background: none;
@@ -80,14 +75,14 @@
     font-size: 14px;
     color: #777;
     text-overflow: ellipsis;
-}
+  }
 
-.floating-text-format-popup select.code-language {
+  .floating-text-format-popup select.code-language {
     text-transform: capitalize;
     width: 130px;
-}
+  }
 
-.floating-text-format-popup .popup-item .text {
+  .floating-text-format-popup .popup-item .text {
     display: flex;
     line-height: 20px;
     vertical-align: middle;
@@ -98,9 +93,9 @@
     overflow: hidden;
     height: 20px;
     text-align: left;
-}
+  }
 
-.floating-text-format-popup .popup-item .icon {
+  .floating-text-format-popup .popup-item .icon {
     display: flex;
     width: 20px;
     height: 20px;
@@ -108,17 +103,17 @@
     margin-right: 8px;
     line-height: 16px;
     background-size: contain;
-}
+  }
 
-.floating-text-format-popup i.chevron-down {
+  .floating-text-format-popup i.chevron-down {
     margin-top: 3px;
     width: 16px;
     height: 16px;
     display: flex;
     user-select: none;
-}
+  }
 
-.floating-text-format-popup i.chevron-down.inside {
+  .floating-text-format-popup i.chevron-down.inside {
     width: 16px;
     height: 16px;
     display: flex;
@@ -126,16 +121,17 @@
     margin-top: 11px;
     margin-right: 10px;
     pointer-events: none;
-}
+  }
 
-.floating-text-format-popup .divider {
+  .floating-text-format-popup .divider {
     width: 1px;
     background-color: #eee;
     margin: 0 4px;
-}
+  }
 
-@media (max-width: 1024px) {
+  @media (max-width: 1024px) {
     .floating-text-format-popup button.insert-comment {
-        display: none;
+      display: none;
     }
-}
+  }
+`;

@@ -6,11 +6,7 @@
  *
  */
 
-import type { JSX } from "react";
-import { Dispatch, useCallback, useEffect, useRef, useState } from "react";
-
-import "./index.css";
-
+import { Dispatch, JSX, useCallback, useEffect, useRef, useState } from "react";
 import { $isCodeHighlightNode } from "@lexical/code";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -33,16 +29,16 @@ import { getSelectedNode } from "../../utils/getSelectedNode";
 import { setFloatingElemPosition } from "../../utils/setFloatingElemPosition";
 
 function TextFormatFloatingToolbar({
-                                     editor,
-                                     anchorElem,
-                                     isLink,
-                                     isBold,
-                                     isItalic,
-                                     isUnderline,
-                                     isCode,
-                                     isStrikethrough,
-                                     setIsLinkEditMode,
-                                   }: {
+  editor,
+  anchorElem,
+  isLink,
+  isBold,
+  isItalic,
+  isUnderline,
+  isCode,
+  isStrikethrough,
+  setIsLinkEditMode,
+}: {
   editor: LexicalEditor;
   anchorElem: HTMLElement;
   isBold: boolean;
@@ -66,10 +62,7 @@ function TextFormatFloatingToolbar({
   }, [editor, isLink, setIsLinkEditMode]);
 
   function mouseMoveListener(e: MouseEvent) {
-    if (
-      popupCharStylesEditorRef?.current &&
-      (e.buttons === 1 || e.buttons === 3)
-    ) {
+    if (popupCharStylesEditorRef?.current && (e.buttons === 1 || e.buttons === 3)) {
       if (popupCharStylesEditorRef.current.style.pointerEvents !== "none") {
         const x = e.clientX;
         const y = e.clientY;
@@ -83,7 +76,7 @@ function TextFormatFloatingToolbar({
     }
   }
 
-  function mouseUpListener(e: MouseEvent) {
+  function mouseUpListener(_e: MouseEvent) {
     if (popupCharStylesEditorRef?.current) {
       if (popupCharStylesEditorRef.current.style.pointerEvents !== "auto") {
         popupCharStylesEditorRef.current.style.pointerEvents = "auto";
@@ -101,6 +94,7 @@ function TextFormatFloatingToolbar({
         document.removeEventListener("mouseup", mouseUpListener);
       };
     }
+    return;
   }, [popupCharStylesEditorRef]);
 
   const $updateTextFormatFloatingToolbar = useCallback(() => {
@@ -118,17 +112,12 @@ function TextFormatFloatingToolbar({
       selection !== null &&
       nativeSelection !== null &&
       !nativeSelection.isCollapsed &&
-      rootElement !== null &&
+      !!rootElement &&
       rootElement.contains(nativeSelection.anchorNode)
     ) {
       const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
 
-      setFloatingElemPosition(
-        rangeRect,
-        popupCharStylesEditorElem,
-        anchorElem,
-        isLink,
-      );
+      setFloatingElemPosition(rangeRect, popupCharStylesEditorElem, anchorElem, isLink);
     }
   }, [editor, anchorElem, isLink]);
 
@@ -187,7 +176,8 @@ function TextFormatFloatingToolbar({
             }}
             className={"popup-item spaced " + (isBold ? "active" : "")}
             title="Bold"
-            aria-label="Format text as bold">
+            aria-label="Format text as bold"
+          >
             <i className="format bold" />
           </button>
           <button
@@ -197,7 +187,8 @@ function TextFormatFloatingToolbar({
             }}
             className={"popup-item spaced " + (isItalic ? "active" : "")}
             title="Italic"
-            aria-label="Format text as italics">
+            aria-label="Format text as italics"
+          >
             <i className="format italic" />
           </button>
           <button
@@ -207,7 +198,8 @@ function TextFormatFloatingToolbar({
             }}
             className={"popup-item spaced " + (isUnderline ? "active" : "")}
             title="Underline"
-            aria-label="Format text to underlined">
+            aria-label="Format text to underlined"
+          >
             <i className="format underline" />
           </button>
           <button
@@ -217,7 +209,8 @@ function TextFormatFloatingToolbar({
             }}
             className={"popup-item spaced " + (isStrikethrough ? "active" : "")}
             title="Strikethrough"
-            aria-label="Format text with a strikethrough">
+            aria-label="Format text with a strikethrough"
+          >
             <i className="format strikethrough" />
           </button>
           <button
@@ -227,7 +220,8 @@ function TextFormatFloatingToolbar({
             }}
             className={"popup-item spaced " + (isCode ? "active" : "")}
             title="Insert code block"
-            aria-label="Insert code block">
+            aria-label="Insert code block"
+          >
             <i className="format code" />
           </button>
           <button
@@ -235,7 +229,8 @@ function TextFormatFloatingToolbar({
             onClick={insertLink}
             className={"popup-item spaced " + (isLink ? "active" : "")}
             title="Insert link"
-            aria-label="Insert link">
+            aria-label="Insert link"
+          >
             <i className="format link" />
           </button>
         </>
@@ -269,9 +264,7 @@ function useFloatingTextFormatToolbar(
 
       if (
         nativeSelection !== null &&
-        (!$isRangeSelection(selection) ||
-          rootElement === null ||
-          !rootElement.contains(nativeSelection.anchorNode))
+        (!$isRangeSelection(selection) || !rootElement?.contains(nativeSelection.anchorNode))
       ) {
         setIsText(false);
         return;
@@ -298,10 +291,7 @@ function useFloatingTextFormatToolbar(
         setIsLink(false);
       }
 
-      if (
-        !$isCodeHighlightNode(selection.anchor.getNode()) &&
-        selection.getTextContent() !== ""
-      ) {
+      if (!$isCodeHighlightNode(selection.anchor.getNode()) && selection.getTextContent() !== "") {
         setIsText($isTextNode(node) || $isParagraphNode(node));
       } else {
         setIsText(false);
@@ -355,13 +345,15 @@ function useFloatingTextFormatToolbar(
   );
 }
 
-export default function FloatingTextFormatToolbarPlugin({
-                                                          anchorElem = document.body,
-                                                          setIsLinkEditMode,
-                                                        }: {
+export const FloatingTextFormatToolbarPlugin = ({
+  anchorElem = document.body,
+  setIsLinkEditMode,
+}: {
   anchorElem?: HTMLElement;
   setIsLinkEditMode: Dispatch<boolean>;
-}): JSX.Element | null {
+}): JSX.Element | null => {
   const [editor] = useLexicalComposerContext();
   return useFloatingTextFormatToolbar(editor, anchorElem, setIsLinkEditMode);
-}
+};
+
+export { floatTextFormatToolbarPluginStyles } from "./floatTextFormatToolbarPluginStyles";

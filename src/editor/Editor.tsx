@@ -29,8 +29,8 @@ import {
   CodeHighlightPlugin,
   ComponentPickerMenuPlugin as ComponentPickerPlugin,
   FloatingLinkEditorPlugin,
+  FloatingTextFormatToolbarPlugin,
 } from "./plugins";
-import FloatingTextFormatToolbarPlugin from "./plugins/FloatingTextFormatToolbarPlugin";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";
 import MarkdownShortcutPlugin from "./plugins/MarkdownShortcutPlugin";
