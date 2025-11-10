@@ -34,9 +34,9 @@ import {
   LinkPlugin,
   MarkdownPlugin as MarkdownShortcutPlugin,
   MaxLengthPlugin,
+  ShortcutsPlugin,
+  TableActionMenuPlugin as TableCellActionMenuPlugin,
 } from "./plugins";
-import ShortcutsPlugin from "./plugins/ShortcutsPlugin";
-import TableCellActionMenuPlugin from "./plugins/TableActionMenuPlugin";
 import TableCellResizer from "./plugins/TableCellResizer";
 import TableHoverActionsPlugin from "./plugins/TableHoverActionsPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";

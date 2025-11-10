@@ -9,3 +9,6 @@ export * from "./LinkPlugin";
 export * from "./MarkdownShortcutPlugin";
 export * from "./MarkdownTransformers";
 export * from "./MaxLengthPlugin";
+export * from "./ShortcutsPlugin";
+export * from "./TabFocusPlugin";
+export * from "./TableActionMenuPlugin";

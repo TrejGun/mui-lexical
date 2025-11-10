@@ -19,7 +19,7 @@ import {
 } from "lexical";
 import { Dispatch, useEffect } from "react";
 
-import { useToolbarState } from "../../context/ToolbarContext";
+import { useToolbarState } from "../../context";
 import { sanitizeUrl } from "../../utils/url";
 import {
   clearFormatting,
@@ -51,13 +51,13 @@ import {
   isStrikeThrough,
 } from "./shortcuts";
 
-export default function ShortcutsPlugin({
-                                          editor,
-                                          setIsLinkEditMode,
-                                        }: {
+export const ShortcutsPlugin = ({
+  editor,
+  setIsLinkEditMode,
+}: {
   editor: LexicalEditor;
   setIsLinkEditMode: Dispatch<boolean>;
-}): null {
+}): null => {
   const { toolbarState } = useToolbarState();
 
   useEffect(() => {
@@ -125,17 +125,8 @@ export default function ShortcutsPlugin({
       return false;
     };
 
-    return editor.registerCommand(
-      KEY_MODIFIER_COMMAND,
-      keyboardShortcutsHandler,
-      COMMAND_PRIORITY_NORMAL,
-    );
-  }, [
-    editor,
-    toolbarState.isLink,
-    toolbarState.blockType,
-    setIsLinkEditMode,
-  ]);
+    return editor.registerCommand(KEY_MODIFIER_COMMAND, keyboardShortcutsHandler, COMMAND_PRIORITY_NORMAL);
+  }, [editor, toolbarState.isLink, toolbarState.blockType, setIsLinkEditMode]);
 
   return null;
-}
+};
