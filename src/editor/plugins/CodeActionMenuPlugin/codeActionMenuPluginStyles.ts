@@ -1,12 +1,7 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
+import { css } from "@mui/material";
 
-.code-action-menu-container {
+export const codeActionMenuPluginStyles = css`
+  .code-action-menu-container {
     height: 35.8px;
     font-size: 10px;
     color: rgba(0, 0, 0, 0.5);
@@ -15,13 +10,13 @@
     align-items: center;
     flex-direction: row;
     user-select: none;
-}
+  }
 
-.code-action-menu-container .code-highlight-language {
+  .code-action-menu-container .code-highlight-language {
     margin-right: 4px;
-}
+  }
 
-.code-action-menu-container button.menu-item {
+  .code-action-menu-container button.menu-item {
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 4px;
@@ -32,23 +27,39 @@
     align-items: center;
     color: rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
-}
+  }
 
-.code-action-menu-container button.menu-item i.format {
+  .code-action-menu-container button.menu-item i.format {
     height: 16px;
     width: 16px;
     opacity: 0.6;
     display: flex;
     color: rgba(0, 0, 0, 0.5);
     background-size: contain;
-}
+  }
 
-.code-action-menu-container button.menu-item:hover {
+  .code-action-menu-container button.menu-item:hover {
     border: 1px solid rgba(0, 0, 0, 0.3);
     opacity: 0.9;
-}
+  }
 
-.code-action-menu-container button.menu-item:active {
+  .code-action-menu-container button.menu-item:active {
     background-color: rgba(223, 232, 250);
     border: 1px solid rgba(0, 0, 0, 0.45);
-}
+  }
+
+  .code-action-menu-container .prettier-wrapper {
+    position: relative;
+  }
+
+  .code-action-menu-container .prettier-wrapper .code-error-tips {
+    padding: 5px;
+    border-radius: 4px;
+    color: #fff;
+    background: #222;
+    margin-top: 4px;
+    position: absolute;
+    top: 26px;
+    right: 0;
+  }
+`;

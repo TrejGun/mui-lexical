@@ -33,7 +33,8 @@
     "@mui/material": "7.3.5",
     "lexical": "0.38.2",
     "lodash-es": "4.17.21",
-    "mdi-material-ui": "7.9.4"
+    "mdi-material-ui": "7.9.4",
+    "prettier": "3.6.2"
   },
   "description": "Material-UI Lexical Editor and Viewer",
   "devDependencies": {

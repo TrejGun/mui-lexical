@@ -6,39 +6,30 @@
  *
  */
 
-import type { JSX, ReactPortal } from "react";
-import { useEffect, useRef, useState } from "react";
-
-import "./index.css";
-
+import { type ReactPortal, useEffect, useRef, useState } from "react";
 import { $isCodeNode, CodeNode, getLanguageFriendlyName, normalizeCodeLang } from "@lexical/code";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNearestNodeFromDOMNode, isHTMLElement } from "lexical";
 import { createPortal } from "react-dom";
 
-import { CopyButton } from "./components/CopyButton";
-import { canBePrettier, PrettierButton } from "./components/PrettierButton";
+import { canBePrettier, CopyButton, PrettierButton } from "./components";
 import { useDebounce } from "./utils";
 
+export { codeActionMenuPluginStyles } from "./codeActionMenuPluginStyles";
 const CODE_PADDING = 8;
 
-interface Position {
+interface IPosition {
   top: string;
   right: string;
 }
 
-function CodeActionMenuContainer({
-                                   anchorElem,
-                                 }: {
-  anchorElem: HTMLElement;
-}): JSX.Element {
+function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement }) {
   const [editor] = useLexicalComposerContext();
 
   const [lang, setLang] = useState("");
   const [isShown, setShown] = useState<boolean>(false);
-  const [shouldListenMouseMove, setShouldListenMouseMove] =
-    useState<boolean>(false);
-  const [position, setPosition] = useState<Position>({
+  const [shouldListenMouseMove, setShouldListenMouseMove] = useState<boolean>(false);
+  const [position, setPosition] = useState<IPosition>({
     right: "0",
     top: "0",
   });
@@ -76,8 +67,7 @@ function CodeActionMenuContainer({
       });
 
       if (codeNode) {
-        const { y: editorElemY, right: editorElemRight } =
-          anchorElem.getBoundingClientRect();
+        const { y: editorElemY, right: editorElemRight } = anchorElem.getBoundingClientRect();
         const { y, right } = codeDOMNode.getBoundingClientRect();
         setLang(_lang);
         setShown(true);
@@ -108,7 +98,7 @@ function CodeActionMenuContainer({
   useEffect(() => {
     return editor.registerMutationListener(
       CodeNode,
-      (mutations) => {
+      mutations => {
         editor.getEditorState().read(() => {
           for (const [key, type] of mutations) {
             switch (type) {
@@ -134,22 +124,18 @@ function CodeActionMenuContainer({
   const normalizedLang = normalizeCodeLang(lang);
   const codeFriendlyName = getLanguageFriendlyName(lang);
 
+  if (!isShown) {
+    return null;
+  }
+
   return (
-    <>
-      {isShown ? (
-        <div className="code-action-menu-container" style={{ ...position }}>
-          <div className="code-highlight-language">{codeFriendlyName}</div>
-          <CopyButton editor={editor} getCodeDOMNode={getCodeDOMNode} />
-          {canBePrettier(normalizedLang) ? (
-            <PrettierButton
-              editor={editor}
-              getCodeDOMNode={getCodeDOMNode}
-              lang={normalizedLang}
-            />
-          ) : null}
-        </div>
+    <div className="code-action-menu-container" style={{ ...position }}>
+      <div className="code-highlight-language">{codeFriendlyName}</div>
+      <CopyButton editor={editor} getCodeDOMNode={getCodeDOMNode} />
+      {canBePrettier(normalizedLang) ? (
+        <PrettierButton editor={editor} getCodeDOMNode={getCodeDOMNode} lang={normalizedLang} />
       ) : null}
-    </>
+    </div>
   );
 }
 
@@ -160,13 +146,8 @@ function getMouseInfo(event: MouseEvent): {
   const target = event.target;
 
   if (isHTMLElement(target)) {
-    const codeDOMNode = target.closest<HTMLElement>(
-      "code.PlaygroundEditorTheme__code",
-    );
-    const isOutside = !(
-      codeDOMNode ||
-      target.closest<HTMLElement>("div.code-action-menu-container")
-    );
+    const codeDOMNode = target.closest<HTMLElement>("code.PlaygroundEditorTheme__code");
+    const isOutside = !(codeDOMNode || target.closest<HTMLElement>("div.code-action-menu-container"));
 
     return { codeDOMNode, isOutside };
   } else {
@@ -174,13 +155,10 @@ function getMouseInfo(event: MouseEvent): {
   }
 }
 
-export default function CodeActionMenuPlugin({
-                                               anchorElem = document.body,
-                                             }: {
+export const CodeActionMenuPlugin = ({
+  anchorElem = document.body,
+}: {
   anchorElem?: HTMLElement;
-}): ReactPortal | null {
-  return createPortal(
-    <CodeActionMenuContainer anchorElem={anchorElem} />,
-    anchorElem,
-  );
-}
+}): ReactPortal | null => {
+  return createPortal(<CodeActionMenuContainer anchorElem={anchorElem} />, anchorElem);
+};

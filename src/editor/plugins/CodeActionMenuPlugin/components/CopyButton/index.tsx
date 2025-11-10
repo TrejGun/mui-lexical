@@ -8,15 +8,16 @@
 import { $isCodeNode } from "@lexical/code";
 import { $getNearestNodeFromDOMNode, $getSelection, $setSelection, LexicalEditor } from "lexical";
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 import { useDebounce } from "../../utils";
 
-interface Props {
+interface ICopyButtonProps {
   editor: LexicalEditor;
   getCodeDOMNode: () => HTMLElement | null;
 }
 
-export function CopyButton({ editor, getCodeDOMNode }: Props) {
+export const CopyButton = ({ editor, getCodeDOMNode }: ICopyButtonProps) => {
   const [isCopyCompleted, setCopyCompleted] = useState<boolean>(false);
 
   const removeSuccessIcon = useDebounce(() => {
@@ -53,12 +54,8 @@ export function CopyButton({ editor, getCodeDOMNode }: Props) {
   }
 
   return (
-    <button className="menu-item" onClick={handleClick} aria-label="copy">
-      {isCopyCompleted ? (
-        <i className="format success" />
-      ) : (
-        <i className="format copy" />
-      )}
-    </button>
+    <Button className="menu-item" onClick={handleClick} aria-label="copy">
+      {isCopyCompleted ? <i className="format success" /> : <i className="format copy" />}
+    </Button>
   );
-}
+};

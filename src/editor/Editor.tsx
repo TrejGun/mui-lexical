@@ -24,7 +24,7 @@ import { CAN_USE_DOM } from "@lexical/utils";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 
 import { SharedHistoryContext, useSharedHistoryContext, ToolbarContext } from "./context";
-import CodeActionMenuPlugin from "./plugins/CodeActionMenuPlugin";
+import { CodeActionMenuPlugin } from "./plugins";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ComponentPickerPlugin from "./plugins/ComponentPickerPlugin";
 import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
