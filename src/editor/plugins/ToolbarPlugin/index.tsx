@@ -44,11 +44,8 @@ import {
   UNDO_COMMAND,
 } from "lexical";
 
-import {
-  blockTypeToBlockName,
-  useToolbarState,
-} from "../../context/ToolbarContext";
-import useModal from "../../hooks/useModal";
+import { blockTypeToBlockName, useToolbarState } from "../../context";
+import { useModal } from "../../hooks";
 import DropDown, { DropDownItem } from "../../ui/DropDown";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
@@ -70,9 +67,7 @@ import { InsertVideoDialog } from "../VideoPlugin";
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
 
-  for (const [lang, friendlyName] of Object.entries(
-    CODE_LANGUAGE_FRIENDLY_NAME_MAP,
-  )) {
+  for (const [lang, friendlyName] of Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP)) {
     options.push([lang, friendlyName]);
   }
 
@@ -107,9 +102,7 @@ function BlockFormatDropDown({
       buttonAriaLabel="Formatting options for text style"
     >
       <DropDownItem
-        className={
-          "item wide " + dropDownActiveClass(blockType === "paragraph")
-        }
+        className={"item wide " + dropDownActiveClass(blockType === "paragraph")}
         onClick={() => formatParagraph(editor)}
       >
         <div className="icon-text-container">
@@ -236,7 +229,7 @@ function Divider(): JSX.Element {
   return <div className="divider" />;
 }
 
-export default function ToolbarPlugin({
+export const ToolbarPlugin = ({
   editor,
   activeEditor,
   setActiveEditor,
@@ -246,10 +239,8 @@ export default function ToolbarPlugin({
   activeEditor: LexicalEditor;
   setActiveEditor: Dispatch<LexicalEditor>;
   setIsLinkEditMode: Dispatch<boolean>;
-}): JSX.Element {
-  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
-    null,
-  );
+}): JSX.Element => {
+  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(null);
   const [modal, showModal] = useModal();
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const { toolbarState, updateToolbarState } = useToolbarState();
@@ -262,9 +253,7 @@ export default function ToolbarPlugin({
           const rootElement = activeEditor.getRootElement();
           updateToolbarState(
             "isImageCaption",
-            !!rootElement?.parentElement?.classList.contains(
-              "image-caption-container",
-            ),
+            !!rootElement?.parentElement?.classList.contains("image-caption-container"),
           );
         } else {
           updateToolbarState("isImageCaption", false);
@@ -274,7 +263,7 @@ export default function ToolbarPlugin({
         let element =
           anchorNode.getKey() === "root"
             ? anchorNode
-            : $findMatchingParent(anchorNode, (e) => {
+            : $findMatchingParent(anchorNode, e => {
                 const parent = e.getParent();
                 return parent !== null && $isRootOrShadowRoot(parent);
               });
@@ -304,31 +293,18 @@ export default function ToolbarPlugin({
         if (elementDOM !== null) {
           setSelectedElementKey(elementKey);
           if ($isListNode(element)) {
-            const parentList = $getNearestNodeOfType<ListNode>(
-              anchorNode,
-              ListNode,
-            );
-            const type = parentList
-              ? parentList.getListType()
-              : element.getListType();
+            const parentList = $getNearestNodeOfType<ListNode>(anchorNode, ListNode);
+            const type = parentList ? parentList.getListType() : element.getListType();
 
             updateToolbarState("blockType", type);
           } else {
-            const type = $isHeadingNode(element)
-              ? element.getTag()
-              : element.getType();
+            const type = $isHeadingNode(element) ? element.getTag() : element.getType();
             if (type in blockTypeToBlockName) {
-              updateToolbarState(
-                "blockType",
-                type as keyof typeof blockTypeToBlockName,
-              );
+              updateToolbarState("blockType", type as keyof typeof blockTypeToBlockName);
             }
             if ($isCodeNode(element)) {
               const language = element.getLanguage()!;
-              updateToolbarState(
-                "codeLanguage",
-                language ? CODE_LANGUAGE_MAP[language] || language : "",
-              );
+              updateToolbarState("codeLanguage", language ? CODE_LANGUAGE_MAP[language] || language : "");
               return;
             }
           }
@@ -338,8 +314,7 @@ export default function ToolbarPlugin({
           // If node is a link, we need to fetch the parent paragraph node to set format
           matchingParent = $findMatchingParent(
             node,
-            (parentNode) =>
-              $isElementNode(parentNode) && !parentNode.isInline(),
+            parentNode => $isElementNode(parentNode) && !parentNode.isInline(),
           );
         }
 
@@ -358,10 +333,7 @@ export default function ToolbarPlugin({
         updateToolbarState("isBold", selection.hasFormat("bold"));
         updateToolbarState("isItalic", selection.hasFormat("italic"));
         updateToolbarState("isUnderline", selection.hasFormat("underline"));
-        updateToolbarState(
-          "isStrikethrough",
-          selection.hasFormat("strikethrough"),
-        );
+        updateToolbarState("isStrikethrough", selection.hasFormat("strikethrough"));
         updateToolbarState("isHighlight", selection.hasFormat("highlight"));
         updateToolbarState("isCode", selection.hasFormat("code"));
       }
@@ -388,7 +360,7 @@ export default function ToolbarPlugin({
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerEditableListener((editable) => {
+      editor.registerEditableListener(editable => {
         setIsEditable(editable);
       }),
       activeEditor.registerUpdateListener(({ editorState }) => {
@@ -398,7 +370,7 @@ export default function ToolbarPlugin({
       }),
       activeEditor.registerCommand<boolean>(
         CAN_UNDO_COMMAND,
-        (payload) => {
+        payload => {
           updateToolbarState("canUndo", payload);
           return false;
         },
@@ -406,7 +378,7 @@ export default function ToolbarPlugin({
       ),
       activeEditor.registerCommand<boolean>(
         CAN_REDO_COMMAND,
-        (payload) => {
+        payload => {
           updateToolbarState("canRedo", payload);
           return false;
         },
@@ -418,10 +390,7 @@ export default function ToolbarPlugin({
   const insertLink = useCallback(() => {
     if (!toolbarState.isLink) {
       setIsLinkEditMode(true);
-      activeEditor.dispatchCommand(
-        TOGGLE_LINK_COMMAND,
-        sanitizeUrl("https://"),
-      );
+      activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
     } else {
       setIsLinkEditMode(false);
       activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
@@ -472,14 +441,9 @@ export default function ToolbarPlugin({
         <i className="format redo" />
       </button>
       <Divider />
-      {toolbarState.blockType in blockTypeToBlockName &&
-        activeEditor === editor && (
-          <BlockFormatDropDown
-            disabled={!isEditable}
-            blockType={toolbarState.blockType}
-            editor={activeEditor}
-          />
-        )}
+      {toolbarState.blockType in blockTypeToBlockName && activeEditor === editor && (
+        <BlockFormatDropDown disabled={!isEditable} blockType={toolbarState.blockType} editor={activeEditor} />
+      )}
       <Divider />
       {toolbarState.blockType === "code" ? (
         <DropDown
@@ -491,9 +455,7 @@ export default function ToolbarPlugin({
           {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
             return (
               <DropDownItem
-                className={`item ${dropDownActiveClass(
-                  value === toolbarState.codeLanguage,
-                )}`}
+                className={`item ${dropDownActiveClass(value === toolbarState.codeLanguage)}`}
                 onClick={() => onCodeLanguageSelect(value)}
                 key={value}
               >
@@ -509,9 +471,7 @@ export default function ToolbarPlugin({
             onClick={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
             }}
-            className={
-              "toolbar-item spaced " + (toolbarState.isBold ? "active" : "")
-            }
+            className={"toolbar-item spaced " + (toolbarState.isBold ? "active" : "")}
             title={`Bold (${SHORTCUTS.BOLD})`}
             type="button"
             aria-label={`Format text as bold. Shortcut: ${SHORTCUTS.BOLD}`}
@@ -523,9 +483,7 @@ export default function ToolbarPlugin({
             onClick={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
             }}
-            className={
-              "toolbar-item spaced " + (toolbarState.isItalic ? "active" : "")
-            }
+            className={"toolbar-item spaced " + (toolbarState.isItalic ? "active" : "")}
             title={`Italic (${SHORTCUTS.ITALIC})`}
             type="button"
             aria-label={`Format text as italics. Shortcut: ${SHORTCUTS.ITALIC}`}
@@ -537,10 +495,7 @@ export default function ToolbarPlugin({
             onClick={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
             }}
-            className={
-              "toolbar-item spaced " +
-              (toolbarState.isUnderline ? "active" : "")
-            }
+            className={"toolbar-item spaced " + (toolbarState.isUnderline ? "active" : "")}
             title={`Underline (${SHORTCUTS.UNDERLINE})`}
             type="button"
             aria-label={`Format text to underlined. Shortcut: ${SHORTCUTS.UNDERLINE}`}
@@ -550,15 +505,9 @@ export default function ToolbarPlugin({
           <button
             disabled={!isEditable}
             onClick={() => {
-              activeEditor.dispatchCommand(
-                FORMAT_TEXT_COMMAND,
-                "strikethrough",
-              );
+              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
             }}
-            className={
-              "toolbar-item spaced " +
-              (toolbarState.isStrikethrough ? "active" : "")
-            }
+            className={"toolbar-item spaced " + (toolbarState.isStrikethrough ? "active" : "")}
             title={`Strikethrough (${SHORTCUTS.STRIKETHROUGH})`}
             type="button"
             aria-label={`Format text to strikethrough. Shortcut: ${SHORTCUTS.STRIKETHROUGH}`}
@@ -581,9 +530,7 @@ export default function ToolbarPlugin({
               onClick={() => {
                 activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
               }}
-              className={
-                "toolbar-item spaced " + (toolbarState.isCode ? "active" : "")
-              }
+              className={"toolbar-item spaced " + (toolbarState.isCode ? "active" : "")}
               title={`Insert code block (${SHORTCUTS.INSERT_CODE_BLOCK})`}
               type="button"
               aria-label="Insert code block"
@@ -594,9 +541,7 @@ export default function ToolbarPlugin({
           <button
             disabled={!isEditable}
             onClick={insertLink}
-            className={
-              "toolbar-item spaced " + (toolbarState.isLink ? "active" : "")
-            }
+            className={"toolbar-item spaced " + (toolbarState.isLink ? "active" : "")}
             aria-label="Insert link"
             title={`Insert link (${SHORTCUTS.INSERT_LINK})`}
             type="button"
@@ -608,10 +553,7 @@ export default function ToolbarPlugin({
               <Divider />
               <button
                 onClick={() => {
-                  activeEditor.dispatchCommand(
-                    INSERT_HORIZONTAL_RULE_COMMAND,
-                    undefined,
-                  );
+                  activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
                 }}
                 className={"toolbar-item spaced"}
                 title="Horizontal Rule"
@@ -622,11 +564,8 @@ export default function ToolbarPlugin({
               </button>
               <button
                 onClick={() => {
-                  showModal("Insert Image", (onClose) => (
-                    <InsertImageDialog
-                      activeEditor={activeEditor}
-                      onClose={onClose}
-                    />
+                  showModal("Insert Image", onClose => (
+                    <InsertImageDialog activeEditor={activeEditor} onClose={onClose} />
                   ));
                 }}
                 className={"toolbar-item spaced"}
@@ -638,11 +577,8 @@ export default function ToolbarPlugin({
               </button>
               <button
                 onClick={() => {
-                  showModal("Insert Video", (onClose) => (
-                    <InsertVideoDialog
-                      activeEditor={activeEditor}
-                      onClose={onClose}
-                    />
+                  showModal("Insert Video", onClose => (
+                    <InsertVideoDialog activeEditor={activeEditor} onClose={onClose} />
                   ));
                 }}
                 className={"toolbar-item spaced"}
@@ -654,11 +590,8 @@ export default function ToolbarPlugin({
               </button>
               <button
                 onClick={() => {
-                  showModal("Insert Table", (onClose) => (
-                    <InsertTableDialog
-                      activeEditor={activeEditor}
-                      onClose={onClose}
-                    />
+                  showModal("Insert Table", onClose => (
+                    <InsertTableDialog activeEditor={activeEditor} onClose={onClose} />
                   ));
                 }}
                 className={"toolbar-item spaced"}
@@ -676,4 +609,4 @@ export default function ToolbarPlugin({
       {modal}
     </div>
   );
-}
+};

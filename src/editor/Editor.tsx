@@ -38,8 +38,8 @@ import {
   TableActionMenuPlugin as TableCellActionMenuPlugin,
   TableCellResizerPlugin as TableCellResizer,
   TableHoverActionsPlugin,
+  ToolbarPlugin,
 } from "./plugins";
-import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import ContentEditable from "./ui/ContentEditable";
 import { VideoPlugin } from "./plugins/VideoPlugin";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
