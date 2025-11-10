@@ -36,8 +36,8 @@ import {
   MaxLengthPlugin,
   ShortcutsPlugin,
   TableActionMenuPlugin as TableCellActionMenuPlugin,
+  TableCellResizerPlugin as TableCellResizer,
 } from "./plugins";
-import TableCellResizer from "./plugins/TableCellResizer";
 import TableHoverActionsPlugin from "./plugins/TableHoverActionsPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import ContentEditable from "./ui/ContentEditable";
