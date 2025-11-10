@@ -39,9 +39,9 @@ import {
   TableCellResizerPlugin as TableCellResizer,
   TableHoverActionsPlugin,
   ToolbarPlugin,
+  VideoPlugin,
 } from "./plugins";
 import ContentEditable from "./ui/ContentEditable";
-import { VideoPlugin } from "./plugins/VideoPlugin";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 

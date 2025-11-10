@@ -6,9 +6,7 @@
  *
  */
 
-import type { JSX } from "react";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-
+import { JSX, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { INSERT_TABLE_COMMAND, TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { EditorThemeClasses, Klass, LexicalEditor, LexicalNode } from "lexical";
@@ -23,14 +21,11 @@ export type InsertTableCommandPayload = Readonly<{
   includeHeaders?: boolean;
 }>;
 
-export type CellContextShape = {
+export interface ICellContextShape {
   cellEditorConfig: null | CellEditorConfig;
   cellEditorPlugins: null | JSX.Element | Array<JSX.Element>;
-  set: (
-    cellEditorConfig: null | CellEditorConfig,
-    cellEditorPlugins: null | JSX.Element | Array<JSX.Element>,
-  ) => void;
-};
+  set: (cellEditorConfig: null | CellEditorConfig, cellEditorPlugins: null | JSX.Element | Array<JSX.Element>) => void;
+}
 
 export type CellEditorConfig = Readonly<{
   namespace: string;
@@ -40,7 +35,7 @@ export type CellEditorConfig = Readonly<{
   theme?: EditorThemeClasses;
 }>;
 
-export const CellContext = createContext<CellContextShape>({
+export const CellContext = createContext<ICellContextShape>({
   cellEditorConfig: null,
   cellEditorPlugins: null,
   set: () => {
@@ -67,16 +62,17 @@ export function TableContext({ children }: { children: JSX.Element }) {
           },
         }),
         [contextValue.cellEditorConfig, contextValue.cellEditorPlugins],
-      )}>
+      )}
+    >
       {children}
     </CellContext.Provider>
   );
 }
 
 export function InsertTableDialog({
-                                    activeEditor,
-                                    onClose,
-                                  }: {
+  activeEditor,
+  onClose,
+}: {
   activeEditor: LexicalEditor;
   onClose: () => void;
 }): JSX.Element {
@@ -130,24 +126,22 @@ export function InsertTableDialog({
   );
 }
 
-export function TablePlugin({
-                              cellEditorConfig,
-                              children,
-                            }: {
+export const TablePlugin = ({
+  cellEditorConfig,
+  children,
+}: {
   cellEditorConfig: CellEditorConfig;
   children: JSX.Element | Array<JSX.Element>;
-}): JSX.Element | null {
+}): JSX.Element | null => {
   const [editor] = useLexicalComposerContext();
   const cellContext = useContext(CellContext);
   useEffect(() => {
     if (!editor.hasNodes([TableNode, TableRowNode, TableCellNode])) {
-      throw new Error(
-        "TablePlugin: TableNode, TableRowNode, or TableCellNode is not registered on editor",
-      );
+      throw new Error("TablePlugin: TableNode, TableRowNode, or TableCellNode is not registered on editor");
     }
   }, [editor]);
   useEffect(() => {
     cellContext.set(cellEditorConfig, children);
   }, [cellContext, cellEditorConfig, children]);
   return null;
-}
+};
