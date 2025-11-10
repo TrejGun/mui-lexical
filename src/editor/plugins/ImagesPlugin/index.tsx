@@ -6,8 +6,7 @@
  *
  */
 
-import type { JSX } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $wrapNodeInElement, mergeRegister } from "@lexical/utils";
 import {
@@ -31,26 +30,16 @@ import {
   LexicalEditor,
 } from "lexical";
 
-import {
-  $createImageNode,
-  $isImageNode,
-  ImageNode,
-  IImagePayload,
-} from "../../nodes/ImageNode";
+import { $createImageNode, $isImageNode, ImageNode, IImagePayload } from "../../nodes/ImageNode";
 import Button from "../../ui/Button";
 import { DialogActions } from "../../ui/Dialog";
 import TextInput from "../../ui/TextInput";
 
 export type InsertImagePayload = Readonly<IImagePayload>;
 
-export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =
-  createCommand("INSERT_IMAGE_COMMAND");
+export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand("INSERT_IMAGE_COMMAND");
 
-export function InsertImageUriDialogBody({
-  onClick,
-}: {
-  onClick: (payload: InsertImagePayload) => void;
-}) {
+export function InsertImageUriDialogBody({ onClick }: { onClick: (payload: InsertImagePayload) => void }) {
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
 
@@ -73,11 +62,7 @@ export function InsertImageUriDialogBody({
         data-test-id="image-modal-alt-text-input"
       />
       <DialogActions>
-        <Button
-          data-test-id="image-modal-confirm-btn"
-          disabled={isDisabled}
-          onClick={() => onClick({ altText, src })}
-        >
+        <Button data-test-id="image-modal-confirm-btn" disabled={isDisabled} onClick={() => onClick({ altText, src })}>
           Confirm
         </Button>
       </DialogActions>
@@ -113,11 +98,7 @@ export function InsertImageDialog({
   return <InsertImageUriDialogBody onClick={onClick} />;
 }
 
-export default function ImagesPlugin({
-  captionsEnabled,
-}: {
-  captionsEnabled?: boolean;
-}): JSX.Element | null {
+export const ImagesPlugin = ({ captionsEnabled }: { captionsEnabled?: boolean }): JSX.Element | null => {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -128,7 +109,7 @@ export default function ImagesPlugin({
     return mergeRegister(
       editor.registerCommand<InsertImagePayload>(
         INSERT_IMAGE_COMMAND,
-        (payload) => {
+        payload => {
           const imageNode = $createImageNode(payload);
           $insertNodes([imageNode]);
           if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
@@ -141,21 +122,21 @@ export default function ImagesPlugin({
       ),
       editor.registerCommand<DragEvent>(
         DRAGSTART_COMMAND,
-        (event) => {
+        event => {
           return $onDragStart(event);
         },
         COMMAND_PRIORITY_HIGH,
       ),
       editor.registerCommand<DragEvent>(
         DRAGOVER_COMMAND,
-        (event) => {
+        event => {
           return $onDragover(event);
         },
         COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand<DragEvent>(
         DROP_COMMAND,
-        (event) => {
+        event => {
           return $onDrop(event, editor);
         },
         COMMAND_PRIORITY_HIGH,
@@ -164,10 +145,9 @@ export default function ImagesPlugin({
   }, [captionsEnabled, editor]);
 
   return null;
-}
+};
 
-const TRANSPARENT_IMAGE =
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const TRANSPARENT_IMAGE = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 const img = document.createElement("img");
 img.src = TRANSPARENT_IMAGE;
 

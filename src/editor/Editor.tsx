@@ -30,9 +30,9 @@ import {
   ComponentPickerMenuPlugin as ComponentPickerPlugin,
   FloatingLinkEditorPlugin,
   FloatingTextFormatToolbarPlugin,
+  ImagesPlugin,
+  LinkPlugin,
 } from "./plugins";
-import ImagesPlugin from "./plugins/ImagesPlugin";
-import LinkPlugin from "./plugins/LinkPlugin";
 import MarkdownShortcutPlugin from "./plugins/MarkdownShortcutPlugin";
 import { MaxLengthPlugin } from "./plugins/MaxLengthPlugin";
 import ShortcutsPlugin from "./plugins/ShortcutsPlugin";

@@ -7,12 +7,11 @@
  */
 
 import type { JSX } from "react";
-
 import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 
 import { validateUrl } from "../../utils/url";
 
-export default function LinkPlugin(): JSX.Element {
+export const LinkPlugin = (): JSX.Element => {
   return (
     <LexicalLinkPlugin
       validateUrl={validateUrl}
@@ -22,4 +21,4 @@ export default function LinkPlugin(): JSX.Element {
       }}
     />
   );
-}
+};
