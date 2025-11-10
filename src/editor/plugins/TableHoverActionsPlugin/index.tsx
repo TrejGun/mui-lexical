@@ -6,9 +6,7 @@
  *
  */
 
-import type { JSX, ReactPortal } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
-
+import { useEffect, useMemo, useRef, useState, JSX, ReactPortal } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import {
@@ -22,7 +20,6 @@ import {
   getTableElement,
   TableCellNode,
   TableNode,
-  TableRowNode,
 } from "@lexical/table";
 import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import { $getNearestNodeFromDOMNode, EditorThemeClasses, isHTMLElement, NodeKey } from "lexical";
@@ -33,17 +30,12 @@ import { useDebounce } from "../CodeActionMenuPlugin/utils";
 
 const BUTTON_WIDTH_PX = 20;
 
-function TableHoverActionsContainer({
-                                      anchorElem,
-                                    }: {
-  anchorElem: HTMLElement;
-}): JSX.Element | null {
+function TableHoverActionsContainer({ anchorElem }: { anchorElem: HTMLElement }): JSX.Element | null {
   const [editor, { getTheme }] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [isShownRow, setShownRow] = useState<boolean>(false);
   const [isShownColumn, setShownColumn] = useState<boolean>(false);
-  const [shouldListenMouseMove, setShouldListenMouseMove] =
-    useState<boolean>(false);
+  const [shouldListenMouseMove, setShouldListenMouseMove] = useState<boolean>(false);
   const [position, setPosition] = useState({});
   const tableSetRef = useRef<Set<NodeKey>>(new Set());
   const tableCellDOMNodeRef = useRef<HTMLElement | null>(null);
@@ -73,28 +65,19 @@ function TableHoverActionsContainer({
           const maybeTableCell = $getNearestNodeFromDOMNode(tableDOMNode);
 
           if ($isTableCellNode(maybeTableCell)) {
-            const table = $findMatchingParent(maybeTableCell, (node) =>
-              $isTableNode(node),
-            );
+            const table = $findMatchingParent(maybeTableCell, node => $isTableNode(node));
             if (!$isTableNode(table)) {
               return;
             }
 
-            tableDOMElement = getTableElement(
-              table,
-              editor.getElementByKey(table.getKey()),
-            );
+            tableDOMElement = getTableElement(table, editor.getElementByKey(table.getKey()));
 
             if (tableDOMElement) {
               const rowCount = table.getChildrenSize();
-              const colCount = (
-                (table as TableNode).getChildAtIndex(0) as TableRowNode
-              )?.getChildrenSize();
+              const colCount = table.getChildAtIndex(0)?.getChildrenSize();
 
-              const rowIndex =
-                $getTableRowIndexFromTableCellNode(maybeTableCell);
-              const colIndex =
-                $getTableColumnIndexFromTableCellNode(maybeTableCell);
+              const rowIndex = $getTableRowIndexFromTableCellNode(maybeTableCell);
+              const colIndex = $getTableColumnIndexFromTableCellNode(maybeTableCell);
 
               if (rowIndex === rowCount - 1) {
                 hoveredRowNode = maybeTableCell;
@@ -118,34 +101,21 @@ function TableHoverActionsContainer({
         } = (tableDOMElement as HTMLTableElement).getBoundingClientRect();
 
         // Adjust for using the scrollable table container
-        const parentElement = (tableDOMElement as HTMLTableElement)
-          .parentElement;
+        const parentElement = (tableDOMElement as HTMLTableElement).parentElement;
         let tableHasScroll = false;
-        if (
-          parentElement?.classList.contains(
-            "PlaygroundEditorTheme__tableScrollableWrapper",
-          )
-        ) {
-          tableHasScroll =
-            parentElement.scrollWidth > parentElement.clientWidth;
+        if (parentElement?.classList.contains("PlaygroundEditorTheme__tableScrollableWrapper")) {
+          tableHasScroll = parentElement.scrollWidth > parentElement.clientWidth;
         }
-        const { y: editorElemY, left: editorElemLeft } =
-          anchorElem.getBoundingClientRect();
+        const { y: editorElemY, left: editorElemLeft } = anchorElem.getBoundingClientRect();
 
         if (hoveredRowNode) {
           setShownColumn(false);
           setShownRow(true);
           setPosition({
             height: BUTTON_WIDTH_PX,
-            left:
-              tableHasScroll && parentElement
-                ? parentElement.offsetLeft
-                : tableElemLeft - editorElemLeft,
+            left: tableHasScroll && parentElement ? parentElement.offsetLeft : tableElemLeft - editorElemLeft,
             top: tableElemBottom - editorElemY + 5,
-            width:
-              tableHasScroll && parentElement
-                ? parentElement.offsetWidth
-                : tableElemWidth,
+            width: tableHasScroll && parentElement ? parentElement.offsetWidth : tableElemWidth,
           });
         } else if (hoveredColumnNode) {
           setShownColumn(true);
@@ -191,7 +161,7 @@ function TableHoverActionsContainer({
     return mergeRegister(
       editor.registerMutationListener(
         TableNode,
-        (mutations) => {
+        mutations => {
           editor.getEditorState().read(
             () => {
               let resetObserver = false;
@@ -232,9 +202,7 @@ function TableHoverActionsContainer({
   const insertAction = (insertRow: boolean) => {
     editor.update(() => {
       if (tableCellDOMNodeRef.current) {
-        const maybeTableNode = $getNearestNodeFromDOMNode(
-          tableCellDOMNodeRef.current,
-        );
+        const maybeTableNode = $getNearestNodeFromDOMNode(tableCellDOMNodeRef.current);
         maybeTableNode?.selectEnd();
         if (insertRow) {
           $insertTableRowAtSelection();
@@ -254,11 +222,7 @@ function TableHoverActionsContainer({
   return (
     <>
       {isShownRow && (
-        <button
-          className={`${getTheme()?.tableAddRows}`}
-          style={{ ...position }}
-          onClick={() => insertAction(true)}
-        />
+        <button className={`${getTheme()?.tableAddRows}`} style={{ ...position }} onClick={() => insertAction(true)} />
       )}
       {isShownColumn && (
         <button
@@ -282,18 +246,12 @@ function getMouseInfo(
   const tableCellClass = getThemeSelector(getTheme, "tableCell");
 
   if (isHTMLElement(target)) {
-    const tableDOMNode = target.closest<HTMLElement>(
-      `td${tableCellClass}, th${tableCellClass}`,
-    );
+    const tableDOMNode = target.closest<HTMLElement>(`td${tableCellClass}, th${tableCellClass}`);
 
     const isOutside = !(
       tableDOMNode ||
-      target.closest<HTMLElement>(
-        `button${getThemeSelector(getTheme, "tableAddRows")}`,
-      ) ||
-      target.closest<HTMLElement>(
-        `button${getThemeSelector(getTheme, "tableAddColumns")}`,
-      ) ||
+      target.closest<HTMLElement>(`button${getThemeSelector(getTheme, "tableAddRows")}`) ||
+      target.closest<HTMLElement>(`button${getThemeSelector(getTheme, "tableAddColumns")}`) ||
       target.closest<HTMLElement>("div.TableCellResizer__resizer")
     );
 
@@ -303,17 +261,12 @@ function getMouseInfo(
   }
 }
 
-export default function TableHoverActionsPlugin({
-                                                  anchorElem = document.body,
-                                                }: {
+export const TableHoverActionsPlugin = ({
+  anchorElem = document.body,
+}: {
   anchorElem?: HTMLElement;
-}): ReactPortal | null {
+}): ReactPortal | null => {
   const isEditable = useLexicalEditable();
 
-  return isEditable
-    ? createPortal(
-      <TableHoverActionsContainer anchorElem={anchorElem} />,
-      anchorElem,
-    )
-    : null;
-}
+  return isEditable ? createPortal(<TableHoverActionsContainer anchorElem={anchorElem} />, anchorElem) : null;
+};

@@ -37,8 +37,8 @@ import {
   ShortcutsPlugin,
   TableActionMenuPlugin as TableCellActionMenuPlugin,
   TableCellResizerPlugin as TableCellResizer,
+  TableHoverActionsPlugin,
 } from "./plugins";
-import TableHoverActionsPlugin from "./plugins/TableHoverActionsPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import ContentEditable from "./ui/ContentEditable";
 import { VideoPlugin } from "./plugins/VideoPlugin";

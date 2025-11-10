@@ -13,3 +13,4 @@ export * from "./ShortcutsPlugin";
 export * from "./TabFocusPlugin";
 export * from "./TableActionMenuPlugin";
 export * from "./TableCellResizer";
+export * from "./TableHoverActionsPlugin";
