@@ -24,8 +24,11 @@ import { CAN_USE_DOM } from "@lexical/utils";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 
 import { SharedHistoryContext, useSharedHistoryContext, ToolbarContext } from "./context";
-import { CodeActionMenuPlugin, CodeHighlightPlugin } from "./plugins";
-import ComponentPickerPlugin from "./plugins/ComponentPickerPlugin";
+import {
+  CodeActionMenuPlugin,
+  CodeHighlightPlugin,
+  ComponentPickerMenuPlugin as ComponentPickerPlugin,
+} from "./plugins";
 import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 import FloatingTextFormatToolbarPlugin from "./plugins/FloatingTextFormatToolbarPlugin";
 import ImagesPlugin from "./plugins/ImagesPlugin";

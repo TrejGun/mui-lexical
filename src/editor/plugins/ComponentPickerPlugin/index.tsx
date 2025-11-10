@@ -6,9 +6,7 @@
  *
  */
 
-import type { JSX } from "react";
-import { useCallback, useMemo, useState } from "react";
-
+import { useCallback, useMemo, useState, type JSX } from "react";
 import { $createCodeNode } from "@lexical/code";
 import { INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -31,7 +29,7 @@ import {
 } from "lexical";
 import * as ReactDOM from "react-dom";
 
-import useModal from "../../hooks/useModal";
+import { useModal } from "../../hooks";
 import { InsertImageDialog } from "../ImagesPlugin";
 import { InsertTableDialog } from "../TablePlugin";
 
@@ -66,12 +64,12 @@ class ComponentPickerOption extends MenuOption {
 }
 
 function ComponentPickerMenuItem({
-                                   index,
-                                   isSelected,
-                                   onClick,
-                                   onMouseEnter,
-                                   option,
-                                 }: {
+  index,
+  isSelected,
+  onClick,
+  onMouseEnter,
+  option,
+}: {
   index: number;
   isSelected: boolean;
   onClick: () => void;
@@ -92,7 +90,8 @@ function ComponentPickerMenuItem({
       aria-selected={isSelected}
       id={"typeahead-item-" + index}
       onMouseEnter={onMouseEnter}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {option.icon}
       <span className="text">{option.title}</span>
     </li>
@@ -106,22 +105,19 @@ function getDynamicOptions(editor: LexicalEditor, queryString: string) {
     return options;
   }
 
-  const tableMatch = queryString.match(/^([1-9]\d?)(?:x([1-9]\d?)?)?$/);
+  const tableMatch = /^([1-9]\d?)(?:x([1-9]\d?)?)?$/.exec(queryString);
 
   if (tableMatch !== null) {
     const rows = tableMatch[1];
-    const colOptions = tableMatch[2]
-      ? [tableMatch[2]]
-      : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(String);
+    const colOptions = tableMatch[2] ? [tableMatch[2]] : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(String);
 
     options.push(
       ...colOptions.map(
-        (columns) =>
+        columns =>
           new ComponentPickerOption(`${rows}x${columns} Table`, {
             icon: <i className="icon table" />,
             keywords: ["table"],
-            onSelect: () =>
-              editor.dispatchCommand(INSERT_TABLE_COMMAND, { columns, rows }),
+            onSelect: () => editor.dispatchCommand(INSERT_TABLE_COMMAND, { columns, rows }),
           }),
       ),
     );
@@ -146,7 +142,7 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
         }),
     }),
     ...([1, 2, 3, 4, 5, 6] as const).map(
-      (n) =>
+      n =>
         new ComponentPickerOption(`Heading ${n}`, {
           icon: <i className={`icon h${n}`} />,
           keywords: ["heading", "header", `h${n}`],
@@ -163,27 +159,22 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
       icon: <i className="icon table" />,
       keywords: ["table", "grid", "spreadsheet", "rows", "columns"],
       onSelect: () =>
-        showModal("Insert Table", (onClose) => (
-          <InsertTableDialog activeEditor={editor} onClose={onClose} />
-        )),
+        showModal("Insert Table", onClose => <InsertTableDialog activeEditor={editor} onClose={onClose} />),
     }),
     new ComponentPickerOption("Numbered List", {
       icon: <i className="icon number" />,
       keywords: ["numbered list", "ordered list", "ol"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined),
+      onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Bulleted List", {
       icon: <i className="icon bullet" />,
       keywords: ["bulleted list", "unordered list", "ul"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined),
+      onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Check List", {
       icon: <i className="icon check" />,
       keywords: ["check list", "todo list"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined),
+      onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Quote", {
       icon: <i className="icon quote" />,
@@ -219,30 +210,26 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
     new ComponentPickerOption("Divider", {
       icon: <i className="icon horizontal-rule" />,
       keywords: ["horizontal rule", "divider", "hr"],
-      onSelect: () =>
-        editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined),
+      onSelect: () => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined),
     }),
     new ComponentPickerOption("Image", {
       icon: <i className="icon image" />,
       keywords: ["image", "photo", "picture", "file"],
       onSelect: () =>
-        showModal("Insert Image", (onClose) => (
-          <InsertImageDialog activeEditor={editor} onClose={onClose} />
-        )),
+        showModal("Insert Image", onClose => <InsertImageDialog activeEditor={editor} onClose={onClose} />),
     }),
     ...(["left", "center", "right", "justify"] as const).map(
-      (alignment) =>
+      alignment =>
         new ComponentPickerOption(`Align ${alignment}`, {
           icon: <i className={`icon ${alignment}-align`} />,
           keywords: ["align", "justify", alignment],
-          onSelect: () =>
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment),
+          onSelect: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment),
         }),
     ),
   ];
 }
 
-export default function ComponentPickerMenuPlugin(): JSX.Element {
+export const ComponentPickerMenuPlugin = (): JSX.Element => {
   const [editor] = useLexicalComposerContext();
   const [modal, showModal] = useModal();
   const [queryString, setQueryString] = useState<string | null>(null);
@@ -262,11 +249,7 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
 
     return [
       ...getDynamicOptions(editor, queryString),
-      ...baseOptions.filter(
-        (option) =>
-          regex.test(option.title) ||
-          option.keywords.some((keyword) => regex.test(keyword)),
-      ),
+      ...baseOptions.filter(option => regex.test(option.title) || option.keywords.some(keyword => regex.test(keyword))),
     ];
   }, [editor, queryString, showModal]);
 
@@ -294,36 +277,33 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
         onSelectOption={onSelectOption}
         triggerFn={checkForTriggerMatch}
         options={options}
-        menuRenderFn={(
-          anchorElementRef,
-          { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
-        ) =>
+        menuRenderFn={(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) =>
           anchorElementRef.current && options.length
             ? ReactDOM.createPortal(
-              <div className="typeahead-popover component-picker-menu">
-                <ul>
-                  {options.map((option, i: number) => (
-                    <ComponentPickerMenuItem
-                      index={i}
-                      isSelected={selectedIndex === i}
-                      onClick={() => {
-                        setHighlightedIndex(i);
-                        selectOptionAndCleanUp(option);
-                      }}
-                      onMouseEnter={() => {
-                        setHighlightedIndex(i);
-                      }}
-                      key={option.key}
-                      option={option}
-                    />
-                  ))}
-                </ul>
-              </div>,
-              anchorElementRef.current,
-            )
+                <div className="typeahead-popover component-picker-menu">
+                  <ul>
+                    {options.map((option, i: number) => (
+                      <ComponentPickerMenuItem
+                        index={i}
+                        isSelected={selectedIndex === i}
+                        onClick={() => {
+                          setHighlightedIndex(i);
+                          selectOptionAndCleanUp(option);
+                        }}
+                        onMouseEnter={() => {
+                          setHighlightedIndex(i);
+                        }}
+                        key={option.key}
+                        option={option}
+                      />
+                    ))}
+                  </ul>
+                </div>,
+                anchorElementRef.current,
+              )
             : null
         }
       />
     </>
   );
-}
+};
