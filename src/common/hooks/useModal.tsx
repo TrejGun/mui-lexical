@@ -1,12 +1,10 @@
-"use client";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 
-import { useCallback, useMemo, useState } from "react";
+import { ModalWrapper as Modal } from "../../components/ui/Modal";
 
-import Modal from "../../components/ui/Modal";
-
-export default function useModal() {
+export const useModal = () => {
   const [modalContent, setModalContent] = useState<{
-    content: string;
+    content: ReactNode;
     title: string;
   } | null>(null);
 
@@ -27,10 +25,7 @@ export default function useModal() {
   }, [modalContent, onClose]);
 
   const showModal = useCallback(
-    (
-      title: string,
-      getContent: (fn: () => void) => string,
-    ) => {
+    (title: string, getContent: (onClose: () => void) => ReactNode) => {
       setModalContent({
         content: getContent(onClose),
         title,
@@ -40,4 +35,4 @@ export default function useModal() {
   );
 
   return [modal, showModal];
-}
+};

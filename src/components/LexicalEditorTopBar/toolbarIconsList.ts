@@ -1,23 +1,19 @@
-"use client";
-
-import {
-  CloudCircleOutlined,
-  CloudDone,
-  Code,
-  FormatAlignJustifyOutlined,
-  FormatAlignLeftOutlined,
-  FormatAlignRightOutlined,
-  FormatBoldOutlined,
-  FormatItalicOutlined,
-  FormatListBulleted,
-  FormatListNumbered,
-  FormatQuote,
-  FormatUnderlinedOutlined,
-  RedoOutlined,
-  StrikethroughSOutlined,
-  TextFields,
-  UndoOutlined,
-} from "@mui/icons-material";
+import CloudCircleOutlinedIcon from "@mui/icons-material/CloudCircleOutlined";
+import CloudDoneOutlinedIcon from "@mui/icons-material/CloudDoneOutlined";
+import CodeIcon from "@mui/icons-material/Code";
+import FormatAlignJustifyOutlinedIcon from "@mui/icons-material/FormatAlignJustifyOutlined";
+import FormatItalicOutlinedIcon from "@mui/icons-material/FormatItalicOutlined";
+import FormatAlignLeftOutlinedIcon from "@mui/icons-material/FormatAlignLeftOutlined";
+import FormatAlignRightOutlinedIcon from "@mui/icons-material/FormatAlignRightOutlined";
+import FormatBoldOutlinedIcon from "@mui/icons-material/FormatBoldOutlined";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import FormatUnderlinedOutlinedIcon from "@mui/icons-material/FormatUnderlinedOutlined";
+import RedoOutlinedIcon from "@mui/icons-material/RedoOutlined";
+import StrikethroughSOutlinedIcon from "@mui/icons-material/StrikethroughSOutlined";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
+import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 
 export const eventTypes = {
   paragraph: "paragraph",
@@ -43,68 +39,68 @@ export const eventTypes = {
 const pluginsList = [
   {
     id: 1,
-    Icon: TextFields,
+    Icon: TextFieldsIcon,
     event: eventTypes.paragraph,
   },
   {
     id: 2,
-    Icon: CloudCircleOutlined,
+    Icon: CloudCircleOutlinedIcon,
     event: eventTypes.h1,
   },
   {
     id: 3,
-    Icon: CloudDone,
+    Icon: CloudDoneOutlinedIcon,
     event: eventTypes.h2,
   },
   {
     id: 4,
-    Icon: FormatListBulleted,
+    Icon: FormatListBulletedIcon,
     event: eventTypes.ul,
   },
   {
     id: 5,
-    Icon: FormatListNumbered,
+    Icon: FormatListNumberedIcon,
     event: eventTypes.ol,
   },
   {
     id: 6,
-    Icon: FormatQuote,
+    Icon: FormatQuoteIcon,
     event: eventTypes.quote,
   },
 
   {
     id: 7,
-    Icon: Code,
+    Icon: CodeIcon,
     event: eventTypes.formatCode,
   },
   {
     id: 8,
-    Icon: UndoOutlined,
+    Icon: UndoOutlinedIcon,
     event: eventTypes.formatUndo,
   },
   {
     id: 9,
-    Icon: RedoOutlined,
+    Icon: RedoOutlinedIcon,
     event: eventTypes.formatRedo,
   },
   {
     id: 10,
-    Icon: FormatBoldOutlined,
+    Icon: FormatBoldOutlinedIcon,
     event: eventTypes.formatBold,
   },
   {
     id: 11,
-    Icon: FormatItalicOutlined,
+    Icon: FormatItalicOutlinedIcon,
     event: eventTypes.formatItalic,
   },
   {
     id: 12,
-    Icon: FormatUnderlinedOutlined,
+    Icon: FormatUnderlinedOutlinedIcon,
     event: eventTypes.formatUnderline,
   },
   {
     id: 13,
-    Icon: StrikethroughSOutlined,
+    Icon: StrikethroughSOutlinedIcon,
     event: eventTypes.formatStrike,
   },
   // {
@@ -114,18 +110,18 @@ const pluginsList = [
   // },
   {
     id: 15,
-    Icon: FormatAlignLeftOutlined,
+    Icon: FormatAlignLeftOutlinedIcon,
     event: eventTypes.formatAlignLeft,
   },
 
   {
     id: 16,
-    Icon: FormatAlignJustifyOutlined,
+    Icon: FormatAlignJustifyOutlinedIcon,
     event: eventTypes.formatAlignCenter,
   },
   {
     id: 17,
-    Icon: FormatAlignRightOutlined,
+    Icon: FormatAlignRightOutlinedIcon,
     event: eventTypes.formatAlignRight,
   },
 ];

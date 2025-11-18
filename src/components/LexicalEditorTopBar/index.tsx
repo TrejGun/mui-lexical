@@ -1,5 +1,3 @@
-"use client";
-
 import { Grid } from "@mui/material";
 
 import useOnClickListener from "./useOnClickListener";
@@ -8,8 +6,7 @@ import toolbarIconsList from "./toolbarIconsList";
 export const LexicalEditorTopBar = () => {
   const { onClick, selectedEventTypes, blockType } = useOnClickListener();
 
-  const isIconSelected = (event: string) =>
-    selectedEventTypes.includes(event) || blockType.includes(event);
+  const isIconSelected = (event: string) => selectedEventTypes.includes(event) || blockType.includes(event);
 
   return (
     <Grid
@@ -26,10 +23,7 @@ export const LexicalEditorTopBar = () => {
             cursor: "pointer",
           }}
         >
-          <Icon
-            onClick={() => onClick(event)}
-            color={isIconSelected(event) ? "secondary" : undefined}
-          />
+          <Icon onClick={() => onClick(event)} color={isIconSelected(event) ? "secondary" : undefined} />
         </Grid>
       ))}
     </Grid>

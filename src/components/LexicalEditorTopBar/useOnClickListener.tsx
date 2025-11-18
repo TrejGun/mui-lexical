@@ -24,7 +24,7 @@ import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $isAtNodeEnd, $isParentElementRTL, $wrapNodes } from "@lexical/selection";
 
 import { eventTypes } from "./toolbarIconsList";
-import useModal from "../../common/hooks/useModal";
+import { useModal } from "../../common/hooks/useModal";
 
 const LowPriority = 1;
 
@@ -32,15 +32,11 @@ const useOnClickListener = () => {
   const [editor] = useLexicalComposerContext();
   const [modal, _showModal] = useModal();
   const [blockType, setBlockType] = useState("paragraph");
-  const [_selectedElementKey, setSelectedElementKey] = useState<string | null>(
-    null,
-  );
+  const [_selectedElementKey, setSelectedElementKey] = useState<string | null>(null);
   const [_isRTL, setIsRTL] = useState(false);
   const [isLink, setIsLink] = useState(false);
 
-  const [selectedEventTypes, setSelectedEventTypes] = useState<Array<string>>(
-    [],
-  );
+  const [selectedEventTypes, setSelectedEventTypes] = useState<Array<string>>([]);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -56,17 +52,14 @@ const useOnClickListener = () => {
           allSelectedEvents.push(event);
         }
       } else {
-        allSelectedEvents = allSelectedEvents.filter((ev) => ev !== event);
+        allSelectedEvents = allSelectedEvents.filter(ev => ev !== event);
       }
     };
 
     // range selection ( e.g like to bold only the particular area of the text)
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
-      const element =
-        anchorNode.getKey() === "root"
-          ? anchorNode
-          : anchorNode.getTopLevelElementOrThrow();
+      const element = anchorNode.getKey() === "root" ? anchorNode : anchorNode.getTopLevelElementOrThrow();
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
       if (elementDOM !== null) {
@@ -76,27 +69,16 @@ const useOnClickListener = () => {
           const type = parentList ? parentList.getTag() : element.getTag();
           setBlockType(type);
         } else {
-          const type = $isHeadingNode(element)
-            ? element.getTag()
-            : element.getType();
+          const type = $isHeadingNode(element) ? element.getTag() : element.getType();
 
           setBlockType(type);
         }
       }
 
       pushInEventTypesState(selection.hasFormat("bold"), eventTypes.formatBold);
-      pushInEventTypesState(
-        selection.hasFormat("italic"),
-        eventTypes.formatItalic,
-      );
-      pushInEventTypesState(
-        selection.hasFormat("underline"),
-        eventTypes.formatUnderline,
-      );
-      pushInEventTypesState(
-        selection.hasFormat("strikethrough"),
-        eventTypes.formatStrike,
-      );
+      pushInEventTypesState(selection.hasFormat("italic"), eventTypes.formatItalic);
+      pushInEventTypesState(selection.hasFormat("underline"), eventTypes.formatUnderline);
+      pushInEventTypesState(selection.hasFormat("strikethrough"), eventTypes.formatStrike);
       pushInEventTypesState(selection.hasFormat("code"), eventTypes.formatCode);
 
       setIsRTL($isParentElementRTL(selection));
@@ -111,16 +93,14 @@ const useOnClickListener = () => {
         setIsLink(true);
       } else {
         if (allSelectedEvents.includes(eventTypes.formatInsertLink)) {
-          allSelectedEvents = allSelectedEvents.filter(
-            (ev) => ev !== eventTypes.formatCode,
-          );
+          allSelectedEvents = allSelectedEvents.filter(ev => ev !== eventTypes.formatInsertLink);
         }
         setIsLink(false);
       }
 
       setSelectedEventTypes(allSelectedEvents);
     }
-  }, [editor]);
+  }, [editor, selectedEventTypes]);
 
   useEffect(() => {
     return mergeRegister(

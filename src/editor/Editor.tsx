@@ -37,7 +37,7 @@ import { LexicalContentEditable as ContentEditable } from "./ui/ContentEditable"
 import { PlaygroundNodes } from "./nodes";
 import { playgroundEditorTheme } from "./themes/playgroundEditorTheme";
 
-export const Editor = () => {
+const EditorContent = () => {
   const { historyState } = useSharedHistoryContext();
   const isEditable = useLexicalEditable();
   const placeholder = "Enter some rich text...";
@@ -70,6 +70,71 @@ export const Editor = () => {
   }, [isSmallWidthViewport]);
 
   return (
+    <SharedHistoryContext>
+      <ToolbarContext>
+        <ToolbarPlugin
+          editor={editor}
+          activeEditor={activeEditor}
+          setActiveEditor={setActiveEditor}
+          setIsLinkEditMode={setIsLinkEditMode}
+        />
+        <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
+        <div className={`editor-container`}>
+          <MaxLengthPlugin maxLength={30} />
+          <AutoFocusPlugin />
+          <ClearEditorPlugin />
+          <ComponentPickerPlugin />
+          <HistoryPlugin externalHistoryState={historyState} />
+          <RichTextPlugin
+            contentEditable={
+              <div className="editor-scroller">
+                <div className="editor" ref={onRef}>
+                  <ContentEditable placeholder={placeholder} />
+                </div>
+              </div>
+            }
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <MarkdownShortcutPlugin />
+          <CodeHighlightPlugin />
+          <ListPlugin />
+          <CheckListPlugin />
+          <TablePlugin hasCellMerge={false} hasCellBackgroundColor={false} hasHorizontalScroll={true} />
+          <TableCellResizer />
+          <ImagesPlugin />
+          <VideoPlugin />
+          <LinkPlugin />
+          <ClickableLinkPlugin disabled={isEditable} />
+          <HorizontalRulePlugin />
+          <TabIndentationPlugin maxIndent={7} />
+          {floatingAnchorElem && (
+            <>
+              <FloatingLinkEditorPlugin
+                anchorElem={floatingAnchorElem}
+                isLinkEditMode={isLinkEditMode}
+                setIsLinkEditMode={setIsLinkEditMode}
+              />
+              <TableCellActionMenuPlugin anchorElem={floatingAnchorElem} cellMerge={true} />
+            </>
+          )}
+          {floatingAnchorElem && !isSmallWidthViewport && (
+            <>
+              <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
+              <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
+              <FloatingTextFormatToolbarPlugin
+                anchorElem={floatingAnchorElem}
+                setIsLinkEditMode={setIsLinkEditMode}
+              />
+            </>
+          )}
+        </div>
+      </ToolbarContext>
+    </SharedHistoryContext>
+  );
+};
+
+export const Editor = () => {
+  return (
     <LexicalComposer
       initialConfig={{
         editorState: null,
@@ -81,66 +146,7 @@ export const Editor = () => {
         theme: playgroundEditorTheme,
       }}
     >
-      <SharedHistoryContext>
-        <ToolbarContext>
-          <ToolbarPlugin
-            editor={editor}
-            activeEditor={activeEditor}
-            setActiveEditor={setActiveEditor}
-            setIsLinkEditMode={setIsLinkEditMode}
-          />
-          <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
-          <div className={`editor-container`}>
-            <MaxLengthPlugin maxLength={30} />
-            <AutoFocusPlugin />
-            <ClearEditorPlugin />
-            <ComponentPickerPlugin />
-            <HistoryPlugin externalHistoryState={historyState} />
-            <RichTextPlugin
-              contentEditable={
-                <div className="editor-scroller">
-                  <div className="editor" ref={onRef}>
-                    <ContentEditable placeholder={placeholder} />
-                  </div>
-                </div>
-              }
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <MarkdownShortcutPlugin />
-            <CodeHighlightPlugin />
-            <ListPlugin />
-            <CheckListPlugin />
-            <TablePlugin hasCellMerge={false} hasCellBackgroundColor={false} hasHorizontalScroll={true} />
-            <TableCellResizer />
-            <ImagesPlugin />
-            <VideoPlugin />
-            <LinkPlugin />
-            <ClickableLinkPlugin disabled={isEditable} />
-            <HorizontalRulePlugin />
-            <TabIndentationPlugin maxIndent={7} />
-            {floatingAnchorElem && (
-              <>
-                <FloatingLinkEditorPlugin
-                  anchorElem={floatingAnchorElem}
-                  isLinkEditMode={isLinkEditMode}
-                  setIsLinkEditMode={setIsLinkEditMode}
-                />
-                <TableCellActionMenuPlugin anchorElem={floatingAnchorElem} cellMerge={true} />
-              </>
-            )}
-            {floatingAnchorElem && !isSmallWidthViewport && (
-              <>
-                <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
-                <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
-                <FloatingTextFormatToolbarPlugin
-                  anchorElem={floatingAnchorElem}
-                  setIsLinkEditMode={setIsLinkEditMode}
-                />
-              </>
-            )}
-          </div>
-        </ToolbarContext>
-      </SharedHistoryContext>
+      <EditorContent />
     </LexicalComposer>
   );
 };
