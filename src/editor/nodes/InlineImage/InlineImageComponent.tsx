@@ -23,6 +23,7 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { mergeRegister } from "@lexical/utils";
 
 import type { Position } from "./InlineImageNode";
+import { $isInlineImageNode } from "./InlineImageNode";
 import { useModal } from "../../hooks";
 import { LinkPlugin } from "../../plugins";
 import { Button, DialogActions, Select, TextInput, LexicalContentEditable as ContentEditable } from "../../ui";
@@ -87,10 +88,22 @@ export const UpdateInlineImageDialog = ({
   onClose: () => void;
 }): JSX.Element => {
   const editorState = activeEditor.getEditorState();
-  const node = editorState.read(() => $getNodeByKey(nodeKey)!);
-  const [altText, setAltText] = useState(node.getAltText());
-  const [showCaption, setShowCaption] = useState(node.getShowCaption());
-  const [position, setPosition] = useState<Position>(node.getPosition());
+  let initialAltText = "";
+  let initialShowCaption = false;
+  let initialPosition: Position = undefined;
+
+  editorState.read(() => {
+    const node = $getNodeByKey(nodeKey);
+    if ($isInlineImageNode(node)) {
+      initialAltText = node.getAltText();
+      initialShowCaption = node.getShowCaption();
+      initialPosition = node.getPosition();
+    }
+  });
+
+  const [altText, setAltText] = useState(initialAltText);
+  const [showCaption, setShowCaption] = useState(initialShowCaption);
+  const [position, setPosition] = useState<Position>(initialPosition);
 
   const handleShowCaptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setShowCaption(e.target.checked);
@@ -102,11 +115,12 @@ export const UpdateInlineImageDialog = ({
 
   const handleOnConfirm = () => {
     const payload = { altText, position, showCaption };
-    if (node) {
-      activeEditor.update(() => {
+    activeEditor.update(() => {
+      const node = $getNodeByKey(nodeKey);
+      if ($isInlineImageNode(node)) {
         node.update(payload);
-      });
-    }
+      }
+    });
     onClose();
   };
 

@@ -41,7 +41,7 @@ import {
 import { mergeRegister } from "@lexical/utils";
 import { createPortal } from "react-dom";
 
-import DropDown, { DropDownItem } from "../../ui/DropDown";
+import { DropDown, DropDownItem } from "../../ui/DropDown";
 
 type TableCellActionMenuProps = Readonly<{
   contextRef: { current: null | HTMLElement };

@@ -20,7 +20,7 @@ const TIME_RE = /(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/i;
 
 function parseTimeToSeconds(raw: string | null): number | undefined {
   if (!raw) {
-    return;
+    return undefined;
   }
   if (/^\d+$/.test(raw)) {
     return Number(raw);
@@ -29,7 +29,7 @@ function parseTimeToSeconds(raw: string | null): number | undefined {
     const parts = raw.split(":").map((p) => Number(p));
 
     if (parts.some(Number.isNaN)) {
-      return;
+      return undefined;
     }
     let seconds = 0;
     for (let i = 0; i < parts.length; i++) {
@@ -46,6 +46,8 @@ function parseTimeToSeconds(raw: string | null): number | undefined {
     const s = m[3] ? Number(m[3]) : 0;
     return h * 3600 + min * 60 + s;
   }
+  
+  return undefined;
 }
 
 function parseYoutube(url: URL): ParsedVideo | null {

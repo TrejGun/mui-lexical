@@ -11,9 +11,9 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { INSERT_TABLE_COMMAND, TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { EditorThemeClasses, Klass, LexicalEditor, LexicalNode } from "lexical";
 
-import Button from "../ui/Button";
+import { Button } from "../ui/Button";
 import { DialogActions } from "../ui/Dialog";
-import TextInput from "../ui/TextInput";
+import { TextInput } from "../ui/TextInput";
 
 export type InsertTableCommandPayload = Readonly<{
   columns: string;

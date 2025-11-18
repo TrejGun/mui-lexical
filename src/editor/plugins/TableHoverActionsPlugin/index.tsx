@@ -17,6 +17,7 @@ import {
   $insertTableRowAtSelection,
   $isTableCellNode,
   $isTableNode,
+  $isTableRowNode,
   getTableElement,
   TableCellNode,
   TableNode,
@@ -74,7 +75,8 @@ function TableHoverActionsContainer({ anchorElem }: { anchorElem: HTMLElement })
 
             if (tableDOMElement) {
               const rowCount = table.getChildrenSize();
-              const colCount = table.getChildAtIndex(0)?.getChildrenSize();
+              const firstRow = table.getFirstChild();
+              const colCount = $isTableRowNode(firstRow) ? firstRow.getChildrenSize() : 0;
 
               const rowIndex = $getTableRowIndexFromTableCellNode(maybeTableCell);
               const colIndex = $getTableColumnIndexFromTableCellNode(maybeTableCell);

@@ -25,7 +25,7 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { mergeRegister } from "@lexical/utils";
 
 import { useSharedHistoryContext } from "../../context";
-import brokenImage from "../images/image-broken.svg";
+import brokenImage from "../../images/image-broken.svg";
 import { LinkPlugin } from "../../plugins";
 import { LexicalContentEditable as ContentEditable, ImageResizer } from "../../ui";
 import { $isImageNode } from "./ImageNode";

@@ -13,8 +13,8 @@ import { INSERT_VIDEO_COMMAND } from "../../commands";
 import { parseVideoUrl } from "../../utils/parseVideoUrl";
 import { $createVideoNode } from "../../nodes/Video/VideoNode";
 import { DialogActions } from "../../ui/Dialog";
-import Button from "../../ui/Button";
-import TextInput from "../../ui/TextInput";
+import { Button } from "../../ui/Button";
+import { TextInput } from "../../ui/TextInput";
 
 export function InsertVideoDialog({
   activeEditor,

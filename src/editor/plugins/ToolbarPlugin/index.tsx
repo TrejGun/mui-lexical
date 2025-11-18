@@ -46,7 +46,7 @@ import {
 
 import { blockTypeToBlockName, useToolbarState } from "../../context";
 import { useModal } from "../../hooks";
-import DropDown, { DropDownItem } from "../../ui/DropDown";
+import { DropDown, DropDownItem } from "../../ui/DropDown";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
 import { InsertImageDialog } from "../ImagesPlugin";
