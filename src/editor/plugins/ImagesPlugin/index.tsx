@@ -30,7 +30,7 @@ import {
   LexicalEditor,
 } from "lexical";
 
-import { $createImageNode, $isImageNode, ImageNode, IImagePayload } from "../../nodes/ImageNode";
+import { $createImageNode, $isImageNode, ImageNode, IImagePayload } from "../../nodes/Image/ImageNode";
 import Button from "../../ui/Button";
 import { DialogActions } from "../../ui/Dialog";
 import TextInput from "../../ui/TextInput";

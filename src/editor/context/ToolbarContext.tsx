@@ -1,25 +1,9 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import type { JSX } from "react";
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import { ElementFormatType } from "lexical";
 
 export const MIN_ALLOWED_FONT_SIZE = 8;
 export const MAX_ALLOWED_FONT_SIZE = 72;
-export const DEFAULT_FONT_SIZE = 15;
 
 interface IRootTypeToRootName {
   root: "Root";
@@ -69,30 +53,20 @@ type ToolbarStateValue<Key extends ToolbarStateKey> = ToolbarState[Key];
 
 interface IContextShape {
   toolbarState: ToolbarState;
-  updateToolbarState<Key extends ToolbarStateKey>(
-    key: Key,
-    value: ToolbarStateValue<Key>,
-  ): void;
+  updateToolbarState<Key extends ToolbarStateKey>(key: Key, value: ToolbarStateValue<Key>): void;
 }
 
 const Context = createContext<IContextShape | undefined>(undefined);
 
-export const ToolbarContext = ({
-  children,
-}: {
-  children: ReactNode;
-}): JSX.Element => {
+export const ToolbarContext = ({ children }: { children: ReactNode }): JSX.Element => {
   const [toolbarState, setToolbarState] = useState(INITIAL_TOOLBAR_STATE);
 
-  const updateToolbarState = useCallback(
-    <Key extends ToolbarStateKey>(key: Key, value: ToolbarStateValue<Key>) => {
-      setToolbarState((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
-    },
-    [],
-  );
+  const updateToolbarState = useCallback(<Key extends ToolbarStateKey>(key: Key, value: ToolbarStateValue<Key>) => {
+    setToolbarState(prev => ({
+      ...prev,
+      [key]: value,
+    }));
+  }, []);
 
   const contextValue = useMemo(() => {
     return {

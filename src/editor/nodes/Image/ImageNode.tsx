@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -29,11 +21,10 @@ import {
   TextNode,
 } from "lexical";
 import type { JSX } from "react";
-import { lazy } from "react";
 import { HashtagNode } from "@lexical/hashtag";
 import { LinkNode } from "@lexical/link";
 
-const ImageComponent = lazy(() => import("./ImageComponent"));
+import { ImageComponent } from "./ImageComponent";
 
 export interface IImagePayload {
   altText: string;
@@ -112,14 +103,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       caption ||
       createEditor({
         namespace: "Playground/ImageNodeCaption",
-        nodes: [
-          RootNode,
-          TextNode,
-          LineBreakNode,
-          ParagraphNode,
-          LinkNode,
-          HashtagNode,
-        ],
+        nodes: [RootNode, TextNode, LineBreakNode, ParagraphNode, LinkNode, HashtagNode],
       });
     this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
   }
@@ -143,8 +127,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const { altText, height, width, maxWidth, src, showCaption } =
-      serializedNode;
+    const { altText, height, width, maxWidth, src, showCaption } = serializedNode;
     return $createImageNode({
       altText,
       height,
@@ -198,10 +181,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  setWidthAndHeight(
-    width: "inherit" | number,
-    height: "inherit" | number,
-  ): void {
+  setWidthAndHeight(width: "inherit" | number, height: "inherit" | number): void {
     const writable = this.getWritable();
     writable.__width = width;
     writable.__height = height;
@@ -266,22 +246,10 @@ export function $createImageNode({
   key,
 }: IImagePayload): ImageNode {
   return $applyNodeReplacement(
-    new ImageNode(
-      src,
-      altText,
-      maxWidth,
-      width,
-      height,
-      showCaption,
-      caption,
-      captionsEnabled,
-      key,
-    ),
+    new ImageNode(src, altText, maxWidth, width, height, showCaption, caption, captionsEnabled, key),
   );
 }
 
-export function $isImageNode(
-  node: LexicalNode | null | undefined,
-): node is ImageNode {
+export function $isImageNode(node: LexicalNode | null | undefined): node is ImageNode {
   return node instanceof ImageNode;
 }

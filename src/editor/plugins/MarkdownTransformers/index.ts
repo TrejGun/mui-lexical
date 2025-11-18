@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import {
   $convertFromMarkdownString,
   $convertToMarkdownString,
@@ -37,7 +29,7 @@ import {
 } from "@lexical/table";
 import { $isParagraphNode, $isTextNode, LexicalNode } from "lexical";
 
-import { $createImageNode, $isImageNode, ImageNode } from "../../nodes/ImageNode";
+import { $createImageNode, $isImageNode, ImageNode } from "../../nodes/Image/ImageNode";
 
 export const HR: ElementTransformer = {
   dependencies: [HorizontalRuleNode],
@@ -62,7 +54,7 @@ export const HR: ElementTransformer = {
 
 export const IMAGE: TextMatchTransformer = {
   dependencies: [ImageNode],
-  export: (node) => {
+  export: node => {
     if (!$isImageNode(node)) {
       return null;
     }
@@ -83,7 +75,6 @@ export const IMAGE: TextMatchTransformer = {
   trigger: ")",
   type: "text-match",
 };
-
 
 // Very primitive table setup
 const TABLE_ROW_REG_EXP = /^(?:\|)(.+)(?:\|)\s?$/;
@@ -108,11 +99,7 @@ export const TABLE: ElementTransformer = {
       for (const cell of row.getChildren()) {
         // It's TableCellNode so it's just to make flow happy
         if ($isTableCellNode(cell)) {
-          rowOutput.push(
-            $convertToMarkdownString(PLAYGROUND_TRANSFORMERS, cell)
-              .replace(/\n/g, "\\n")
-              .trim(),
-          );
+          rowOutput.push($convertToMarkdownString(PLAYGROUND_TRANSFORMERS, cell).replace(/\n/g, "\\n").trim());
           if (cell.__headerState === TableCellHeaderStates.ROW) {
             isHeaderRow = true;
           }
@@ -121,7 +108,7 @@ export const TABLE: ElementTransformer = {
 
       output.push(`| ${rowOutput.join(" | ")} |`);
       if (isHeaderRow) {
-        output.push(`| ${rowOutput.map((_) => "---").join(" | ")} |`);
+        output.push(`| ${rowOutput.map(_ => "---").join(" | ")} |`);
       }
     }
 
@@ -143,14 +130,11 @@ export const TABLE: ElementTransformer = {
       }
 
       // Add header state to row cells
-      lastRow.getChildren().forEach((cell) => {
+      lastRow.getChildren().forEach(cell => {
         if (!$isTableCellNode(cell)) {
           return;
         }
-        cell.setHeaderStyles(
-          TableCellHeaderStates.ROW,
-          TableCellHeaderStates.ROW,
-        );
+        cell.setHeaderStyles(TableCellHeaderStates.ROW, TableCellHeaderStates.ROW);
       });
 
       // Remove line
@@ -208,10 +192,7 @@ export const TABLE: ElementTransformer = {
     }
 
     const previousSibling = parentNode.getPreviousSibling();
-    if (
-      $isTableNode(previousSibling) &&
-      getTableColumnsSize(previousSibling) === maxCells
-    ) {
+    if ($isTableNode(previousSibling) && getTableColumnsSize(previousSibling) === maxCells) {
       previousSibling.append(...table.getChildren());
       parentNode.remove();
     } else {
@@ -236,11 +217,11 @@ const $createTableCell = (textContent: string): TableCellNode => {
 };
 
 const mapToTableCells = (textContent: string): Array<TableCellNode> | null => {
-  const match = textContent.match(TABLE_ROW_REG_EXP);
-  if (!match || !match[1]) {
+  const match = TABLE_ROW_REG_EXP.exec(textContent);
+  if (!match?.[1]) {
     return null;
   }
-  return match[1].split("|").map((text) => $createTableCell(text));
+  return match[1].split("|").map(text => $createTableCell(text));
 };
 
 export const PLAYGROUND_TRANSFORMERS: Array<Transformer> = [

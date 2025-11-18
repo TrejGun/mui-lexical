@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import { IS_APPLE } from "@lexical/utils";
 
 //disable eslint sorting rule for quick reference to shortcuts
@@ -58,159 +50,97 @@ export function controlOrMeta(metaKey: boolean, ctrlKey: boolean): boolean {
 export function isFormatParagraph(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
 
-  return (
-    (code === "Numpad0" || code === "Digit0") &&
-    !shiftKey &&
-    altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return (code === "Numpad0" || code === "Digit0") && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatHeading(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
   const keyNumber = code[code.length - 1];
 
-  return (
-    ["1", "2", "3"].includes(keyNumber) &&
-    !shiftKey &&
-    altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return ["1", "2", "3"].includes(keyNumber) && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatBulletList(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    (code === "Numpad4" || code === "Digit4") &&
-    !shiftKey &&
-    altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return (code === "Numpad4" || code === "Digit4") && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatNumberedList(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    (code === "Numpad5" || code === "Digit5") &&
-    !shiftKey &&
-    altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return (code === "Numpad5" || code === "Digit5") && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatCheckList(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    (code === "Numpad6" || code === "Digit6") &&
-    !shiftKey &&
-    altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return (code === "Numpad6" || code === "Digit6") && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatCode(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyC" && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyC" && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isFormatQuote(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyQ" && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyQ" && !shiftKey && altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isStrikeThrough(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyS" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyS" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isIndent(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "BracketRight" &&
-    !shiftKey &&
-    !altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "BracketRight" && !shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isOutdent(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "BracketLeft" &&
-    !shiftKey &&
-    !altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "BracketLeft" && !shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isCenterAlign(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyE" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyE" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isLeftAlign(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyL" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyL" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isRightAlign(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyR" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyR" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isJustifyAlign(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyJ" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyJ" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isInsertCodeBlock(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyC" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyC" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isIncreaseFontSize(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "Period" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "Period" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isDecreaseFontSize(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "Comma" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "Comma" && shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isClearFormatting(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "Backslash" &&
-    !shiftKey &&
-    !altKey &&
-    controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "Backslash" && !shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }
 
 export function isInsertLink(event: KeyboardEvent): boolean {
   const { code, shiftKey, altKey, metaKey, ctrlKey } = event;
-  return (
-    code === "KeyK" && !shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey)
-  );
+  return code === "KeyK" && !shiftKey && !altKey && controlOrMeta(metaKey, ctrlKey);
 }

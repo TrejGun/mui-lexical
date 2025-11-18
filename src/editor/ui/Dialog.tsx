@@ -1,15 +1,6 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import type { JSX } from "react";
 import { ReactNode } from "react";
-
-import "./Dialog.css";
+import { css } from "@mui/material";
 
 type Props = Readonly<{
   "data-test-id"?: string;
@@ -20,13 +11,30 @@ export function DialogButtonsList({ children }: Props): JSX.Element {
   return <div className="DialogButtonsList">{children}</div>;
 }
 
-export function DialogActions({
-                                "data-test-id": dataTestId,
-                                children,
-                              }: Props): JSX.Element {
+export function DialogActions({ "data-test-id": dataTestId, children }: Props): JSX.Element {
   return (
     <div className="DialogActions" data-test-id={dataTestId}>
       {children}
     </div>
   );
 }
+
+export const lexicalDialogStyles = css`
+  .DialogActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-top: 20px;
+  }
+
+  .DialogButtonsList {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    margin-top: 20px;
+  }
+
+  .DialogButtonsList button {
+    margin-bottom: 20px;
+  }
+`;

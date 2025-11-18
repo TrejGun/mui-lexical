@@ -1,22 +1,16 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- *
- */
+import { css } from "@mui/material";
 
-.InlineImageNode__contentEditable {
+export const inlineImageNodeStyles = css`
+  .InlineImageNode__contentEditable {
     min-height: 20px;
-    border: 0px;
+    border: 0;
     resize: none;
     cursor: text;
     caret-color: rgb(5, 5, 5);
     display: block;
     position: relative;
     tab-size: 1;
-    outline: 0px;
+    outline: 0;
     padding: 10px;
     user-select: text;
     font-size: 14px;
@@ -24,9 +18,9 @@
     width: calc(100% - 20px);
     white-space: pre-wrap;
     word-break: break-word;
-}
+  }
 
-.InlineImageNode__placeholder {
+  .InlineImageNode__placeholder {
     font-size: 12px;
     color: #888;
     overflow: hidden;
@@ -38,27 +32,27 @@
     white-space: nowrap;
     display: inline-block;
     pointer-events: none;
-}
+  }
 
-.InlineImageNode_Checkbox:checked,
-.InlineImageNode_Checkbox:not(:checked) {
+  .InlineImageNode_Checkbox:checked,
+  .InlineImageNode_Checkbox:not(:checked) {
     position: absolute;
     left: -9999px;
-}
+  }
 
-.InlineImageNode_Checkbox:checked + label,
-.InlineImageNode_Checkbox:not(:checked) + label {
+  .InlineImageNode_Checkbox:checked + label,
+  .InlineImageNode_Checkbox:not(:checked) + label {
     position: absolute;
     padding-right: 55px;
     cursor: pointer;
     line-height: 20px;
     display: inline-block;
     color: #666;
-}
+  }
 
-.InlineImageNode_Checkbox:checked + label:before,
-.InlineImageNode_Checkbox:not(:checked) + label:before {
-    content: '';
+  .InlineImageNode_Checkbox:checked + label:before,
+  .InlineImageNode_Checkbox:not(:checked) + label:before {
+    content: "";
     position: absolute;
     right: 0;
     top: 0;
@@ -66,11 +60,11 @@
     height: 18px;
     border: 1px solid #666;
     background: #fff;
-}
+  }
 
-.InlineImageNode_Checkbox:checked + label:after,
-.InlineImageNode_Checkbox:not(:checked) + label:after {
-    content: '';
+  .InlineImageNode_Checkbox:checked + label:after,
+  .InlineImageNode_Checkbox:not(:checked) + label:after {
+    content: "";
     width: 8px;
     height: 8px;
     background: #222222;
@@ -79,16 +73,15 @@
     right: 6px;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
-}
+  }
 
-.InlineImageNode_Checkbox:not(:checked) + label:after {
+  .InlineImageNode_Checkbox:not(:checked) + label:after {
     opacity: 0;
-    -webkit-transform: scale(0);
     transform: scale(0);
-}
+  }
 
-.InlineImageNode_Checkbox:checked + label:after {
+  .InlineImageNode_Checkbox:checked + label:after {
     opacity: 1;
-    -webkit-transform: scale(1);
     transform: scale(1);
-}
+  }
+`;
