@@ -32,6 +32,8 @@ export * from "./VideoButton";
 export * from "./Divider";
 export * from "./BlockFormatDropdown";
 export * from "./CodeLanguageDropdown";
+export * from "./LeftAlignButton";
+export * from "./RightAlignButton";
 
 export const componentsStyles = [
   buttonStyles,

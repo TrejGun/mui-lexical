@@ -842,12 +842,9 @@ export const editorStyles = css`
   }
 
   i.chevron-down {
-    background-color: transparent;
-    background-size: contain;
     display: inline-block;
     height: 8px;
     width: 8px;
-    background-image: url(./images/icons/chevron-down.svg);
   }
 
   .action-button {

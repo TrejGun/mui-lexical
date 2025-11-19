@@ -42,6 +42,9 @@ const INITIAL_TOOLBAR_STATE = {
   isRTL: false,
   isStrikethrough: false,
   isUnderline: false,
+  isRightAlign: false,
+  isLeftAlign: false,
+  isCenterAlign: false,
   rootType: "root" as keyof IRootTypeToRootName,
 };
 

@@ -25,7 +25,6 @@ import {
   ImagesPlugin,
   LinkPlugin,
   MarkdownPlugin as MarkdownShortcutPlugin,
-  MaxLengthPlugin,
   ShortcutsPlugin,
   TableActionMenuPlugin as TableCellActionMenuPlugin,
   TableCellResizerPlugin as TableCellResizer,
@@ -80,7 +79,6 @@ const EditorContent = () => {
         />
         <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
         <div className={`editor-container`}>
-          <MaxLengthPlugin maxLength={30} />
           <AutoFocusPlugin />
           <ClearEditorPlugin />
           <ComponentPickerPlugin />

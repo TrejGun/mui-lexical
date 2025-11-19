@@ -48,9 +48,12 @@ import {
   UnderlineButton,
   UndoButton,
   VideoButton,
+  RightAlignButton,
+  LeftAlignButton,
 } from "../../ui";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
+import { CenterAlignButton } from "../../ui/CenterAlignButton";
 
 export const ToolbarPlugin = ({
   editor,
@@ -152,6 +155,8 @@ export const ToolbarPlugin = ({
         );
       }
       if ($isRangeSelection(selection) || $isTableSelection(selection)) {
+        const anchorNode = selection.anchor.getNode();
+        const element = anchorNode.getTopLevelElementOrThrow();
         // Update text format
         updateToolbarState("isBold", selection.hasFormat("bold"));
         updateToolbarState("isItalic", selection.hasFormat("italic"));
@@ -159,6 +164,12 @@ export const ToolbarPlugin = ({
         updateToolbarState("isStrikethrough", selection.hasFormat("strikethrough"));
         updateToolbarState("isHighlight", selection.hasFormat("highlight"));
         updateToolbarState("isCode", selection.hasFormat("code"));
+        if (element) {
+          const align = element.getFormatType();
+          updateToolbarState("isRightAlign", align === "right");
+          updateToolbarState("isLeftAlign", align === "left");
+          updateToolbarState("isCenterAlign", align === "center");
+        }
       }
     });
   }, [activeEditor, editor, updateToolbarState]);
@@ -259,11 +270,17 @@ export const ToolbarPlugin = ({
           <ItalicButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
           <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
           <StrikethroughButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <ClearButton disabled={!isEditable} activeEditor={activeEditor} />
           {canViewerSeeInsertCodeButton && (
             <CodeButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
           )}
           <LinkButton disabled={!isEditable} insertLink={insertLink} toolbarState={toolbarState} />
+          <ClearButton disabled={!isEditable} activeEditor={activeEditor} />
+
+          <Divider />
+          <LeftAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <CenterAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+
           {canViewerSeeInsertDropdown && (
             <>
               <Divider />
