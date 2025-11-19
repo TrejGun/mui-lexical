@@ -43,10 +43,11 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
+import CodeIcon from "@mui/icons-material/Code";
 
 import { blockTypeToBlockName, useToolbarState } from "../../context";
 import { useModal } from "../../hooks";
-import { DropDown, DropDownItem } from "../../ui/DropDown";
+import { BlockFormatDropDown, DropDown, DropDownItem, RedoButton, UndoButton } from "../../ui";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
 import { InsertImageDialog } from "../ImagesPlugin";
@@ -63,6 +64,7 @@ import {
   formatQuote,
 } from "./utils";
 import { InsertVideoDialog } from "../VideoPlugin";
+import { dropDownActiveClass } from "../../utils/dropDownActiveClass";
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
@@ -75,155 +77,6 @@ function getCodeLanguageOptions(): [string, string][] {
 }
 
 const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();
-
-function dropDownActiveClass(active: boolean) {
-  if (active) {
-    return "active dropdown-item-active";
-  } else {
-    return "";
-  }
-}
-
-function BlockFormatDropDown({
-  editor,
-  blockType,
-  disabled = false,
-}: {
-  blockType: keyof typeof blockTypeToBlockName;
-  editor: LexicalEditor;
-  disabled?: boolean;
-}): JSX.Element {
-  return (
-    <DropDown
-      disabled={disabled}
-      buttonClassName="toolbar-item block-controls"
-      buttonIconClassName={"icon block-type " + blockType}
-      buttonLabel={blockTypeToBlockName[blockType]}
-      buttonAriaLabel="Formatting options for text style"
-    >
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "paragraph")}
-        onClick={() => formatParagraph(editor)}
-      >
-        <div className="icon-text-container">
-          <i className="icon paragraph" />
-          <span className="text">Normal</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.NORMAL}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h1")}
-        onClick={() => formatHeading(editor, blockType, "h1")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h1" />
-          <span className="text">Heading 1</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING1}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h2")}
-        onClick={() => formatHeading(editor, blockType, "h2")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h2" />
-          <span className="text">Heading 2</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING2}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h3")}
-        onClick={() => formatHeading(editor, blockType, "h3")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h3" />
-          <span className="text">Heading 3</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING3}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h4")}
-        onClick={() => formatHeading(editor, blockType, "h4")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h4" />
-          <span className="text">Heading 4</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING4}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h5")}
-        onClick={() => formatHeading(editor, blockType, "h5")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h5" />
-          <span className="text">Heading 5</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING5}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "h6")}
-        onClick={() => formatHeading(editor, blockType, "h6")}
-      >
-        <div className="icon-text-container">
-          <i className="icon h6" />
-          <span className="text">Heading 6</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.HEADING6}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "bullet")}
-        onClick={() => formatBulletList(editor, blockType)}
-      >
-        <div className="icon-text-container">
-          <i className="icon bullet-list" />
-          <span className="text">Bullet List</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.BULLET_LIST}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "number")}
-        onClick={() => formatNumberedList(editor, blockType)}
-      >
-        <div className="icon-text-container">
-          <i className="icon numbered-list" />
-          <span className="text">Numbered List</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.NUMBERED_LIST}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "check")}
-        onClick={() => formatCheckList(editor, blockType)}
-      >
-        <div className="icon-text-container">
-          <i className="icon check-list" />
-          <span className="text">Check List</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.CHECK_LIST}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "quote")}
-        onClick={() => formatQuote(editor, blockType)}
-      >
-        <div className="icon-text-container">
-          <i className="icon quote" />
-          <span className="text">Quote</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.QUOTE}</span>
-      </DropDownItem>
-      <DropDownItem
-        className={"item wide " + dropDownActiveClass(blockType === "code")}
-        onClick={() => formatCode(editor, blockType)}
-      >
-        <div className="icon-text-container">
-          <i className="icon code" />
-          <span className="text">Code Block</span>
-        </div>
-        <span className="shortcut">{SHORTCUTS.CODE_BLOCK}</span>
-      </DropDownItem>
-    </DropDown>
-  );
-}
 
 function Divider(): JSX.Element {
   return <div className="divider" />;
@@ -416,30 +269,9 @@ export const ToolbarPlugin = ({
 
   return (
     <div className="toolbar">
-      <button
-        disabled={!toolbarState.canUndo || !isEditable}
-        onClick={() => {
-          activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
-        }}
-        title={IS_APPLE ? "Undo (⌘Z)" : "Undo (Ctrl+Z)"}
-        type="button"
-        className="toolbar-item spaced"
-        aria-label="Undo"
-      >
-        <i className="format undo" />
-      </button>
-      <button
-        disabled={!toolbarState.canRedo || !isEditable}
-        onClick={() => {
-          activeEditor.dispatchCommand(REDO_COMMAND, undefined);
-        }}
-        title={IS_APPLE ? "Redo (⇧⌘Z)" : "Redo (Ctrl+Y)"}
-        type="button"
-        className="toolbar-item"
-        aria-label="Redo"
-      >
-        <i className="format redo" />
-      </button>
+      <UndoButton disabled={!toolbarState.canUndo || !isEditable} activeEditor={activeEditor} />
+      <RedoButton disabled={!toolbarState.canRedo || !isEditable} activeEditor={activeEditor} />
+
       <Divider />
       {toolbarState.blockType in blockTypeToBlockName && activeEditor === editor && (
         <BlockFormatDropDown disabled={!isEditable} blockType={toolbarState.blockType} editor={activeEditor} />
@@ -535,7 +367,7 @@ export const ToolbarPlugin = ({
               type="button"
               aria-label="Insert code block"
             >
-              <i className="format code" />
+              <CodeIcon />
             </button>
           )}
           <button

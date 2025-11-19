@@ -20,30 +20,27 @@ const config: StorybookConfig = {
       propFilter: prop => (prop.parent ? !prop.parent.fileName.includes("node_modules") : true),
     },
   },
-  webpackFinal: config => {
-    const fileLoaderRule = config.module?.rules?.find(rule => {
-      if (rule && typeof rule === "object" && "test" in rule) {
-        const test = rule.test;
-        if (test instanceof RegExp) {
-          return test.toString().includes("svg");
+  webpackFinal: async config => {
+    if (config.module?.rules) {
+      config.module.rules = config.module.rules.filter(rule => {
+        if (rule && typeof rule === "object" && "test" in rule && rule.test instanceof RegExp) {
+          return !rule.test.toString().includes("svg");
         }
-        if (typeof test === "string") {
-          return test.includes("svg");
-        }
-      }
-      return false;
-    });
-
-    if (fileLoaderRule && typeof fileLoaderRule === "object") {
-      (fileLoaderRule as { exclude?: RegExp }).exclude = /\.svg$/i;
+        return true;
+      });
     }
 
     config.module?.rules?.push({
       test: /\.svg$/i,
-      type: "asset/resource",
-      generator: {
-        filename: "static/media/[name].[hash][ext]",
-      },
+      oneOf: [
+        {
+          issuer: /\.[jt]sx?$/,
+          use: ["@svgr/webpack"],
+        },
+        {
+          type: "asset/resource",
+        },
+      ],
     });
 
     if (config.resolve) {

@@ -121,10 +121,7 @@ const EditorContent = () => {
             <>
               <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
               <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
-              <FloatingTextFormatToolbarPlugin
-                anchorElem={floatingAnchorElem}
-                setIsLinkEditMode={setIsLinkEditMode}
-              />
+              <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} setIsLinkEditMode={setIsLinkEditMode} />
             </>
           )}
         </div>

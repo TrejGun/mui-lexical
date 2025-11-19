@@ -32,6 +32,7 @@ import * as ReactDOM from "react-dom";
 import { useModal } from "../../hooks";
 import { InsertImageDialog } from "../ImagesPlugin";
 import { InsertTableDialog } from "../TablePlugin";
+import { ChatSquareQuoteIcon, CodeIcon, ListOlIcon, ListUlIcon, SquareCheckIcon } from "../../images/icons";
 
 class ComponentPickerOption extends MenuOption {
   // What shows up in the editor
@@ -162,22 +163,22 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
         showModal("Insert Table", onClose => <InsertTableDialog activeEditor={editor} onClose={onClose} />),
     }),
     new ComponentPickerOption("Numbered List", {
-      icon: <i className="icon number" />,
+      icon: <ListOlIcon />,
       keywords: ["numbered list", "ordered list", "ol"],
       onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Bulleted List", {
-      icon: <i className="icon bullet" />,
+      icon: <ListUlIcon />,
       keywords: ["bulleted list", "unordered list", "ul"],
       onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Check List", {
-      icon: <i className="icon check" />,
+      icon: <SquareCheckIcon />,
       keywords: ["check list", "todo list"],
       onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined),
     }),
     new ComponentPickerOption("Quote", {
-      icon: <i className="icon quote" />,
+      icon: <ChatSquareQuoteIcon />,
       keywords: ["block quote"],
       onSelect: () =>
         editor.update(() => {
@@ -188,7 +189,7 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
         }),
     }),
     new ComponentPickerOption("Code", {
-      icon: <i className="icon code" />,
+      icon: <CodeIcon />,
       keywords: ["javascript", "python", "js", "codeblock"],
       onSelect: () =>
         editor.update(() => {

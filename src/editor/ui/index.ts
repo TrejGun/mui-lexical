@@ -16,6 +16,10 @@ export { Modal } from "./Modal";
 export { Select } from "./Select";
 export { TextInput } from "./TextInput";
 
+export * from "./UndoButton";
+export * from "./RedoButton";
+export * from "./BlockFormatDropdown";
+
 export const componentsStyles = [
   buttonStyles,
   lexicalContentEditableStyles,
