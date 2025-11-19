@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { REDO_COMMAND } from "lexical";
 import { IS_APPLE } from "@lexical/utils";
-import RedoIcon from "@mui/icons-material/Redo";
 
 import { IToolbarComponentProps } from "../../../common";
+import { ArrowClockwiseIcon } from "../../images/icons";
 
 export const RedoButton: FC<IToolbarComponentProps> = ({ activeEditor, disabled }) => {
   return (
@@ -17,7 +17,7 @@ export const RedoButton: FC<IToolbarComponentProps> = ({ activeEditor, disabled 
       className="toolbar-item"
       aria-label="Redo"
     >
-      <RedoIcon />
+      <ArrowClockwiseIcon />
     </button>
   );
 };

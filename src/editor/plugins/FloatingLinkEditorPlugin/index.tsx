@@ -29,6 +29,7 @@ import { createPortal } from "react-dom";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { setFloatingElemPositionForLinkEditor } from "../../utils/setFloatingElemPositionForLinkEditor";
 import { sanitizeUrl } from "../../utils/url";
+import { CloseIcon, PencilFillIcon, SuccessAltIcon, TrashIcon } from "../../images/icons";
 
 function preventDefault(event: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLElement>): void {
   event.preventDefault();
@@ -246,7 +247,7 @@ function FloatingLinkEditor({
               monitorInputInteraction(event);
             }}
           />
-          <div>
+          <div className="buttons">
             <div
               className="link-cancel"
               role="button"
@@ -255,7 +256,9 @@ function FloatingLinkEditor({
               onClick={() => {
                 setIsLinkEditMode(false);
               }}
-            />
+            >
+              <CloseIcon />
+            </div>
 
             <div
               className="link-confirm"
@@ -263,7 +266,9 @@ function FloatingLinkEditor({
               tabIndex={0}
               onMouseDown={preventDefault}
               onClick={handleLinkSubmission}
-            />
+            >
+              <SuccessAltIcon />
+            </div>
           </div>
         </>
       ) : (
@@ -271,26 +276,32 @@ function FloatingLinkEditor({
           <a href={sanitizeUrl(linkUrl)} target="_blank" rel="noopener noreferrer">
             {linkUrl}
           </a>
-          <div
-            className="link-edit"
-            role="button"
-            tabIndex={0}
-            onMouseDown={preventDefault}
-            onClick={event => {
-              event.preventDefault();
-              setEditedLinkUrl(linkUrl);
-              setIsLinkEditMode(true);
-            }}
-          />
-          <div
-            className="link-trash"
-            role="button"
-            tabIndex={0}
-            onMouseDown={preventDefault}
-            onClick={() => {
-              editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
-            }}
-          />
+          <div className="buttons">
+            <div
+              className="link-edit"
+              role="button"
+              tabIndex={0}
+              onMouseDown={preventDefault}
+              onClick={event => {
+                event.preventDefault();
+                setEditedLinkUrl(linkUrl);
+                setIsLinkEditMode(true);
+              }}
+            >
+              <PencilFillIcon />
+            </div>
+            <div
+              className="link-trash"
+              role="button"
+              tabIndex={0}
+              onMouseDown={preventDefault}
+              onClick={() => {
+                editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+              }}
+            >
+              <TrashIcon />
+            </div>
+          </div>
         </div>
       )}
     </div>

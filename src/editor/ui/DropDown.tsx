@@ -127,14 +127,14 @@ export const DropDown = ({
   buttonLabel,
   buttonAriaLabel,
   buttonClassName,
-  buttonIconClassName,
+  icon,
   children,
   stopCloseOnClickSelf,
 }: {
   disabled?: boolean;
   buttonAriaLabel?: string;
   buttonClassName: string;
-  buttonIconClassName?: string;
+  icon?: JSX.Element;
   buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
@@ -220,7 +220,7 @@ export const DropDown = ({
         onClick={() => setShowDropDown(!showDropDown)}
         ref={buttonRef}
       >
-        {buttonIconClassName && <span className={buttonIconClassName} />}
+        {icon}
         {buttonLabel && <span className="text dropdown-button-text">{buttonLabel}</span>}
         <i className="chevron-down" />
       </button>

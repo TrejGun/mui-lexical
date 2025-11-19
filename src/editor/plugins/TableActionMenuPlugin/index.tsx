@@ -42,6 +42,7 @@ import { mergeRegister } from "@lexical/utils";
 import { createPortal } from "react-dom";
 
 import { DropDown, DropDownItem } from "../../ui/DropDown";
+import { VerticalBottomIcon, VerticalMiddleIcon, VerticalTopIcon } from "../../images/icons";
 
 type TableCellActionMenuProps = Readonly<{
   contextRef: { current: null | HTMLElement };
@@ -326,7 +327,7 @@ function TableActionMenu({
           className="item wide"
         >
           <div className="icon-text-container">
-            <i className="icon vertical-top" />
+            <VerticalTopIcon />
             <span className="text">Top Align</span>
           </div>
         </DropDownItem>
@@ -337,7 +338,7 @@ function TableActionMenu({
           className="item wide"
         >
           <div className="icon-text-container">
-            <i className="icon vertical-middle" />
+            <VerticalMiddleIcon />
             <span className="text">Middle Align</span>
           </div>
         </DropDownItem>
@@ -348,7 +349,7 @@ function TableActionMenu({
           className="item wide"
         >
           <div className="icon-text-container">
-            <i className="icon vertical-bottom" />
+            <VerticalBottomIcon />
             <span className="text">Bottom Align</span>
           </div>
         </DropDownItem>

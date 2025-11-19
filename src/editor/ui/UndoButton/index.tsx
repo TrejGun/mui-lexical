@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { UNDO_COMMAND } from "lexical";
 import { IS_APPLE } from "@lexical/utils";
-import UndoIcon from "@mui/icons-material/Undo";
 
 import { IToolbarComponentProps } from "../../../common";
+import { ArrowCounterclockwiseIcon } from "../../images/icons";
 
 export const UndoButton: FC<IToolbarComponentProps> = ({ activeEditor, disabled }) => {
   return (
@@ -17,7 +17,7 @@ export const UndoButton: FC<IToolbarComponentProps> = ({ activeEditor, disabled 
       className="toolbar-item spaced"
       aria-label="Undo"
     >
-      <UndoIcon />
+      <ArrowCounterclockwiseIcon />
     </button>
   );
 };

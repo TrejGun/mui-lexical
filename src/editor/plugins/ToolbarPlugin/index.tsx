@@ -8,25 +8,13 @@
 
 import type { JSX } from "react";
 import { Dispatch, useCallback, useEffect, useState } from "react";
-import {
-  $isCodeNode,
-  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
-  CODE_LANGUAGE_MAP,
-  getLanguageFriendlyName,
-} from "@lexical/code";
+import { $isCodeNode, CODE_LANGUAGE_MAP } from "@lexical/code";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $isListNode, ListNode } from "@lexical/list";
-import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/react/LexicalHorizontalRuleNode";
 import { $isHeadingNode } from "@lexical/rich-text";
 import { $isParentElementRTL } from "@lexical/selection";
 import { $isTableNode, $isTableSelection } from "@lexical/table";
-import {
-  $findMatchingParent,
-  $getNearestNodeOfType,
-  $isEditorIsNestedEditor,
-  IS_APPLE,
-  mergeRegister,
-} from "@lexical/utils";
+import { $findMatchingParent, $getNearestNodeOfType, $isEditorIsNestedEditor, mergeRegister } from "@lexical/utils";
 import {
   $getNodeByKey,
   $getSelection,
@@ -36,51 +24,33 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
-  FORMAT_TEXT_COMMAND,
   LexicalEditor,
   NodeKey,
-  REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
-  UNDO_COMMAND,
 } from "lexical";
-import CodeIcon from "@mui/icons-material/Code";
 
 import { blockTypeToBlockName, useToolbarState } from "../../context";
 import { useModal } from "../../hooks";
-import { BlockFormatDropDown, DropDown, DropDownItem, RedoButton, UndoButton } from "../../ui";
+import {
+  BlockFormatDropDown,
+  BoldButton,
+  ClearButton,
+  CodeButton,
+  CodeLanguageDropdown,
+  Divider,
+  HorizontalRuleButton,
+  ImageButton,
+  ItalicButton,
+  LinkButton,
+  RedoButton,
+  StrikethroughButton,
+  TableButton,
+  UnderlineButton,
+  UndoButton,
+  VideoButton,
+} from "../../ui";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { sanitizeUrl } from "../../utils/url";
-import { InsertImageDialog } from "../ImagesPlugin";
-import { SHORTCUTS } from "../ShortcutsPlugin/shortcuts";
-import { InsertTableDialog } from "../TablePlugin";
-import {
-  clearFormatting,
-  formatBulletList,
-  formatCheckList,
-  formatCode,
-  formatHeading,
-  formatNumberedList,
-  formatParagraph,
-  formatQuote,
-} from "./utils";
-import { InsertVideoDialog } from "../VideoPlugin";
-import { dropDownActiveClass } from "../../utils/dropDownActiveClass";
-
-function getCodeLanguageOptions(): [string, string][] {
-  const options: [string, string][] = [];
-
-  for (const [lang, friendlyName] of Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP)) {
-    options.push([lang, friendlyName]);
-  }
-
-  return options;
-}
-
-const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();
-
-function Divider(): JSX.Element {
-  return <div className="divider" />;
-}
 
 export const ToolbarPlugin = ({
   editor,
@@ -278,161 +248,29 @@ export const ToolbarPlugin = ({
       )}
       <Divider />
       {toolbarState.blockType === "code" ? (
-        <DropDown
+        <CodeLanguageDropdown
           disabled={!isEditable}
-          buttonClassName="toolbar-item code-language"
-          buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)}
-          buttonAriaLabel="Select language"
-        >
-          {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-            return (
-              <DropDownItem
-                className={`item ${dropDownActiveClass(value === toolbarState.codeLanguage)}`}
-                onClick={() => onCodeLanguageSelect(value)}
-                key={value}
-              >
-                <span className="text">{name}</span>
-              </DropDownItem>
-            );
-          })}
-        </DropDown>
+          toolbarState={toolbarState}
+          onCodeLanguageSelect={onCodeLanguageSelect}
+        />
       ) : (
         <>
-          <button
-            disabled={!isEditable}
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-            }}
-            className={"toolbar-item spaced " + (toolbarState.isBold ? "active" : "")}
-            title={`Bold (${SHORTCUTS.BOLD})`}
-            type="button"
-            aria-label={`Format text as bold. Shortcut: ${SHORTCUTS.BOLD}`}
-          >
-            <i className="format bold" />
-          </button>
-          <button
-            disabled={!isEditable}
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-            }}
-            className={"toolbar-item spaced " + (toolbarState.isItalic ? "active" : "")}
-            title={`Italic (${SHORTCUTS.ITALIC})`}
-            type="button"
-            aria-label={`Format text as italics. Shortcut: ${SHORTCUTS.ITALIC}`}
-          >
-            <i className="format italic" />
-          </button>
-          <button
-            disabled={!isEditable}
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-            }}
-            className={"toolbar-item spaced " + (toolbarState.isUnderline ? "active" : "")}
-            title={`Underline (${SHORTCUTS.UNDERLINE})`}
-            type="button"
-            aria-label={`Format text to underlined. Shortcut: ${SHORTCUTS.UNDERLINE}`}
-          >
-            <i className="format underline" />
-          </button>
-          <button
-            disabled={!isEditable}
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-            }}
-            className={"toolbar-item spaced " + (toolbarState.isStrikethrough ? "active" : "")}
-            title={`Strikethrough (${SHORTCUTS.STRIKETHROUGH})`}
-            type="button"
-            aria-label={`Format text to strikethrough. Shortcut: ${SHORTCUTS.STRIKETHROUGH}`}
-          >
-            <i className="format strikethrough" />
-          </button>
-          <button
-            disabled={!isEditable}
-            onClick={() => clearFormatting(activeEditor)}
-            className={"toolbar-item spaced"}
-            title="Clear text formatting"
-            type="button"
-            aria-label="Clear all text formatting"
-          >
-            <i className="format clear" />
-          </button>
+          <BoldButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <ItalicButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <StrikethroughButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <ClearButton disabled={!isEditable} activeEditor={activeEditor} />
           {canViewerSeeInsertCodeButton && (
-            <button
-              disabled={!isEditable}
-              onClick={() => {
-                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-              }}
-              className={"toolbar-item spaced " + (toolbarState.isCode ? "active" : "")}
-              title={`Insert code block (${SHORTCUTS.INSERT_CODE_BLOCK})`}
-              type="button"
-              aria-label="Insert code block"
-            >
-              <CodeIcon />
-            </button>
+            <CodeButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
           )}
-          <button
-            disabled={!isEditable}
-            onClick={insertLink}
-            className={"toolbar-item spaced " + (toolbarState.isLink ? "active" : "")}
-            aria-label="Insert link"
-            title={`Insert link (${SHORTCUTS.INSERT_LINK})`}
-            type="button"
-          >
-            <i className="format link" />
-          </button>
+          <LinkButton disabled={!isEditable} insertLink={insertLink} toolbarState={toolbarState} />
           {canViewerSeeInsertDropdown && (
             <>
               <Divider />
-              <button
-                onClick={() => {
-                  activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
-                }}
-                className={"toolbar-item spaced"}
-                title="Horizontal Rule"
-                type="button"
-                aria-label="Horizontal Rule"
-              >
-                <i className="format horizontal-rule" />
-              </button>
-              <button
-                onClick={() => {
-                  showModal("Insert Image", onClose => (
-                    <InsertImageDialog activeEditor={activeEditor} onClose={onClose} />
-                  ));
-                }}
-                className={"toolbar-item spaced"}
-                title="Image"
-                type="button"
-                aria-label="Image"
-              >
-                <i className="format image" />
-              </button>
-              <button
-                onClick={() => {
-                  showModal("Insert Video", onClose => (
-                    <InsertVideoDialog activeEditor={activeEditor} onClose={onClose} />
-                  ));
-                }}
-                className={"toolbar-item spaced"}
-                title="Video"
-                type="button"
-                aria-label="Image"
-              >
-                <i className="format video" />
-              </button>
-              <button
-                onClick={() => {
-                  showModal("Insert Table", onClose => (
-                    <InsertTableDialog activeEditor={activeEditor} onClose={onClose} />
-                  ));
-                }}
-                className={"toolbar-item spaced"}
-                title="Table"
-                type="button"
-                aria-label="Table"
-              >
-                <i className="format table" />
-              </button>
+              <HorizontalRuleButton activeEditor={activeEditor} />
+              <ImageButton activeEditor={activeEditor} showModal={showModal} />
+              <VideoButton activeEditor={activeEditor} showModal={showModal} />
+              <TableButton activeEditor={activeEditor} showModal={showModal} />
             </>
           )}
         </>

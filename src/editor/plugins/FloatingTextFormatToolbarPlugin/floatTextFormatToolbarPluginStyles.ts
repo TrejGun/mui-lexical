@@ -3,6 +3,7 @@ import { css } from "@mui/material";
 export const floatTextFormatToolbarPluginStyles = css`
   .floating-text-format-popup {
     display: flex;
+    align-items: center;
     background: #fff;
     padding: 4px;
     vertical-align: middle;

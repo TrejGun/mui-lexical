@@ -27,6 +27,14 @@ import { createPortal } from "react-dom";
 import { getDOMRangeRect } from "../../utils/getDOMRangeRect";
 import { getSelectedNode } from "../../utils/getSelectedNode";
 import { setFloatingElemPosition } from "../../utils/setFloatingElemPosition";
+import {
+  CodeIcon,
+  LinkIcon,
+  TypeBoldIcon,
+  TypeItalicIcon,
+  TypeStrikethroughIcon,
+  TypeUnderlineIcon,
+} from "../../images/icons";
 
 function TextFormatFloatingToolbar({
   editor,
@@ -178,7 +186,7 @@ function TextFormatFloatingToolbar({
             title="Bold"
             aria-label="Format text as bold"
           >
-            <i className="format bold" />
+            <TypeBoldIcon />
           </button>
           <button
             type="button"
@@ -189,7 +197,7 @@ function TextFormatFloatingToolbar({
             title="Italic"
             aria-label="Format text as italics"
           >
-            <i className="format italic" />
+            <TypeItalicIcon />
           </button>
           <button
             type="button"
@@ -200,7 +208,7 @@ function TextFormatFloatingToolbar({
             title="Underline"
             aria-label="Format text to underlined"
           >
-            <i className="format underline" />
+            <TypeUnderlineIcon />
           </button>
           <button
             type="button"
@@ -211,7 +219,7 @@ function TextFormatFloatingToolbar({
             title="Strikethrough"
             aria-label="Format text with a strikethrough"
           >
-            <i className="format strikethrough" />
+            <TypeStrikethroughIcon />
           </button>
           <button
             type="button"
@@ -222,7 +230,7 @@ function TextFormatFloatingToolbar({
             title="Insert code block"
             aria-label="Insert code block"
           >
-            <i className="format code" />
+            <CodeIcon />
           </button>
           <button
             type="button"
@@ -231,7 +239,7 @@ function TextFormatFloatingToolbar({
             title="Insert link"
             aria-label="Insert link"
           >
-            <i className="format link" />
+            <LinkIcon />
           </button>
         </>
       )}

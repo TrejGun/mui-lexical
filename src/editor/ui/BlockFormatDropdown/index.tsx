@@ -29,26 +29,43 @@ import {
   TypeH6Icon,
 } from "../../images/icons";
 
-type BlockType = keyof typeof blockTypeToBlockName;
+export type BlockType = keyof typeof blockTypeToBlockName;
 
-const blockFormatOptions: Array<{
+export interface IBlockFormatOptions {
   blockType: BlockType;
   title: string;
   icon: () => JSX.Element;
   shortcut: keyof typeof SHORTCUTS;
-}> = [
-  { blockType: "paragraph", title: "Normal", icon: TextParagraphIcon, shortcut: "NORMAL" },
-  { blockType: "h1", title: "Heading 1", icon: TypeH1Icon, shortcut: "HEADING1" },
-  { blockType: "h2", title: "Heading 2", icon: TypeH2Icon, shortcut: "HEADING2" },
-  { blockType: "h3", title: "Heading 3", icon: TypeH3Icon, shortcut: "HEADING3" },
-  { blockType: "h4", title: "Heading 4", icon: TypeH4Icon, shortcut: "HEADING4" },
-  { blockType: "h5", title: "Heading 5", icon: TypeH5Icon, shortcut: "HEADING5" },
-  { blockType: "h6", title: "Heading 6", icon: TypeH6Icon, shortcut: "HEADING6" },
-  { blockType: "bullet", title: "Bullet List", icon: ListUlIcon, shortcut: "BULLET_LIST" },
-  { blockType: "number", title: "Numbered List", icon: ListOlIcon, shortcut: "NUMBERED_LIST" },
-  { blockType: "check", title: "Check List", icon: SquareCheckIcon, shortcut: "CHECK_LIST" },
-  { blockType: "quote", title: "Quote", icon: ChatSquareQuoteIcon, shortcut: "QUOTE" },
-  { blockType: "code", title: "Code Block", icon: CodeIcon, shortcut: "CODE_BLOCK" },
+}
+
+const formatBlockIcons: Record<BlockType, () => JSX.Element> = {
+  paragraph: TextParagraphIcon,
+  h1: TypeH1Icon,
+  h2: TypeH2Icon,
+  h3: TypeH3Icon,
+  h4: TypeH4Icon,
+  h5: TypeH5Icon,
+  h6: TypeH6Icon,
+  bullet: ListUlIcon,
+  number: ListOlIcon,
+  check: SquareCheckIcon,
+  quote: ChatSquareQuoteIcon,
+  code: CodeIcon,
+};
+
+const blockFormatOptions: Array<IBlockFormatOptions> = [
+  { blockType: "paragraph", title: "Normal", icon: formatBlockIcons.paragraph, shortcut: "NORMAL" },
+  { blockType: "h1", title: "Heading 1", icon: formatBlockIcons.h1, shortcut: "HEADING1" },
+  { blockType: "h2", title: "Heading 2", icon: formatBlockIcons.h2, shortcut: "HEADING2" },
+  { blockType: "h3", title: "Heading 3", icon: formatBlockIcons.h3, shortcut: "HEADING3" },
+  { blockType: "h4", title: "Heading 4", icon: formatBlockIcons.h4, shortcut: "HEADING4" },
+  { blockType: "h5", title: "Heading 5", icon: formatBlockIcons.h5, shortcut: "HEADING5" },
+  { blockType: "h6", title: "Heading 6", icon: formatBlockIcons.h6, shortcut: "HEADING6" },
+  { blockType: "bullet", title: "Bullet List", icon: formatBlockIcons.bullet, shortcut: "BULLET_LIST" },
+  { blockType: "number", title: "Numbered List", icon: formatBlockIcons.number, shortcut: "NUMBERED_LIST" },
+  { blockType: "check", title: "Check List", icon: formatBlockIcons.check, shortcut: "CHECK_LIST" },
+  { blockType: "quote", title: "Quote", icon: formatBlockIcons.quote, shortcut: "QUOTE" },
+  { blockType: "code", title: "Code Block", icon: formatBlockIcons.code, shortcut: "CODE_BLOCK" },
 ];
 
 export const BlockFormatDropDown = ({
@@ -78,11 +95,13 @@ export const BlockFormatDropDown = ({
     return clickActions;
   }, [editor]);
 
+  const Icon = formatBlockIcons[blockType];
+
   return (
     <DropDown
       disabled={disabled}
       buttonClassName="toolbar-item block-controls"
-      buttonIconClassName={"icon block-type " + blockType}
+      icon={<Icon />}
       buttonLabel={blockTypeToBlockName[blockType]}
       buttonAriaLabel="Formatting options for text style"
     >

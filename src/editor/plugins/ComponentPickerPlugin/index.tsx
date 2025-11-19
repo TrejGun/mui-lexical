@@ -32,7 +32,17 @@ import * as ReactDOM from "react-dom";
 import { useModal } from "../../hooks";
 import { InsertImageDialog } from "../ImagesPlugin";
 import { InsertTableDialog } from "../TablePlugin";
-import { ChatSquareQuoteIcon, CodeIcon, ListOlIcon, ListUlIcon, SquareCheckIcon } from "../../images/icons";
+import {
+  ChatSquareQuoteIcon,
+  CodeIcon,
+  FileImageIcon,
+  HorizontalRuleIcon,
+  ListOlIcon,
+  ListUlIcon,
+  SquareCheckIcon,
+  TableIcon,
+  TextParagraphIcon,
+} from "../../images/icons";
 
 class ComponentPickerOption extends MenuOption {
   // What shows up in the editor
@@ -116,7 +126,7 @@ function getDynamicOptions(editor: LexicalEditor, queryString: string) {
       ...colOptions.map(
         columns =>
           new ComponentPickerOption(`${rows}x${columns} Table`, {
-            icon: <i className="icon table" />,
+            icon: <TableIcon />,
             keywords: ["table"],
             onSelect: () => editor.dispatchCommand(INSERT_TABLE_COMMAND, { columns, rows }),
           }),
@@ -132,7 +142,7 @@ type ShowModal = ReturnType<typeof useModal>[1];
 function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
   return [
     new ComponentPickerOption("Paragraph", {
-      icon: <i className="icon paragraph" />,
+      icon: <TextParagraphIcon />,
       keywords: ["normal", "paragraph", "p", "text"],
       onSelect: () =>
         editor.update(() => {
@@ -157,7 +167,7 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
         }),
     ),
     new ComponentPickerOption("Table", {
-      icon: <i className="icon table" />,
+      icon: <TableIcon />,
       keywords: ["table", "grid", "spreadsheet", "rows", "columns"],
       onSelect: () =>
         showModal("Insert Table", onClose => <InsertTableDialog activeEditor={editor} onClose={onClose} />),
@@ -209,12 +219,12 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
         }),
     }),
     new ComponentPickerOption("Divider", {
-      icon: <i className="icon horizontal-rule" />,
+      icon: <HorizontalRuleIcon />,
       keywords: ["horizontal rule", "divider", "hr"],
       onSelect: () => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined),
     }),
     new ComponentPickerOption("Image", {
-      icon: <i className="icon image" />,
+      icon: <FileImageIcon />,
       keywords: ["image", "photo", "picture", "file"],
       onSelect: () =>
         showModal("Insert Image", onClose => <InsertImageDialog activeEditor={editor} onClose={onClose} />),

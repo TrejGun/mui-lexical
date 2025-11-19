@@ -121,102 +121,6 @@ export const editorStyles = css`
     background-color: rgb(233, 35, 35);
   }
 
-  .test-recorder-toolbar {
-    display: flex;
-  }
-
-  .test-recorder-button {
-    position: relative;
-    display: block;
-    width: 32px;
-    height: 32px;
-    font-size: 10px;
-    padding: 6px 6px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
-    background-color: #222;
-    transition: box-shadow 50ms ease-out;
-  }
-
-  .test-recorder-button:active {
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
-  }
-
-  .test-recorder-button + .test-recorder-button {
-    margin-left: 4px;
-  }
-
-  .test-recorder-button::after {
-    content: "";
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    bottom: 8px;
-    left: 8px;
-    display: block;
-    background-size: contain;
-    filter: invert(1);
-  }
-
-  #options-button {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-  }
-
-  #test-recorder-button {
-    position: fixed;
-    left: 70px;
-    bottom: 20px;
-  }
-
-  #paste-log-button {
-    position: fixed;
-    left: 120px;
-    bottom: 20px;
-  }
-
-  #docs-button {
-    position: fixed;
-    left: 170px;
-    bottom: 20px;
-  }
-
-  #options-button::after {
-    background-image: url(./images/icons/gear.svg);
-  }
-
-  #test-recorder-button::after {
-    background-image: url(./images/icons/journal-code.svg);
-  }
-
-  #paste-log-button::after {
-    background-image: url(./images/icons/clipboard.svg);
-  }
-
-  #docs-button::after {
-    background-image: url(./images/icons/file-earmark-text.svg);
-  }
-
-  #test-recorder-button-snapshot {
-    margin-right: auto;
-  }
-
-  #test-recorder-button-snapshot::after {
-    background-image: url(./images/icons/camera.svg);
-  }
-
-  #test-recorder-button-copy::after {
-    background-image: url(./images/icons/clipboard.svg);
-  }
-
-  #test-recorder-button-download::after {
-    background-image: url(./images/icons/download.svg);
-  }
-
   .typeahead-popover {
     background: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -325,256 +229,21 @@ export const editorStyles = css`
     width: 200px;
   }
 
-  i.palette {
-    background-image: url(./images/icons/palette.svg);
-  }
-
-  i.bucket {
-    background-image: url(./images/icons/paint-bucket.svg);
-  }
-
-  i.bold {
-    background-image: url(./images/icons/type-bold.svg);
-  }
-
-  i.italic {
-    background-image: url(./images/icons/type-italic.svg);
-  }
-
-  i.clear {
-    background-image: url(./images/icons/trash.svg);
-  }
-
-  i.underline {
-    background-image: url(./images/icons/type-underline.svg);
-  }
-
-  i.uppercase {
-    background-image: url(./images/icons/type-uppercase.svg);
-  }
-
-  i.lowercase {
-    background-image: url(./images/icons/type-lowercase.svg);
-  }
-
-  i.capitalize {
-    background-image: url(./images/icons/type-capitalize.svg);
-  }
-
-  i.strikethrough {
-    background-image: url(./images/icons/type-strikethrough.svg);
-  }
-
-  i.subscript {
-    background-image: url(./images/icons/type-subscript.svg);
-  }
-
-  i.superscript {
-    background-image: url(./images/icons/type-superscript.svg);
-  }
-
-  i.highlight {
-    background-image: url(./images/icons/highlighter.svg);
-  }
-
-  i.link {
-    background-image: url(./images/icons/link.svg);
-  }
-
-  i.horizontal-rule {
-    background-image: url(./images/icons/horizontal-rule.svg);
-  }
-
-  .icon.plus {
-    background-image: url(./images/icons/plus.svg);
-  }
-
-  .icon.caret-right {
-    background-image: url(./images/icons/caret-right-fill.svg);
-  }
-
-  .icon.dropdown-more {
-    background-image: url(./images/icons/dropdown-more.svg);
-  }
-
-  .icon.font-color {
-    background-image: url(./images/icons/font-color.svg);
-  }
-
-  .icon.font-family {
-    background-image: url(./images/icons/font-family.svg);
-  }
-
-  .icon.bg-color {
-    background-image: url(./images/icons/bg-color.svg);
-  }
-
-  .icon.table {
-    background-color: #6c757d;
-    mask-image: url(./images/icons/table.svg);
-    -webkit-mask-image: url(./images/icons/table.svg);
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-    mask-size: contain;
-    -webkit-mask-size: contain;
-  }
-
-  i.image {
-    background-image: url(./images/icons/file-image.svg);
-  }
-
-  i.video {
-    background-image: url(./images/icons/youtube.svg);
-  }
-
-  i.table {
-    background-image: url(./images/icons/table.svg);
-  }
-
-  i.close {
-    background-image: url(./images/icons/close.svg);
-  }
-
-  i.figma {
-    background-image: url(./images/icons/figma.svg);
-  }
-
-  i.poll {
-    background-image: url(./images/icons/card-checklist.svg);
-  }
-
-  i.columns {
-    background-image: url(./images/icons/3-columns.svg);
-  }
-
-  i.x {
-    background-image: url(./images/icons/x.svg);
-  }
-
-  i.youtube {
-    background-image: url(./images/icons/youtube.svg);
-  }
-
-  .icon.left-align,
-  i.left-align {
-    background-image: url(./images/icons/text-left.svg);
-  }
-
-  .icon.center-align,
-  i.center-align {
-    background-image: url(./images/icons/text-center.svg);
-  }
-
-  .icon.right-align,
-  i.right-align {
-    background-image: url(./images/icons/text-right.svg);
-  }
-
-  .icon.justify-align,
-  i.justify-align {
-    background-image: url(./images/icons/justify.svg);
-  }
-
-  .icon.vertical-top,
-  i.left-align {
-    background-image: url(./images/icons/vertical-top.svg);
-  }
-
-  .icon.vertical-middle,
-  i.center-align {
-    background-image: url(./images/icons/vertical-middle.svg);
-  }
-
-  .icon.vertical-bottom,
-  i.right-align {
-    background-image: url(./images/icons/vertical-bottom.svg);
-  }
-
-  i.indent {
-    background-image: url(./images/icons/indent.svg);
-  }
-
-  i.markdown {
-    background-image: url(./images/icons/markdown.svg);
-  }
-
-  i.outdent {
-    background-image: url(./images/icons/outdent.svg);
-  }
-
-  i.undo {
-    background-image: url(./images/icons/arrow-counterclockwise.svg);
-  }
-
-  i.redo {
-    background-image: url(./images/icons/arrow-clockwise.svg);
-  }
-
-  i.sticky {
-    background-image: url(./images/icons/sticky.svg);
-  }
-
-  i.mic {
-    background-image: url(./images/icons/mic.svg);
-  }
-
-  i.import {
-    background-image: url(./images/icons/upload.svg);
-  }
-
-  i.export {
-    background-image: url(./images/icons/download.svg);
-  }
-
-  i.share {
-    background-image: url(./images/icons/send.svg);
-  }
-
-  i.diagram-2 {
-    background-image: url(./images/icons/diagram-2.svg);
-  }
-
-  i.user {
-    background-image: url(./images/icons/user.svg);
-  }
-
-  i.equation {
-    background-image: url(./images/icons/plus-slash-minus.svg);
-  }
-
-  i.gif {
-    background-image: url(./images/icons/filetype-gif.svg);
-  }
-
-  i.copy {
-    background-image: url(./images/icons/copy.svg);
-  }
-
-  i.success {
-    background-image: url(./images/icons/success.svg);
-  }
-
-  i.prettier {
-    background-image: url(./images/icons/prettier.svg);
-  }
-
-  i.prettier-error {
-    background-image: url(./images/icons/prettier-error.svg);
-  }
-
-  i.page-break,
-  .icon.page-break {
-    background-image: url(./images/icons/scissors.svg);
-  }
-
   .link-editor .button.active,
   .toolbar .button.active {
     background-color: rgb(223, 232, 250);
   }
 
+  .link-editor div.buttons {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .link-editor .link-input {
     display: block;
-    width: calc(100% - 75px);
+    width: calc(100% - 100px);
     box-sizing: border-box;
     margin: 12px 12px;
     padding: 8px 12px;
@@ -589,7 +258,8 @@ export const editorStyles = css`
   }
 
   .link-editor .link-view {
-    display: block;
+    display: flex;
+    gap: 8px;
     width: calc(100% - 24px);
     margin: 8px 12px;
     padding: 8px 12px;
@@ -608,61 +278,13 @@ export const editorStyles = css`
     width: calc(100% - 33px);
   }
 
-  .link-editor div.link-edit {
-    background-image: url(./images/icons/pencil-fill.svg);
-    background-size: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 35px;
-    vertical-align: -0.25em;
-    position: absolute;
-    right: 30px;
-    top: 0;
-    bottom: 0;
-    cursor: pointer;
-  }
-
-  .link-editor div.link-trash {
-    background-image: url(./images/icons/trash.svg);
-    background-size: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 35px;
-    vertical-align: -0.25em;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    cursor: pointer;
-  }
-
-  .link-editor div.link-cancel {
-    background-image: url(./images/icons/close.svg);
-    background-size: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 35px;
-    vertical-align: -0.25em;
-    margin-right: 28px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    cursor: pointer;
-  }
-
+  .link-editor div.link-edit,
+  .link-editor div.link-trash,
+  .link-editor div.link-cancel,
   .link-editor div.link-confirm {
-    background-image: url(./images/icons/success-alt.svg);
-    background-size: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 35px;
-    vertical-align: -0.25em;
-    margin-right: 2px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    width: 24px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
   }
 
@@ -695,20 +317,6 @@ export const editorStyles = css`
   .mention:focus {
     box-shadow: rgb(180 213 255) 0px 0px 0px 2px;
     outline: none;
-  }
-
-  .characters-limit {
-    color: #888;
-    font-size: 12px;
-    text-align: right;
-    display: block;
-    position: absolute;
-    left: 12px;
-    bottom: 5px;
-  }
-
-  .characters-limit.characters-limit-exceeded {
-    color: red;
   }
 
   .dropdown {
@@ -750,6 +358,8 @@ export const editorStyles = css`
 
   .dropdown .item.wide .icon-text-container {
     display: flex;
+    align-items: center;
+    gap: 4px;
 
     .text {
       min-width: 120px;
@@ -1377,13 +987,14 @@ export const editorStyles = css`
   button.toolbar-item {
     border: 0;
     display: flex;
+    align-items: center;
+    gap: 4px;
     background: none;
     border-radius: 10px;
     padding: 8px;
     cursor: pointer;
     vertical-align: middle;
     flex-shrink: 0;
-    align-items: center;
     justify-content: space-between;
   }
 

@@ -18,7 +18,20 @@ export { TextInput } from "./TextInput";
 
 export * from "./UndoButton";
 export * from "./RedoButton";
+export * from "./BoldButton";
+export * from "./ClearButton";
+export * from "./CodeButton";
+export * from "./ItalicButton";
+export * from "./ImageButton";
+export * from "./HorizontalRuleButton";
+export * from "./LinkButton";
+export * from "./UnderlineButton";
+export * from "./StrikethroughButton";
+export * from "./TableButton";
+export * from "./VideoButton";
+export * from "./Divider";
 export * from "./BlockFormatDropdown";
+export * from "./CodeLanguageDropdown";
 
 export const componentsStyles = [
   buttonStyles,
