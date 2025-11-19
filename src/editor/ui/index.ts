@@ -33,6 +33,7 @@ export * from "./Divider";
 export * from "./BlockFormatDropdown";
 export * from "./CodeLanguageDropdown";
 export * from "./LeftAlignButton";
+export * from "./CenterAlignButton";
 export * from "./RightAlignButton";
 
 export const componentsStyles = [

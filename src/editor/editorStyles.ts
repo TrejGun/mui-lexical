@@ -1020,7 +1020,7 @@ export const editorStyles = css`
   }
 
   button.toolbar-item.active {
-    background-color: rgba(223, 232, 250, 0.3);
+    background-color: rgba(196, 204, 221, 0.3);
   }
 
   button.toolbar-item.active i {
