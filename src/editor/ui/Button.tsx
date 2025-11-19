@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { ReactNode } from "react";
 import { css, Button as MUIButton } from "@mui/material";
 
-import joinClasses from "../utils/joinClasses";
+import { joinClasses } from "../utils";
 
 export const Button = ({
   "data-test-id": dataTestId,
