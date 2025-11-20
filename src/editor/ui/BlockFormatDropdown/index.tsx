@@ -13,7 +13,7 @@ import {
   formatQuote,
 } from "../../plugins/ToolbarPlugin/utils";
 import { SHORTCUTS } from "../../plugins/ShortcutsPlugin/shortcuts";
-import { dropDownActiveClass } from "../../utils/dropDownActiveClass";
+import { dropDownActiveClass } from "../../utils";
 import {
   ChatSquareQuoteIcon,
   CodeIcon,
@@ -28,6 +28,7 @@ import {
   TypeH5Icon,
   TypeH6Icon,
 } from "../../images/icons";
+import { TToolbarBlockFormatControl } from "../../types";
 
 export type BlockType = keyof typeof blockTypeToBlockName;
 
@@ -54,28 +55,35 @@ const formatBlockIcons: Record<BlockType, () => JSX.Element> = {
 };
 
 const blockFormatOptions: Array<IBlockFormatOptions> = [
-  { blockType: "paragraph", title: "Normal", icon: formatBlockIcons.paragraph, shortcut: "NORMAL" },
-  { blockType: "h1", title: "Heading 1", icon: formatBlockIcons.h1, shortcut: "HEADING1" },
-  { blockType: "h2", title: "Heading 2", icon: formatBlockIcons.h2, shortcut: "HEADING2" },
-  { blockType: "h3", title: "Heading 3", icon: formatBlockIcons.h3, shortcut: "HEADING3" },
-  { blockType: "h4", title: "Heading 4", icon: formatBlockIcons.h4, shortcut: "HEADING4" },
-  { blockType: "h5", title: "Heading 5", icon: formatBlockIcons.h5, shortcut: "HEADING5" },
-  { blockType: "h6", title: "Heading 6", icon: formatBlockIcons.h6, shortcut: "HEADING6" },
-  { blockType: "bullet", title: "Bullet List", icon: formatBlockIcons.bullet, shortcut: "BULLET_LIST" },
-  { blockType: "number", title: "Numbered List", icon: formatBlockIcons.number, shortcut: "NUMBERED_LIST" },
-  { blockType: "check", title: "Check List", icon: formatBlockIcons.check, shortcut: "CHECK_LIST" },
-  { blockType: "quote", title: "Quote", icon: formatBlockIcons.quote, shortcut: "QUOTE" },
-  { blockType: "code", title: "Code Block", icon: formatBlockIcons.code, shortcut: "CODE_BLOCK" },
+  {
+    blockType: "paragraph",
+    title: blockTypeToBlockName.paragraph,
+    icon: formatBlockIcons.paragraph,
+    shortcut: "NORMAL",
+  },
+  { blockType: "h1", title: blockTypeToBlockName.h1, icon: formatBlockIcons.h1, shortcut: "HEADING1" },
+  { blockType: "h2", title: blockTypeToBlockName.h2, icon: formatBlockIcons.h2, shortcut: "HEADING2" },
+  { blockType: "h3", title: blockTypeToBlockName.h3, icon: formatBlockIcons.h3, shortcut: "HEADING3" },
+  { blockType: "h4", title: blockTypeToBlockName.h4, icon: formatBlockIcons.h4, shortcut: "HEADING4" },
+  { blockType: "h5", title: blockTypeToBlockName.h5, icon: formatBlockIcons.h5, shortcut: "HEADING5" },
+  { blockType: "h6", title: blockTypeToBlockName.h6, icon: formatBlockIcons.h6, shortcut: "HEADING6" },
+  { blockType: "bullet", title: blockTypeToBlockName.bullet, icon: formatBlockIcons.bullet, shortcut: "BULLET_LIST" },
+  { blockType: "number", title: blockTypeToBlockName.number, icon: formatBlockIcons.number, shortcut: "NUMBERED_LIST" },
+  { blockType: "check", title: blockTypeToBlockName.check, icon: formatBlockIcons.check, shortcut: "CHECK_LIST" },
+  { blockType: "quote", title: blockTypeToBlockName.quote, icon: formatBlockIcons.quote, shortcut: "QUOTE" },
+  { blockType: "code", title: blockTypeToBlockName.code, icon: formatBlockIcons.code, shortcut: "CODE_BLOCK" },
 ];
 
 export const BlockFormatDropDown = ({
   editor,
   blockType,
   disabled = false,
+  controls = [],
 }: {
   blockType: BlockType;
   editor: LexicalEditor;
   disabled?: boolean;
+  controls?: Array<TToolbarBlockFormatControl>;
 }): JSX.Element => {
   const onClItemClick = useMemo(() => {
     const clickActions: Record<BlockType, () => void> = {
@@ -97,6 +105,10 @@ export const BlockFormatDropDown = ({
 
   const Icon = formatBlockIcons[blockType];
 
+  const filteredOptions = controls.length
+    ? blockFormatOptions.filter(o => controls.includes(o.blockType))
+    : blockFormatOptions;
+
   return (
     <DropDown
       disabled={disabled}
@@ -105,7 +117,7 @@ export const BlockFormatDropDown = ({
       buttonLabel={blockTypeToBlockName[blockType]}
       buttonAriaLabel="Formatting options for text style"
     >
-      {blockFormatOptions.map(o => {
+      {filteredOptions.map(o => {
         const Icon = o.icon;
         return (
           <DropDownItem

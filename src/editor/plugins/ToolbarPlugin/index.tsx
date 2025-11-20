@@ -6,8 +6,7 @@
  *
  */
 
-import type { FC, JSX } from "react";
-import { Dispatch, useCallback, useEffect, useState } from "react";
+import { FC, Fragment, JSX, Dispatch, useCallback, useEffect, useState } from "react";
 import { $isCodeNode, CODE_LANGUAGE_MAP } from "@lexical/code";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $isListNode, ListNode } from "@lexical/list";
@@ -256,21 +255,31 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
   const controlsMap: IControlsMap = {
     undo: <UndoButton disabled={!toolbarState.canUndo || !isEditable} activeEditor={activeEditor} />,
     redo: <RedoButton disabled={!toolbarState.canRedo || !isEditable} activeEditor={activeEditor} />,
+    blockFormat: (
+      <Fragment>
+        {toolbarState.blockType in blockTypeToBlockName && activeEditor === editor && (
+          <BlockFormatDropDown
+            controls={controls.blockFormat}
+            disabled={!isEditable}
+            blockType={toolbarState.blockType}
+            editor={activeEditor}
+          />
+        )}
+        <Divider />
+      </Fragment>
+    ),
   };
 
   return (
     <div className="toolbar">
       {controls.history && (
-        <>
+        <Fragment>
           {controls.history.map(c => controlsMap[c])}
           <Divider />
-        </>
+        </Fragment>
       )}
 
-      {toolbarState.blockType in blockTypeToBlockName && activeEditor === editor && (
-        <BlockFormatDropDown disabled={!isEditable} blockType={toolbarState.blockType} editor={activeEditor} />
-      )}
-      <Divider />
+      {controls.blockFormat && controlsMap.blockFormat}
       {toolbarState.blockType === "code" ? (
         <CodeLanguageDropdown
           disabled={!isEditable}
