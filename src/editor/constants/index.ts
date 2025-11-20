@@ -34,5 +34,5 @@ export const toolbarDefaultControls: IToolbarControls = {
     "typescript",
     "xml",
   ],
-  clear: ["formatting", "editor"],
+  clear: ["editor"],
 };
