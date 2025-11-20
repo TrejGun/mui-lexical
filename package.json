@@ -88,6 +88,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
+  "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
