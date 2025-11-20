@@ -121,7 +121,11 @@ const EditorContent = ({ controls }: IEditorProps) => {
             <>
               <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
               <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
-              <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} setIsLinkEditMode={setIsLinkEditMode} />
+              <FloatingTextFormatToolbarPlugin
+                anchorElem={floatingAnchorElem}
+                setIsLinkEditMode={setIsLinkEditMode}
+                controls={controls?.textFormat}
+              />
             </>
           )}
         </div>

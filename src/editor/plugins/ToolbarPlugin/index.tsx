@@ -53,7 +53,7 @@ import {
 } from "../../ui";
 import { getSelectedNode, sanitizeUrl } from "../../utils";
 import { IControlsMap, IToolbarControls } from "../../types";
-import { toolbarDefaultControls } from "./constants";
+import { toolbarDefaultControls } from "../../constants";
 
 interface IToolbarPluginProps {
   editor: LexicalEditor;
@@ -278,23 +278,39 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
         />
       </Fragment>
     ),
-    bold: <BoldButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
-    italic: <ItalicButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
-    underline: <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    bold: <BoldButton disabled={!isEditable} activeEditor={activeEditor} isBold={toolbarState.isBold} />,
+    italic: <ItalicButton disabled={!isEditable} activeEditor={activeEditor} isItalic={toolbarState.isItalic} />,
+    underline: (
+      <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} isUnderline={toolbarState.isUnderline} />
+    ),
     strikethrough: (
-      <StrikethroughButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+      <StrikethroughButton
+        disabled={!isEditable}
+        activeEditor={activeEditor}
+        isStrikethrough={toolbarState.isStrikethrough}
+      />
     ),
     code: (
       <Fragment>
         {canViewerSeeInsertCodeButton && (
-          <CodeButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          <CodeButton disabled={!isEditable} activeEditor={activeEditor} isCode={toolbarState.isCode} />
         )}
       </Fragment>
     ),
-    link: <LinkButton disabled={!isEditable} insertLink={insertLink} toolbarState={toolbarState} />,
-    leftAlign: <LeftAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
-    centerAlign: <CenterAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
-    rightAlign: <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    link: <LinkButton disabled={!isEditable} insertLink={insertLink} isLink={toolbarState.isLink} />,
+    leftAlign: (
+      <LeftAlignButton disabled={!isEditable} activeEditor={activeEditor} isLeftAlign={toolbarState.isLeftAlign} />
+    ),
+    centerAlign: (
+      <CenterAlignButton
+        disabled={!isEditable}
+        activeEditor={activeEditor}
+        isCenterAlign={toolbarState.isCenterAlign}
+      />
+    ),
+    rightAlign: (
+      <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} isRightAlign={toolbarState.isRightAlign} />
+    ),
     clear: <ClearButton disabled={!isEditable} activeEditor={activeEditor} />,
     horizontal: <HorizontalRuleButton activeEditor={activeEditor} />,
     image: <ImageButton activeEditor={activeEditor} showModal={showModal} />,

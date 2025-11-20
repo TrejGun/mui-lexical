@@ -6,7 +6,7 @@
  *
  */
 
-import { Dispatch, JSX, useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, Fragment, JSX, useCallback, useEffect, useRef, useState } from "react";
 import { $isCodeHighlightNode } from "@lexical/code";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -17,24 +17,26 @@ import {
   $isRangeSelection,
   $isTextNode,
   COMMAND_PRIORITY_LOW,
-  FORMAT_TEXT_COMMAND,
   getDOMSelection,
   LexicalEditor,
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { createPortal } from "react-dom";
 
-import { getDOMRangeRect } from "../../utils/getDOMRangeRect";
-import { getSelectedNode } from "../../utils/getSelectedNode";
-import { setFloatingElemPosition } from "../../utils/setFloatingElemPosition";
+import { getDOMRangeRect, getSelectedNode, setFloatingElemPosition } from "../../utils";
 import {
-  CodeIcon,
-  LinkIcon,
-  TypeBoldIcon,
-  TypeItalicIcon,
-  TypeStrikethroughIcon,
-  TypeUnderlineIcon,
-} from "../../images/icons";
+  BoldButton,
+  CenterAlignButton,
+  CodeButton,
+  ItalicButton,
+  LeftAlignButton,
+  LinkButton,
+  RightAlignButton,
+  StrikethroughButton,
+  UnderlineButton,
+} from "../../ui";
+import { IControlsMap, TToolbarTextFormatControl } from "../../types";
+import { toolbarDefaultControls } from "../../constants";
 
 function TextFormatFloatingToolbar({
   editor,
@@ -45,7 +47,11 @@ function TextFormatFloatingToolbar({
   isUnderline,
   isCode,
   isStrikethrough,
+  isLeftAlign,
+  isCenterAlign,
+  isRightAlign,
   setIsLinkEditMode,
+  controls = toolbarDefaultControls.textFormat,
 }: {
   editor: LexicalEditor;
   anchorElem: HTMLElement;
@@ -55,7 +61,11 @@ function TextFormatFloatingToolbar({
   isLink: boolean;
   isStrikethrough: boolean;
   isUnderline: boolean;
+  isLeftAlign: boolean;
+  isCenterAlign: boolean;
+  isRightAlign: boolean;
   setIsLinkEditMode: Dispatch<boolean>;
+  controls?: Array<TToolbarTextFormatControl>;
 }): JSX.Element {
   const popupCharStylesEditorRef = useRef<HTMLDivElement | null>(null);
 
@@ -173,76 +183,21 @@ function TextFormatFloatingToolbar({
     );
   }, [editor, $updateTextFormatFloatingToolbar]);
 
+  const controlsMap: Pick<IControlsMap, TToolbarTextFormatControl> = {
+    bold: <BoldButton activeEditor={editor} isBold={isBold} />,
+    italic: <ItalicButton activeEditor={editor} isItalic={isItalic} />,
+    underline: <UnderlineButton activeEditor={editor} isUnderline={isUnderline} />,
+    strikethrough: <StrikethroughButton activeEditor={editor} isStrikethrough={isStrikethrough} />,
+    code: <CodeButton activeEditor={editor} isCode={isCode} />,
+    link: <LinkButton insertLink={insertLink} isLink={isLink} />,
+    leftAlign: <LeftAlignButton activeEditor={editor} isLeftAlign={isLeftAlign} />,
+    centerAlign: <CenterAlignButton activeEditor={editor} isCenterAlign={isCenterAlign} />,
+    rightAlign: <RightAlignButton activeEditor={editor} isRightAlign={isRightAlign} />,
+  };
+
   return (
     <div ref={popupCharStylesEditorRef} className="floating-text-format-popup">
-      {editor.isEditable() && (
-        <>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-            }}
-            className={"popup-item spaced " + (isBold ? "active" : "")}
-            title="Bold"
-            aria-label="Format text as bold"
-          >
-            <TypeBoldIcon />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-            }}
-            className={"popup-item spaced " + (isItalic ? "active" : "")}
-            title="Italic"
-            aria-label="Format text as italics"
-          >
-            <TypeItalicIcon />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-            }}
-            className={"popup-item spaced " + (isUnderline ? "active" : "")}
-            title="Underline"
-            aria-label="Format text to underlined"
-          >
-            <TypeUnderlineIcon />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-            }}
-            className={"popup-item spaced " + (isStrikethrough ? "active" : "")}
-            title="Strikethrough"
-            aria-label="Format text with a strikethrough"
-          >
-            <TypeStrikethroughIcon />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-            }}
-            className={"popup-item spaced " + (isCode ? "active" : "")}
-            title="Insert code block"
-            aria-label="Insert code block"
-          >
-            <CodeIcon />
-          </button>
-          <button
-            type="button"
-            onClick={insertLink}
-            className={"popup-item spaced " + (isLink ? "active" : "")}
-            title="Insert link"
-            aria-label="Insert link"
-          >
-            <LinkIcon />
-          </button>
-        </>
-      )}
+      {editor.isEditable() && !!controls?.length && <>{controls.map(c => controlsMap[c])}</>}
     </div>
   );
 }
@@ -251,6 +206,7 @@ function useFloatingTextFormatToolbar(
   editor: LexicalEditor,
   anchorElem: HTMLElement,
   setIsLinkEditMode: Dispatch<boolean>,
+  controls?: Array<TToolbarTextFormatControl>,
 ): JSX.Element | null {
   const [isText, setIsText] = useState(false);
   const [isLink, setIsLink] = useState(false);
@@ -259,6 +215,9 @@ function useFloatingTextFormatToolbar(
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
+  const [isLeftAlign, setIsLeftAlign] = useState(false);
+  const [isCenterAlign, setIsCenterAlign] = useState(false);
+  const [isRightAlign, setIsRightAlign] = useState(false);
 
   const updatePopup = useCallback(() => {
     editor.getEditorState().read(() => {
@@ -281,8 +240,9 @@ function useFloatingTextFormatToolbar(
       if (!$isRangeSelection(selection)) {
         return;
       }
-
       const node = getSelectedNode(selection);
+      const element = node.getTopLevelElementOrThrow();
+      const align = element.getFormatType();
 
       // Update text format
       setIsBold(selection.hasFormat("bold"));
@@ -290,6 +250,9 @@ function useFloatingTextFormatToolbar(
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
       setIsCode(selection.hasFormat("code"));
+      setIsLeftAlign(align === "left");
+      setIsCenterAlign(align === "center");
+      setIsRightAlign(align === "right");
 
       // Update links
       const parent = node.getParent();
@@ -347,7 +310,11 @@ function useFloatingTextFormatToolbar(
       isStrikethrough={isStrikethrough}
       isUnderline={isUnderline}
       isCode={isCode}
+      isLeftAlign={isLeftAlign}
+      isCenterAlign={isCenterAlign}
+      isRightAlign={isRightAlign}
       setIsLinkEditMode={setIsLinkEditMode}
+      controls={controls}
     />,
     anchorElem,
   );
@@ -356,12 +323,14 @@ function useFloatingTextFormatToolbar(
 export const FloatingTextFormatToolbarPlugin = ({
   anchorElem = document.body,
   setIsLinkEditMode,
+  controls,
 }: {
   anchorElem?: HTMLElement;
   setIsLinkEditMode: Dispatch<boolean>;
+  controls?: Array<TToolbarTextFormatControl>;
 }): JSX.Element | null => {
   const [editor] = useLexicalComposerContext();
-  return useFloatingTextFormatToolbar(editor, anchorElem, setIsLinkEditMode);
+  return useFloatingTextFormatToolbar(editor, anchorElem, setIsLinkEditMode, controls);
 };
 
 export { floatTextFormatToolbarPluginStyles } from "./floatTextFormatToolbarPluginStyles";
