@@ -68,7 +68,7 @@
   "engines": {
     "node": ">=20"
   },
-  "homepage": "https://github.com/TrejGun/mui-lexical#readme",
+  "homepage": "https://github.com/ethberry/mui-lexical#readme",
   "keywords": [
     "material-ui",
     "mui",
@@ -94,7 +94,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TrejGun/mui-lexical.git"
+    "url": "git+https://github.com/ethberry/mui-lexical.git"
   },
   "scripts": {
     "build": "tsc",
