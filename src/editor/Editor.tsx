@@ -14,6 +14,8 @@ import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { CAN_USE_DOM } from "@lexical/utils";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { EditorState } from "lexical";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 
 import { SharedHistoryContext, useSharedHistoryContext, ToolbarContext } from "./context";
 import {
@@ -37,15 +39,42 @@ import { PlaygroundNodes } from "./nodes";
 import { playgroundEditorTheme } from "./themes/playgroundEditorTheme";
 import { IToolbarControls } from "./types";
 
-const EditorContent = ({ controls }: IEditorProps) => {
+type TEditorContentProps = Omit<IEditorProps, "initialEditorState" | "readOnly">;
+
+const EditorContent = (props: TEditorContentProps) => {
+  const {
+    autoFocus,
+    placeholder = "Enter some rich text...",
+    hideToolbar = false,
+    controls,
+    onStateChange,
+    onTextChange,
+    onBlur,
+    onFocus,
+  } = props;
   const { historyState } = useSharedHistoryContext();
   const isEditable = useLexicalEditable();
-  const placeholder = "Enter some rich text...";
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false);
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+
+  const handleChange = (editorState: EditorState) => {
+    editorState.read(() => {
+      if (onStateChange) {
+        onStateChange(editorState);
+      }
+
+      if (onTextChange) {
+        const textContent = editorState.read(() => {
+          const root = editorState._nodeMap.get("root");
+          return root ? root.getTextContent() : "";
+        });
+        onTextChange(textContent);
+      }
+    });
+  };
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -72,13 +101,15 @@ const EditorContent = ({ controls }: IEditorProps) => {
   return (
     <SharedHistoryContext>
       <ToolbarContext>
-        <ToolbarPlugin
-          editor={editor}
-          activeEditor={activeEditor}
-          controls={controls}
-          setActiveEditor={setActiveEditor}
-          setIsLinkEditMode={setIsLinkEditMode}
-        />
+        {!hideToolbar && (
+          <ToolbarPlugin
+            editor={editor}
+            activeEditor={activeEditor}
+            controls={controls}
+            setActiveEditor={setActiveEditor}
+            setIsLinkEditMode={setIsLinkEditMode}
+          />
+        )}
         <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
         <div className={`editor-container`}>
           <AutoFocusPlugin />
@@ -89,7 +120,7 @@ const EditorContent = ({ controls }: IEditorProps) => {
             contentEditable={
               <div className="editor-scroller">
                 <div className="editor" ref={onRef}>
-                  <ContentEditable placeholder={placeholder} />
+                  <ContentEditable placeholder={placeholder} autoFocus={autoFocus} onBlur={onBlur} onFocus={onFocus} />
                 </div>
               </div>
             }
@@ -107,6 +138,7 @@ const EditorContent = ({ controls }: IEditorProps) => {
           <ClickableLinkPlugin disabled={isEditable} />
           <HorizontalRulePlugin />
           <TabIndentationPlugin maxIndent={7} />
+          <OnChangePlugin onChange={handleChange} />
           {floatingAnchorElem && (
             <>
               <FloatingLinkEditorPlugin
@@ -134,15 +166,26 @@ const EditorContent = ({ controls }: IEditorProps) => {
   );
 };
 
-interface IEditorProps {
+export interface IEditorProps {
+  initialEditorState?: string;
+  placeholder?: string;
+  readOnly?: boolean;
+  autoFocus?: boolean;
+  hideToolbar?: boolean;
   controls?: IToolbarControls;
+  onStateChange?: (state: EditorState) => void;
+  onTextChange?: (text: string) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
 }
 
-export const Editor = ({ controls }: IEditorProps) => {
+export const Editor = (props: IEditorProps) => {
+  const { initialEditorState, readOnly, ...restProps } = props;
   return (
     <LexicalComposer
       initialConfig={{
-        editorState: null,
+        editorState: initialEditorState || null,
+        editable: !readOnly,
         namespace: "Playground",
         nodes: [...PlaygroundNodes],
         onError: (error: Error) => {
@@ -151,7 +194,7 @@ export const Editor = ({ controls }: IEditorProps) => {
         theme: playgroundEditorTheme,
       }}
     >
-      <EditorContent controls={controls} />
+      <EditorContent {...restProps} />
     </LexicalComposer>
   );
 };

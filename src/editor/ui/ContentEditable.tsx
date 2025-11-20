@@ -1,20 +1,21 @@
 import type { JSX } from "react";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { ContentEditable, ContentEditableProps } from "@lexical/react/LexicalContentEditable";
 import { css } from "@mui/material";
 
-interface ILexicalContentEditableProps {
-  className?: string;
+type ILexicalContentEditableProps = Omit<ContentEditableProps, "placeholder"> & {
   placeholderClassName?: string;
   placeholder: string;
-}
+};
 
 export const LexicalContentEditable = ({
   className,
   placeholder,
   placeholderClassName,
+  ...restProps
 }: ILexicalContentEditableProps): JSX.Element => {
   return (
     <ContentEditable
+      {...restProps}
       className={className ?? "ContentEditable__root"}
       aria-placeholder={placeholder}
       placeholder={<div className={placeholderClassName ?? "ContentEditable__placeholder"}>{placeholder}</div>}
