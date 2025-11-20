@@ -23,5 +23,5 @@
     "strictPropertyInitialization": false,
     "target": "es2017"
   },
-  "exclude": ["node_modules", "./dist", "./storybook"]
+  "exclude": ["node_modules", "./dist", "./.storybook"]
 }
