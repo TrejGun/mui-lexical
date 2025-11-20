@@ -268,6 +268,16 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
         <Divider />
       </Fragment>
     ),
+    codeLanguages: (
+      <Fragment>
+        <CodeLanguageDropdown
+          disabled={!isEditable}
+          toolbarState={toolbarState}
+          onCodeLanguageSelect={onCodeLanguageSelect}
+          controls={controls.codeLanguages}
+        />
+      </Fragment>
+    ),
   };
 
   return (
@@ -281,11 +291,7 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
 
       {controls.blockFormat && controlsMap.blockFormat}
       {toolbarState.blockType === "code" ? (
-        <CodeLanguageDropdown
-          disabled={!isEditable}
-          toolbarState={toolbarState}
-          onCodeLanguageSelect={onCodeLanguageSelect}
-        />
+        controlsMap.codeLanguages
       ) : (
         <>
           <BoldButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />

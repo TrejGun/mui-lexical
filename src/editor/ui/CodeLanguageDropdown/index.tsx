@@ -2,8 +2,9 @@ import React from "react";
 import { CODE_LANGUAGE_FRIENDLY_NAME_MAP, getLanguageFriendlyName } from "@lexical/code";
 
 import { DropDown, DropDownItem } from "../DropDown";
-import { dropDownActiveClass } from "../../utils/dropDownActiveClass";
+import { dropDownActiveClass } from "../../utils";
 import { ToolbarState } from "../../context";
+import { TToolbarCodeLanguagesControl } from "../../types";
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
@@ -21,9 +22,16 @@ interface ICodeLanguageDropdownProps {
   toolbarState: ToolbarState;
   onCodeLanguageSelect: (value: string) => void;
   disabled?: boolean;
+  controls?: Array<TToolbarCodeLanguagesControl>;
 }
 
-export const CodeLanguageDropdown = ({ disabled, toolbarState, onCodeLanguageSelect }: ICodeLanguageDropdownProps) => {
+export const CodeLanguageDropdown = (props: ICodeLanguageDropdownProps) => {
+  const { disabled, toolbarState, controls = [], onCodeLanguageSelect } = props;
+
+  const filteredOptions = controls.length
+    ? CODE_LANGUAGE_OPTIONS.filter(([value]) => controls.includes(value))
+    : CODE_LANGUAGE_OPTIONS;
+
   return (
     <DropDown
       disabled={disabled}
@@ -31,7 +39,7 @@ export const CodeLanguageDropdown = ({ disabled, toolbarState, onCodeLanguageSel
       buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)}
       buttonAriaLabel="Select language"
     >
-      {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
+      {filteredOptions.map(([value, name]) => {
         return (
           <DropDownItem
             className={`item ${dropDownActiveClass(value === toolbarState.codeLanguage)}`}
