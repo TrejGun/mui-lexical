@@ -46,6 +46,7 @@ const EditorContent = (props: TEditorContentProps) => {
     autoFocus,
     placeholder = "Enter some rich text...",
     hideToolbar = false,
+    toolbarPlacement = "top",
     controls,
     onStateChange,
     onTextChange,
@@ -101,17 +102,17 @@ const EditorContent = (props: TEditorContentProps) => {
   return (
     <SharedHistoryContext>
       <ToolbarContext>
-        {!hideToolbar && (
-          <ToolbarPlugin
-            editor={editor}
-            activeEditor={activeEditor}
-            controls={controls}
-            setActiveEditor={setActiveEditor}
-            setIsLinkEditMode={setIsLinkEditMode}
-          />
-        )}
-        <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
-        <div className={`editor-container`}>
+        <div className="editor-container">
+          {!hideToolbar && toolbarPlacement === "top" && (
+            <ToolbarPlugin
+              editor={editor}
+              activeEditor={activeEditor}
+              controls={controls}
+              setActiveEditor={setActiveEditor}
+              setIsLinkEditMode={setIsLinkEditMode}
+            />
+          )}
+          <ShortcutsPlugin editor={activeEditor} setIsLinkEditMode={setIsLinkEditMode} />
           <AutoFocusPlugin />
           <ClearEditorPlugin />
           <ComponentPickerPlugin />
@@ -160,6 +161,16 @@ const EditorContent = (props: TEditorContentProps) => {
               />
             </>
           )}
+
+          {!hideToolbar && toolbarPlacement === "bottom" && (
+            <ToolbarPlugin
+              editor={editor}
+              activeEditor={activeEditor}
+              controls={controls}
+              setActiveEditor={setActiveEditor}
+              setIsLinkEditMode={setIsLinkEditMode}
+            />
+          )}
         </div>
       </ToolbarContext>
     </SharedHistoryContext>
@@ -173,6 +184,7 @@ export interface IEditorProps {
   autoFocus?: boolean;
   hideToolbar?: boolean;
   controls?: IToolbarControls;
+  toolbarPlacement?: "top" | "bottom";
   onStateChange?: (state: EditorState) => void;
   onTextChange?: (text: string) => void;
   onBlur?: () => void;

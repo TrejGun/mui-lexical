@@ -14,15 +14,7 @@ const meta: Meta<typeof Editor> = {
       },
     },
   },
-  decorators: [
-    Story => (
-      <>
-        <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
-          <Story />
-        </div>
-      </>
-    ),
-  ],
+  decorators: [Story => <Story />],
 };
 
 export default meta;
@@ -30,7 +22,16 @@ type Story = StoryObj<typeof Editor>;
 
 export const Default: Story = {
   name: "Default Editor",
-  render: () => <Editor />,
+  render: () => (
+    <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
+      <Editor />
+    </div>
+  ),
+};
+
+export const BottomToolbar: Story = {
+  name: "Bottom Toolbar Editor",
+  render: () => <Editor toolbarPlacement="bottom" />,
 };
 
 export const InContainer: Story = {
