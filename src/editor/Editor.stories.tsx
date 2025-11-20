@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 
-import { Editor } from "./Editor";
+import { Editor, IEditorProps } from "./Editor";
+import { IToolbarControls } from "./types";
+import { Display } from "../display";
 
 const meta: Meta<typeof Editor> = {
   title: "Editor/Editor",
@@ -90,4 +93,104 @@ export const Compact: Story = {
       <Editor />
     </div>
   ),
+};
+
+export const WithMinimalControls: Story = {
+  name: "Editor with Minimal Controls",
+  render: () => {
+    const minimalControls: IToolbarControls = {
+      history: ["undo", "redo"],
+      textFormat: ["bold", "italic", "underline"],
+      blockFormat: ["paragraph", "h1", "h2", "h3"],
+    };
+
+    return (
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "40px auto",
+          border: "1px solid #e0e0e0",
+          borderRadius: "8px",
+          overflow: "hidden",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Editor controls={minimalControls} />
+      </div>
+    );
+  },
+};
+
+export const WithCustomControls: Story = {
+  name: "Editor with Custom Controls",
+  render: () => {
+    const customControls: IToolbarControls = {
+      history: ["undo", "redo"],
+      blockFormat: ["paragraph", "h1", "h2", "h3", "h4", "quote", "code"],
+      textFormat: ["bold", "italic", "strikethrough", "link", "leftAlign", "centerAlign", "rightAlign"],
+      viewFormat: ["image", "table"],
+      clear: ["clear"],
+    };
+
+    return (
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "40px auto",
+          border: "1px solid #e0e0e0",
+          borderRadius: "8px",
+          overflow: "hidden",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Editor controls={customControls} />
+      </div>
+    );
+  },
+};
+
+export const WithDisplay: Story = {
+  name: "Editor with Display Component",
+  render: () => {
+    const [value, setValue] = useState("");
+
+    const onChangeState: IEditorProps["onStateChange"] = state => {
+      const json = JSON.stringify(state.toJSON());
+      setValue(json);
+    };
+
+    return (
+      <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "40px auto",
+            border: "1px solid #e0e0e0",
+            borderRadius: "8px",
+            overflow: "hidden",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            backgroundColor: "#fff",
+          }}
+        >
+          <Editor onStateChange={onChangeState} />
+        </div>
+        <div
+          style={{
+            padding: "20px 40px",
+            minHeight: "300px",
+            margin: "20px auto",
+            border: "1px solid #e0e0e0",
+            borderRadius: "8px",
+            overflow: "hidden",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            backgroundColor: "#fff",
+          }}
+        >
+          <Display data={value} />
+        </div>
+      </div>
+    );
+  },
 };
