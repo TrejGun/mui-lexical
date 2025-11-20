@@ -278,6 +278,24 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
         />
       </Fragment>
     ),
+    bold: <BoldButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    italic: <ItalicButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    underline: <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    strikethrough: (
+      <StrikethroughButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+    ),
+    code: (
+      <Fragment>
+        {canViewerSeeInsertCodeButton && (
+          <CodeButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+        )}
+      </Fragment>
+    ),
+    link: <LinkButton disabled={!isEditable} insertLink={insertLink} toolbarState={toolbarState} />,
+    leftAlign: <LeftAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    centerAlign: <CenterAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    rightAlign: <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
+    clear: <ClearButton disabled={!isEditable} activeEditor={activeEditor} />,
   };
 
   return (
@@ -294,24 +312,22 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
         controlsMap.codeLanguages
       ) : (
         <>
-          <BoldButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <ItalicButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <UnderlineButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <StrikethroughButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          {canViewerSeeInsertCodeButton && (
-            <CodeButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          {controls.textFormat && (
+            <Fragment>
+              {controls.textFormat.map(c => controlsMap[c])}
+              <Divider />
+            </Fragment>
           )}
-          <LinkButton disabled={!isEditable} insertLink={insertLink} toolbarState={toolbarState} />
-          <ClearButton disabled={!isEditable} activeEditor={activeEditor} />
 
-          <Divider />
-          <LeftAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <CenterAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
-          <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />
+          {controls.clear && (
+            <Fragment>
+              {controls.clear.map(c => controlsMap[c])}
+              <Divider />
+            </Fragment>
+          )}
 
           {canViewerSeeInsertDropdown && (
             <>
-              <Divider />
               <HorizontalRuleButton activeEditor={activeEditor} />
               <ImageButton activeEditor={activeEditor} showModal={showModal} />
               <VideoButton activeEditor={activeEditor} showModal={showModal} />
