@@ -33,7 +33,7 @@ import { useModal } from "../../hooks";
 import {
   BlockFormatDropDown,
   BoldButton,
-  ClearButton,
+  ClearFormattingButton,
   CodeButton,
   CodeLanguageDropdown,
   Divider,
@@ -50,10 +50,12 @@ import {
   RightAlignButton,
   LeftAlignButton,
   CenterAlignButton,
+  ClearEditorButton,
 } from "../../ui";
 import { getSelectedNode, sanitizeUrl } from "../../utils";
 import { IControlsMap, IToolbarControls } from "../../types";
 import { toolbarDefaultControls } from "../../constants";
+import { clearEditor, clearFormatting } from "./utils";
 
 interface IToolbarPluginProps {
   editor: LexicalEditor;
@@ -249,6 +251,14 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
     [activeEditor, selectedElementKey],
   );
 
+  const onClearFormatting = useCallback(() => {
+    clearFormatting(activeEditor);
+  }, [activeEditor]);
+
+  const onClearEditor = useCallback(() => {
+    clearEditor(activeEditor);
+  }, [activeEditor]);
+
   const canViewerSeeInsertDropdown = !toolbarState.isImageCaption;
   const canViewerSeeInsertCodeButton = !toolbarState.isImageCaption;
 
@@ -311,7 +321,8 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
     rightAlign: (
       <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} isRightAlign={toolbarState.isRightAlign} />
     ),
-    clear: <ClearButton disabled={!isEditable} activeEditor={activeEditor} />,
+    formatting: <ClearFormattingButton disabled={!isEditable} onClick={onClearFormatting} />,
+    editor: <ClearEditorButton disabled={!isEditable} onClick={onClearEditor} />,
     horizontal: <HorizontalRuleButton activeEditor={activeEditor} />,
     image: <ImageButton activeEditor={activeEditor} showModal={showModal} />,
     video: <VideoButton activeEditor={activeEditor} showModal={showModal} />,

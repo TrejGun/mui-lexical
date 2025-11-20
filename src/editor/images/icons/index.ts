@@ -27,6 +27,7 @@ export * from "./file-image";
 export * from "./filetype-gif";
 export * from "./font-color";
 export * from "./font-family";
+export * from "./format-clear";
 export * from "./highlighter";
 export * from "./horizontal-rule";
 export * from "./indent";

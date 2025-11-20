@@ -15,15 +15,16 @@ export type TToolbarTextFormatControl =
   | "centerAlign"
   | "rightAlign";
 export type TToolbarViewFormatControl = "horizontal" | "image" | "video" | "table";
+export type TToolbarClearControl = "formatting" | "editor";
 export type TToolbarBlockFormatControl = keyof typeof blockTypeToBlockName;
 export type TToolbarCodeLanguagesControl = keyof typeof CODE_LANGUAGE_FRIENDLY_NAME_MAP;
 export type TToolbarControl =
   | TToolbarHistoryControl
   | TToolbarTextFormatControl
   | TToolbarViewFormatControl
+  | TToolbarClearControl
   | "blockFormat"
-  | "codeLanguages"
-  | "clear";
+  | "codeLanguages";
 
 export interface IToolbarControls {
   history?: Array<TToolbarHistoryControl>;
@@ -31,7 +32,7 @@ export interface IToolbarControls {
   blockFormat?: Array<TToolbarBlockFormatControl>;
   viewFormat?: Array<TToolbarViewFormatControl>;
   codeLanguages?: Array<TToolbarCodeLanguagesControl>;
-  clear?: ["clear"];
+  clear?: Array<TToolbarClearControl>;
 }
 
 export type IControlsMap = Record<TToolbarControl, ReactElement>;

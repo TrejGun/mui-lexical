@@ -5,7 +5,7 @@ import { $createHeadingNode, $createQuoteNode, $isHeadingNode, $isQuoteNode, Hea
 import { $setBlocksType } from "@lexical/selection";
 import { $isTableSelection } from "@lexical/table";
 import { $getNearestBlockElementAncestorOrThrow } from "@lexical/utils";
-import { $createParagraphNode, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor } from "lexical";
+import { $createParagraphNode, $getRoot, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor } from "lexical";
 
 import { MAX_ALLOWED_FONT_SIZE, MIN_ALLOWED_FONT_SIZE } from "../../context";
 
@@ -148,6 +148,14 @@ export const formatCode = (editor: LexicalEditor, blockType: string) => {
       }
     });
   }
+};
+
+export const clearEditor = (editor: LexicalEditor) => {
+  editor.update(() => {
+    const root = $getRoot();
+    root.clear();
+    root.append($createParagraphNode());
+  });
 };
 
 export const clearFormatting = (editor: LexicalEditor) => {

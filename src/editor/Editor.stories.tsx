@@ -130,7 +130,7 @@ export const WithCustomControls: Story = {
       blockFormat: ["paragraph", "h1", "h2", "h3", "h4", "quote", "code"],
       textFormat: ["bold", "italic", "strikethrough", "link", "leftAlign", "centerAlign", "rightAlign"],
       viewFormat: ["image", "table"],
-      clear: ["clear"],
+      clear: ["formatting"],
     };
 
     return (
