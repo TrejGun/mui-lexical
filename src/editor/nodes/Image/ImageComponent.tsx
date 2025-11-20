@@ -25,10 +25,10 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { mergeRegister } from "@lexical/utils";
 
 import { useSharedHistoryContext } from "../../context";
-import brokenImage from "../../images/image-broken.svg";
 import { LinkPlugin } from "../../plugins";
 import { LexicalContentEditable as ContentEditable, ImageResizer } from "../../ui";
 import { $isImageNode } from "./ImageNode";
+import { ImageBrokenIcon } from "../../images/image-broken";
 
 const imageCache = new Set();
 
@@ -155,18 +155,7 @@ const LazyImage = ({
 };
 
 const BrokenImage = (): JSX.Element => {
-  return (
-    <img
-      src={brokenImage}
-      style={{
-        height: 200,
-        opacity: 0.2,
-        width: 200,
-      }}
-      draggable="false"
-      alt="#"
-    />
-  );
+  return <ImageBrokenIcon />;
 };
 
 export const ImageComponent = ({
