@@ -1,4 +1,4 @@
 {
-  "extends": ["github>TrejGun/renovate-config"],
-  "baseBranches": ["main"]
+  "extends": ["github>ethberry/renovate-config"],
+  "baseBranches": ["master"]
 }
