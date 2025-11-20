@@ -35,8 +35,9 @@ import {
 import { LexicalContentEditable as ContentEditable } from "./ui/ContentEditable";
 import { PlaygroundNodes } from "./nodes";
 import { playgroundEditorTheme } from "./themes/playgroundEditorTheme";
+import { IToolbarControls } from "./types";
 
-const EditorContent = () => {
+const EditorContent = ({ controls }: IEditorProps) => {
   const { historyState } = useSharedHistoryContext();
   const isEditable = useLexicalEditable();
   const placeholder = "Enter some rich text...";
@@ -74,6 +75,7 @@ const EditorContent = () => {
         <ToolbarPlugin
           editor={editor}
           activeEditor={activeEditor}
+          controls={controls}
           setActiveEditor={setActiveEditor}
           setIsLinkEditMode={setIsLinkEditMode}
         />
@@ -128,7 +130,11 @@ const EditorContent = () => {
   );
 };
 
-export const Editor = () => {
+interface IEditorProps {
+  controls?: IToolbarControls;
+}
+
+export const Editor = ({ controls }: IEditorProps) => {
   return (
     <LexicalComposer
       initialConfig={{
@@ -141,7 +147,7 @@ export const Editor = () => {
         theme: playgroundEditorTheme,
       }}
     >
-      <EditorContent />
+      <EditorContent controls={controls} />
     </LexicalComposer>
   );
 };

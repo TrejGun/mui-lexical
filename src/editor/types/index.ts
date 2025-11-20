@@ -4,7 +4,7 @@ import { CODE_LANGUAGE_FRIENDLY_NAME_MAP } from "@lexical/code";
 import { blockTypeToBlockName } from "../context";
 
 export type TToolbarHistoryControl = "undo" | "redo";
-export type TToolbarTextFormattingControl =
+export type TToolbarTextFormatControl =
   | "bold"
   | "italic"
   | "underline"
@@ -14,19 +14,22 @@ export type TToolbarTextFormattingControl =
   | "leftAlign"
   | "centerAlign"
   | "rightAlign";
+export type TToolbarViewFormatControl = "horizontal" | "image" | "video" | "table";
 export type TToolbarBlockFormatControl = keyof typeof blockTypeToBlockName;
 export type TToolbarCodeLanguagesControl = keyof typeof CODE_LANGUAGE_FRIENDLY_NAME_MAP;
 export type TToolbarControl =
   | TToolbarHistoryControl
-  | TToolbarTextFormattingControl
+  | TToolbarTextFormatControl
+  | TToolbarViewFormatControl
   | "blockFormat"
   | "codeLanguages"
   | "clear";
 
 export interface IToolbarControls {
   history?: Array<TToolbarHistoryControl>;
-  textFormat?: Array<TToolbarTextFormattingControl>;
+  textFormat?: Array<TToolbarTextFormatControl>;
   blockFormat?: Array<TToolbarBlockFormatControl>;
+  viewFormat?: Array<TToolbarViewFormatControl>;
   codeLanguages?: Array<TToolbarCodeLanguagesControl>;
   clear?: ["clear"];
 }

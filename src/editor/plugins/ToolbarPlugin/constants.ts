@@ -14,6 +14,7 @@ export const toolbarDefaultControls: IToolbarControls = {
     "centerAlign",
     "rightAlign",
   ],
+  viewFormat: ["horizontal", "image", "video", "table"],
   codeLanguages: [
     "c",
     "clike",

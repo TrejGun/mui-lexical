@@ -265,7 +265,7 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
             editor={activeEditor}
           />
         )}
-        <Divider />
+        {!!controls.history?.length && <Divider />}
       </Fragment>
     ),
     codeLanguages: (
@@ -296,45 +296,44 @@ export const ToolbarPlugin: FC<IToolbarPluginProps> = ({
     centerAlign: <CenterAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
     rightAlign: <RightAlignButton disabled={!isEditable} activeEditor={activeEditor} toolbarState={toolbarState} />,
     clear: <ClearButton disabled={!isEditable} activeEditor={activeEditor} />,
+    horizontal: <HorizontalRuleButton activeEditor={activeEditor} />,
+    image: <ImageButton activeEditor={activeEditor} showModal={showModal} />,
+    video: <VideoButton activeEditor={activeEditor} showModal={showModal} />,
+    table: <TableButton activeEditor={activeEditor} showModal={showModal} />,
   };
 
   return (
     <div className="toolbar">
-      {controls.history && (
+      {!!controls.history?.length && (
         <Fragment>
           {controls.history.map(c => controlsMap[c])}
           <Divider />
         </Fragment>
       )}
 
-      {controls.blockFormat && controlsMap.blockFormat}
+      {!!controls.blockFormat?.length && controlsMap.blockFormat}
       {toolbarState.blockType === "code" ? (
         controlsMap.codeLanguages
       ) : (
-        <>
-          {controls.textFormat && (
+        <Fragment>
+          {!!controls.textFormat?.length && (
             <Fragment>
               {controls.textFormat.map(c => controlsMap[c])}
-              <Divider />
+              {!!controls.clear?.length && <Divider />}
             </Fragment>
           )}
 
-          {controls.clear && (
+          {!!controls.clear?.length && (
             <Fragment>
               {controls.clear.map(c => controlsMap[c])}
-              <Divider />
+              {!!controls.viewFormat?.length && <Divider />}
             </Fragment>
           )}
 
-          {canViewerSeeInsertDropdown && (
-            <>
-              <HorizontalRuleButton activeEditor={activeEditor} />
-              <ImageButton activeEditor={activeEditor} showModal={showModal} />
-              <VideoButton activeEditor={activeEditor} showModal={showModal} />
-              <TableButton activeEditor={activeEditor} showModal={showModal} />
-            </>
+          {canViewerSeeInsertDropdown && !!controls.viewFormat?.length && (
+            <Fragment>{controls.viewFormat.map(c => controlsMap[c])}</Fragment>
           )}
-        </>
+        </Fragment>
       )}
 
       {modal}
