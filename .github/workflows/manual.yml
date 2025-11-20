@@ -40,7 +40,7 @@ jobs:
         run: npm version patch -m "[Manual release] [skip ci] %s"
 
       - name: Publish by NPM
-        run: npm publish
+        run: npm publish --access public
         env:
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
@@ -61,7 +61,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
